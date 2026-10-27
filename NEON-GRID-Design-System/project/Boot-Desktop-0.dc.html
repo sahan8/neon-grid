@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Boot loader — desktop 0%</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:6}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:5}
+.ng-floor{position:absolute;left:-30%;right:-30%;bottom:-40px;height:46%;background-image:linear-gradient(rgba(0,240,255,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.3) 1px,transparent 1px);background-size:64px 64px;transform:perspective(520px) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 80%);mask-image:linear-gradient(to top,#000 5%,transparent 80%);animation:ng-floor 1200ms linear infinite}
+@keyframes ng-floor{from{background-position:0 0}to{background-position:0 64px}}
+.ng-burst{display:inline-block;animation:ng-burst 3200ms steps(4) infinite}
+@keyframes ng-burst{0%,86%{text-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5);transform:none;clip-path:none}88%{text-shadow:-4px 0 #00F0FF,4px 0 #FF2A6D;transform:translate(-3px,1px);clip-path:polygon(0 0,100% 0,100% 42%,0 42%,0 58%,100% 58%,100% 100%,0 100%)}90%{text-shadow:4px 0 #00F0FF,-4px 0 #FF2A6D;transform:translate(3px,-1px) skewX(-6deg)}92%{text-shadow:-2px 0 #00F0FF,2px 0 #FF2A6D;transform:translate(-1px,0);clip-path:none}94%,100%{text-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5);transform:none}}
+.caret{display:inline-block;width:.6em;height:1.1em;margin-left:2px;background:#00F0FF;vertical-align:-.15em;box-shadow:0 0 6px #00F0FF;animation:ng-blink 1s steps(1) infinite}
+@keyframes ng-blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.typing{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;animation:ng-type 600ms steps(24) 1}
+@keyframes ng-type{from{max-width:0}to{max-width:100%}}
+.ng-appear{animation:ng-appear 600ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes ng-appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.ng-flash{animation:ng-flash 1200ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes ng-flash{0%{background:rgba(232,241,255,.9)}20%{background:rgba(255,42,109,.35)}100%{background:rgba(5,6,10,.96)}}
+.bw{display:inline-flex;transition:filter 150ms cubic-bezier(.16,1,.3,1)}
+.bw:hover{filter:drop-shadow(0 0 8px #FF2A6D) drop-shadow(0 0 16px rgba(255,42,109,.5))}
+.bw:focus-within{outline:2px solid #00F0FF;outline-offset:3px;filter:drop-shadow(0 0 8px rgba(0,240,255,.6))}
+.b-pri{cursor:pointer;transition:background 150ms cubic-bezier(.16,1,.3,1),transform 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-pri:active{background:#D91E5B !important;transform:translateY(1px)}
+.b-pri:focus{outline:none}
+.snd{cursor:pointer;transition:all 150ms cubic-bezier(.16,1,.3,1)}
+.snd:hover{background:rgba(0,240,255,.1) !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.snd:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.dots span{animation:ng-dot 1200ms steps(1) infinite}
+.dots span:nth-child(2){animation-delay:300ms}.dots span:nth-child(3){animation-delay:600ms}
+@keyframes ng-dot{0%,50%{opacity:1}50.01%,100%{opacity:.2}}
+@media (prefers-reduced-motion:reduce){.ng-burst,.ng-floor,.typing,.dots span{animation:none}.caret{animation:none;opacity:.8}.ng-appear,.ng-flash{animation:ng-fade 300ms ease 1}@keyframes ng-fade{from{opacity:0}to{opacity:1}}.b-pri:active{transform:none}}
+</style>
+</helmet>
+<div role="main" aria-label="NEON//GRID boot sequence" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(to top, rgba(255,42,109,0.32), rgba(123,44,255,0.08) 45%, rgba(5,6,10,0) 80%); opacity: {{horizonOp}}"></div>
+<div aria-hidden="true" class="ng-floor" style="opacity: {{floorOp}}"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, rgba(5,6,10,0) 30%, rgba(5,6,10,0.85) 100%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- screen corner brackets -->
+<span aria-hidden="true" style="position: absolute; z-index: 3; top: {{bk}}px; left: {{bk}}px; width: 20px; height: 20px; border-top: 2px solid rgba(0,240,255,0.6); border-left: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 3; top: {{bk}}px; right: {{bk}}px; width: 20px; height: 20px; border-top: 2px solid rgba(0,240,255,0.6); border-right: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 3; bottom: {{bk}}px; left: {{bk}}px; width: 20px; height: 20px; border-bottom: 2px solid rgba(0,240,255,0.6); border-left: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 3; bottom: {{bk}}px; right: {{bk}}px; width: 20px; height: 20px; border-bottom: 2px solid rgba(0,240,255,0.6); border-right: 2px solid rgba(0,240,255,0.6)"></span>
+
+<!-- HUD top -->
+<div style="position: absolute; z-index: 3; top: {{hudPad}}px; left: {{hudPad}}px; right: {{hudPad}}px; display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: {{hudFont}}px; letter-spacing: 0.14em; text-transform: uppercase; color: #8A93A8">
+<span style="display: inline-flex; align-items: center; gap: 10px"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{dotColor}}; box-shadow: 0 0 8px {{dotColor}}"></span>NEON//GRID OS v1.0</span>
+<span>{{hudRight}}</span>
+</div>
+
+<!-- HUD bottom (desktop) -->
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; z-index: 3; bottom: {{hudPad}}px; left: {{hudPad}}px; right: {{hudPad}}px; display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8A93A8">
+<span>SECTOR 07 // NIGHT CITY</span>
+<span>SIGNAL {{signal}}% · LATENCY {{latency}}MS</span>
+<span>© [YEAR] [STUDIO NAME]</span>
+</div>
+</sc-if>
+
+<!-- CENTRE -->
+<div style="position: absolute; z-index: 2; inset: 0; display: flex; align-items: center; justify-content: center; padding: 0 {{sidePad}}px">
+<div style="width: 100%; max-width: {{colW}}px; display: flex; flex-direction: column; align-items: center; gap: {{gap}}px">
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{logoSize}}px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap"><span class="ng-burst">NEON<span style="color: #FF2A6D">//</span>GRID</span></h1>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{subFont}}px; letter-spacing: 0.24em; text-transform: uppercase; color: #00F0FF">// Neural interface boot sequence</span>
+</div>
+
+<!-- terminal -->
+<div style="width: 100%; background: rgba(11,14,23,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(0,240,255,0.15); position: relative">
+<span aria-hidden="true" style="position: absolute; top: -1px; left: -1px; width: 12px; height: 12px; border-top: 2px solid #00F0FF; border-left: 2px solid #00F0FF"></span>
+<span aria-hidden="true" style="position: absolute; bottom: -1px; right: -1px; width: 12px; height: 12px; border-bottom: 2px solid #00F0FF; border-right: 2px solid #00F0FF"></span>
+<div style="height: 32px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,240,255,0.12); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">
+<span style="display: inline-flex; gap: 6px" aria-hidden="true"><span style="width: 8px; height: 8px; background: #FF2A6D"></span><span style="width: 8px; height: 8px; background: #F5E642"></span><span style="width: 8px; height: 8px; background: #00F0FF"></span></span>
+<span>TERMINAL · TTY07</span>
+<span>{{clock}}</span>
+</div>
+<div role="log" aria-live="polite" aria-label="Boot log" style="height: {{termH}}px; padding: 12px 16px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; font-family: 'JetBrains Mono', monospace; font-size: {{termFont}}px; line-height: 1.75">
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="5">
+<div style="color: {{l.color}}; white-space: pre; overflow: hidden; text-overflow: ellipsis"><sc-if value="{{l.last}}" hint-placeholder-val="{{ false }}"><span class="typing">{{l.t}}</span><span class="caret" aria-hidden="true"></span></sc-if><sc-if value="{{l.notLast}}" hint-placeholder-val="{{ true }}">{{l.t}}</sc-if></div>
+</sc-for>
+</div>
+</div>
+
+<!-- progress -->
+<div style="width: 100%; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">STATUS</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{labelFont}}px; letter-spacing: 0.12em; color: {{statusColor}}">{{status}}</span>
+</div>
+<span aria-hidden="true" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: {{pctFont}}px; line-height: 1; letter-spacing: 0.02em; color: {{pctColor}}; text-shadow: {{pctGlow}}">{{pctStr}}<span style="font-size: 0.5em; color: #8A93A8">%</span></span>
+</div>
+<div role="progressbar" aria-label="Boot progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{p}}" style="display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: {{segGap}}px">
+<sc-for list="{{segs}}" as="s" hint-placeholder-count="20"><span style="height: {{segH}}px; background: {{s.bg}}; border: 1px solid {{s.bd}}; box-shadow: {{s.glow}}; clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%)"></span></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8A93A8">
+<span>{{mb}} / 19.4 MB</span>
+<span>{{eta}}</span>
+</div>
+</div>
+
+<!-- actions -->
+<div style="width: 100%; height: 60px; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div class="ng-appear" style="width: 100%; display: flex; gap: 12px; justify-content: center; align-items: center">
+<span class="bw" style="flex: {{btnFlex}}"><button type="button" class="b-pri" onClick="{{enter}}" style="width: 100%; height: 56px; padding: 0 40px; border: 0; background: #FF2A6D; color: #05060A; display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Enter the grid<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></button></span>
+<button type="button" class="snd" role="switch" aria-checked="{{soundStr}}" aria-label="Sound" onClick="{{toggleSound}}" style="height: 56px; min-width: 56px; padding: 0 {{sndPad}}px; flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: {{sndBg}}; border: 1px solid #00F0FF; color: #00F0FF; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em">
+<sc-if value="{{sound}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"></path><path d="M16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"></path></svg></sc-if>
+<sc-if value="{{muted}}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"></path><path d="M16 9l5 6M21 9l-5 6"></path></svg></sc-if>
+<sc-if value="{{showSndLabel}}" hint-placeholder-val="{{ true }}"><span>{{soundLabel}}</span></sc-if>
+</button>
+</div>
+</sc-if>
+<sc-if value="{{notDone}}" hint-placeholder-val="{{ true }}">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #8A93A8">AWAITING LINK<span class="dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></span>
+</sc-if>
+</div>
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<span class="ng-appear" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; margin-top: -8px">HEADPHONES RECOMMENDED · AUDIO {{soundLabelShort}}</span>
+</sc-if>
+</div>
+</div>
+
+<!-- entered transition -->
+<sc-if value="{{entered}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="ng-flash" onClick="{{reset}}" aria-label="Replay boot sequence" style="position: absolute; inset: 0; z-index: 10; border: 0; background: rgba(5,6,10,0.96); color: #E8F1FF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.24em; color: #2BFF88">LINK ESTABLISHED</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{enterFont}}px; letter-spacing: 0.08em; text-shadow: 0 0 8px #FF2A6D, 0 0 24px rgba(255,42,109,0.5)">ENTERING SECTOR 07</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">[PROTOTYPE] CLICK TO REPLAY</span>
+</button>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"progress":{"editor":"range","default":0,"min":0,"max":100,"step":1,"unit":"%"},"mobile":{"editor":"boolean","default":false},"autoplay":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { p: 0, sound: false, entered: false }; this.timer = null; }
+  componentDidMount() { if (this.props.autoplay ?? false) this.run(); }
+  componentWillUnmount() { if (this.timer) clearInterval(this.timer); }
+  run() {
+    var self = this;
+    if (this.timer) clearInterval(this.timer);
+    this.setState({ p: 0 });
+    this.timer = setInterval(function () {
+      var n = Math.min(100, self.state.p + 1 + Math.floor(Math.random() * 3));
+      self.setState({ p: n });
+      if (n >= 100) { clearInterval(self.timer); self.timer = null; }
+    }, 90);
+  }
+  renderVals() {
+    var self = this;
+    var auto = this.props.autoplay ?? false;
+    var raw = auto ? this.state.p : (this.props.progress ?? 0);
+    var p = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
+    var m = !!(this.props.mobile ?? false);
+    var done = p >= 100;
+    var OK = '#2BFF88', DIM = '#8A93A8', TXT = '#E8F1FF', CY = '#00F0FF';
+    var all = [
+      { at: -1, t: 'NEON//GRID OS v1.0 · tty07 · build 2026.10.27', color: DIM },
+      { at: 0, t: '> INITIALISING NEURAL LINK...', color: TXT },
+      { at: 10, t: '  [OK] cortex handshake · 12ms', color: OK },
+      { at: 22, t: '> DECRYPTING CITY GRID...', color: TXT },
+      { at: 36, t: '  [OK] 2,048 nodes mapped', color: OK },
+      { at: 50, t: '> LOADING SECTOR DATA... ' + (done ? '100% [OK]' : p + '%'), color: done ? OK : TXT },
+      { at: 78, t: '> CALIBRATING OPTICS...', color: TXT },
+      { at: 90, t: '  [OK] chrome synced · 0 faults', color: OK },
+      { at: 100, t: '> ALL SYSTEMS NOMINAL. WELCOME, RUNNER.', color: CY }
+    ];
+    var lines = all.filter(function (l) { return p >= l.at; });
+    lines = lines.map(function (l, i) { var last = i === lines.length - 1; return { t: l.t, color: l.color, last: last, notLast: !last }; });
+    var filled = Math.round(p / 5);
+    var segs = [];
+    for (var i = 0; i < 20; i++) {
+      var on = i < filled;
+      var lead = on && !done && i === filled - 1;
+      segs.push({
+        bg: on ? (lead ? '#E8F1FF' : CY) : 'rgba(0,240,255,0.04)',
+        bd: on ? (lead ? '#E8F1FF' : CY) : 'rgba(0,240,255,0.22)',
+        glow: on ? (lead ? '0 0 10px #E8F1FF' : '0 0 6px rgba(0,240,255,0.8)') : 'none'
+      });
+    }
+    var pad3 = ('00' + p).slice(-3);
+    var secs = Math.ceil((100 - p) * 0.06);
+    var status = p === 0 ? 'HANDSHAKE PENDING' : (p < 50 ? 'INITIALISING NEURAL LINK' : (done ? 'LINK ESTABLISHED' : 'LOADING SECTOR DATA'));
+    var sound = !!this.state.sound;
+    return {
+      p: p, done: done, notDone: !done, desktop: !m,
+      W: m ? 390 : 1440, H: m ? 844 : 900,
+      bk: m ? 12 : 24, hudPad: m ? 20 : 40, hudFont: m ? 10 : 12, sidePad: m ? 16 : 80,
+      colW: m ? 358 : 760, gap: m ? 24 : 32,
+      logoSize: m ? 34 : 96, subFont: m ? 10 : 12,
+      termH: m ? 210 : 236, termFont: m ? 12 : 14,
+      labelFont: m ? 12 : 14, pctFont: m ? 40 : 64,
+      segGap: m ? 2 : 4, segH: m ? 14 : 18,
+      btnFlex: m ? '1 1 auto' : '0 0 auto', sndPad: m ? 0 : 20, showSndLabel: !m,
+      enterFont: m ? 22 : 48,
+      hudRight: m ? 'TTY07' : 'BOOT SEQ 0x07 · TTY07 · AUDIO ' + (sound ? 'ON' : 'OFF'),
+      dotColor: done ? OK : '#F5E642',
+      horizonOp: 0.35 + 0.65 * (p / 100), floorOp: 0.25 + 0.75 * (p / 100),
+      signal: 60 + Math.round(p * 0.38), latency: ('00' + Math.max(12, 140 - p)).slice(-3),
+      clock: 'T+' + ('0' + Math.floor(p * 0.06)).slice(-2) + '.' + ('0' + (p % 10) * 6).slice(-2) + 's',
+      lines: lines, segs: segs, pctStr: pad3,
+      pctColor: done ? OK : TXT,
+      pctGlow: done ? '0 0 8px rgba(43,255,136,0.6)' : '0 0 8px rgba(0,240,255,0.5)',
+      status: status, statusColor: done ? OK : (p === 0 ? DIM : CY),
+      mb: (19.4 * p / 100).toFixed(1), eta: done ? 'COMPLETE' : 'ETA 00:0' + Math.min(9, secs),
+      sound: sound, muted: !sound, soundStr: sound ? 'true' : 'false',
+      soundLabel: sound ? 'SOUND ON' : 'SOUND OFF', soundLabelShort: sound ? 'ON' : 'OFF',
+      sndBg: sound ? 'rgba(0,240,255,0.16)' : 'transparent',
+      toggleSound: function () { self.setState({ sound: !self.state.sound }); },
+      entered: !!this.state.entered,
+      enter: function () { self.setState({ entered: true }); },
+      reset: function () { self.setState({ entered: false }); if (self.props.autoplay ?? false) self.run(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Boot loader — mobile 0%</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#05060A}</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #05060A">
+<dc-import name="Boot-Desktop-0" progress="{{p}}" mobile="{{m}}" autoplay="{{a}}" hint-size="390px,844px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"progress":{"editor":"range","default":0,"min":0,"max":100,"step":1,"unit":"%"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { p: this.props.progress ?? 0, m: true, a: false }; }
+}
+</script>
+</body>
+</html>

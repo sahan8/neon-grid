@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NEON//GRID — Cards, Meters, Inputs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+a{color:#00F0FF}a:hover{color:#E8F1FF}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:5}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:4}
+.tilt{transition:transform 300ms cubic-bezier(.16,1,.3,1),border-color 150ms,box-shadow 300ms;transform-style:preserve-3d}
+.tilt:hover{transform:perspective(900px) rotateX(4deg) rotateY(-6deg) translateY(-4px);border-color:#00F0FF !important;box-shadow:0 0 8px rgba(0,240,255,.6),0 0 24px rgba(0,240,255,.3),0 24px 48px rgba(0,0,0,.6)}
+.tilt:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.card-link{text-decoration:none;color:inherit;display:flex}
+.card-link:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.caret{display:inline-block;width:8px;height:18px;background:#00F0FF;vertical-align:middle;animation:ng-blink 1s steps(1) infinite}
+@keyframes ng-blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.term{transition:border-color 150ms,box-shadow 150ms}
+.term:hover{border-color:rgba(0,240,255,.5) !important}
+.term:focus-within{border-color:#00F0FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.term input,.term select{background:transparent;border:0;outline:none;color:#E8F1FF;font:inherit;flex:1;min-width:0;caret-color:#00F0FF;height:100%}
+.term select option{background:#121726;color:#E8F1FF}
+.term input::placeholder{color:#8A93A8}
+.ck:focus-visible,.tg:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.ck,.tg{cursor:pointer}
+@media (prefers-reduced-motion:reduce){.tilt:hover{transform:none}.caret{animation:none}}
+</style>
+</helmet>
+<div style="width: 1440px; height: 3000px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px; box-sizing: border-box; display: flex; flex-direction: column; gap: 96px">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- CARDS -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">05 / CARDS + INPUTS</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">3 CARDS · METERS · 5 INPUTS</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1">Cards</h2>
+
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">DISTRICT CARD · STATES</span>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{dStates}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: #0B0E17; border: 1px solid {{s.border}}; box-shadow: {{s.shadow}}; outline: {{s.outline}}; outline-offset: 3px; transform: {{s.transform}}; opacity: {{s.opacity}}; display: flex; flex-direction: column; clip-path: {{s.clip}}">
+<div style="height: 168px; position: relative; overflow: hidden; background: linear-gradient(to top, rgba(255,42,109,0.45), rgba(123,44,255,0.15) 60%, #0B0E17)">
+<div style="position: absolute; left: -30%; right: -30%; bottom: -10px; height: 110px; background-image: linear-gradient(rgba(0,240,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.4) 1px, transparent 1px); background-size: 28px 28px; transform: perspective(240px) rotateX(60deg); transform-origin: 50% 100%"></div>
+<span style="position: absolute; top: 12px; left: 12px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #00F0FF; border: 1px solid rgba(0,240,255,0.5); background: rgba(5,6,10,0.7)">SECTOR 07</span>
+<span style="position: absolute; bottom: 12px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">[DISTRICT RENDER]</span>
+</div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.08em">[DISTRICT NAME]</span>
+<span style="font-size: 15px; color: #8A93A8; line-height: 1.4">[One-line district description]</span>
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding-top: 8px; border-top: 1px dashed rgba(0,240,255,0.2)"><span style="color: #8A93A8">THREAT</span><span style="color: #F5E642">{{s.threat}}</span></div>
+</div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">{{s.label}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">{{s.note}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; align-items: start">
+<!-- augment card -->
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">AUGMENT PRODUCT CARD · LIVE HOVER</span>
+<a href="#" class="card-link"><div class="tilt" style="flex: 1; background: #0B0E17; border: 1px solid rgba(0,240,255,0.15); display: flex; flex-direction: column">
+<div style="height: 220px; position: relative; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 55%, rgba(0,240,255,0.18), rgba(11,14,23,0) 60%)">
+<div style="width: 120px; height: 120px; border: 1px solid #00F0FF; transform: rotate(45deg); box-shadow: 0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)"></div>
+<span style="position: absolute; top: 12px; left: 12px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: #05060A; background: #F5E642">NEW</span>
+<span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">[3D PRODUCT RENDER]</span>
+</div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid rgba(0,240,255,0.12)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF">OPTICS · CLASS B</span>
+<span style="font-weight: 700; font-size: 24px; line-height: 1.2">[Augment name]</span>
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 18px">[PRICE]</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #2BFF88">IN STOCK</span>
+</div>
+</div>
+</div></a>
+</div>
+
+<!-- character card -->
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">CHARACTER CARD · LIVE HOVER TILT</span>
+<a href="#" class="card-link"><div class="tilt" style="flex: 1; position: relative; background: #0B0E17; border: 1px solid rgba(255,42,109,0.3); display: flex; flex-direction: column">
+<span style="position: absolute; top: -1px; left: -1px; width: 16px; height: 16px; border-top: 2px solid #FF2A6D; border-left: 2px solid #FF2A6D; z-index: 1"></span>
+<span style="position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px; border-bottom: 2px solid #FF2A6D; border-right: 2px solid #FF2A6D; z-index: 1"></span>
+<div style="height: 260px; position: relative; overflow: hidden; background: linear-gradient(160deg, #121726, #05060A)">
+<div style="position: absolute; left: 50%; bottom: 0; width: 150px; height: 210px; transform: translateX(-50%); background: linear-gradient(to top, rgba(123,44,255,0.5), rgba(123,44,255,0.1)); clip-path: polygon(35% 0, 65% 0, 70% 30%, 100% 45%, 100% 100%, 0 100%, 0 45%, 30% 30%)"></div>
+<span style="position: absolute; top: 12px; right: 12px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF2A6D; border: 1px solid rgba(255,42,109,0.6); background: rgba(5,6,10,0.7)">LVL 3</span>
+<span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">[CHARACTER PORTRAIT]</span>
+</div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.08em">[HANDLE]</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8A93A8">[CLASS] · [FACTION]</span>
+<sc-for list="{{charStats}}" as="st" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 28px; gap: 8px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px">
+<span style="color: #8A93A8">{{st.k}}</span>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{st.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 8px; background: {{b.bg}}; box-shadow: {{b.glow}}"></span></sc-for>
+</div>
+<span style="text-align: right">{{st.v}}</span>
+</div>
+</sc-for>
+</div>
+</div></a>
+</div>
+
+<!-- card notes -->
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">CARD RULES</span>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 24px; display: flex; flex-direction: column; gap: 12px; font-size: 16px; color: #8A93A8">
+<span><span style="color: #E8F1FF; font-weight: 600">Whole card is one link.</span> Wrap it in a single &lt;a&gt; so it gets one tab stop and one focus ring.</span>
+<span><span style="color: #E8F1FF; font-weight: 600">Tilt:</span> max ±6° on Y, ±4° on X, lift 4px, motion/base cyber-out. In product, tilt follows the pointer; reduced motion disables tilt and keeps the border glow.</span>
+<span><span style="color: #E8F1FF; font-weight: 600">Accent per type:</span> district = cyan, character = magenta brackets, augment = cyan glow + yellow NEW tag.</span>
+<span><span style="color: #E8F1FF; font-weight: 600">Locked / disabled:</span> 50% opacity, desaturated art, a LOCKED chip and aria-disabled. Never hide locked content entirely.</span>
+<span><span style="color: #E8F1FF; font-weight: 600">Image placeholders</span> in brackets are where 3D renders go; keep 16:10 for districts, 4:5 for characters.</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- METERS -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Stat bar + progress meter</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">SEGMENTED · 10 BLOCKS · 12PX TALL · 3PX GAP</span>
+<sc-for list="{{meters}}" as="m" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em"><span>{{m.label}}</span><span style="color: {{m.color}}">{{m.v}}% · {{m.state}}</span></div>
+<div role="meter" aria-label="{{m.label}}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{m.v}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px">
+<sc-for list="{{m.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 12px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}; clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%)"></span></sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">CONTINUOUS · 4PX · FOR UPLOADS AND LOADS</span>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px"><span>DOWNLOADING DISTRICT MESH</span><span style="color: #00F0FF">64%</span></div>
+<div role="progressbar" aria-label="Downloading district mesh" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="height: 4px; background: rgba(0,240,255,0.12)"><div style="width: 64%; height: 100%; background: #00F0FF; box-shadow: 0 0 8px #00F0FF"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px"><span>SYNC FAILED</span><span style="color: #FF3B3B">ERR 0x41</span></div>
+<div role="progressbar" aria-label="Sync" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" style="height: 4px; background: rgba(255,59,59,0.15)"><div style="width: 38%; height: 100%; background: #FF3B3B"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: #8A93A8">
+<span>States: cyan 0–69 normal · yellow 70–89 warning · magenta 90–100 critical. Always print the number; colour is backup.</span>
+<span>Fill animates block-by-block with steps(10) over motion/slow. Reduced motion: final value, fade in.</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- INPUTS -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Inputs · terminal style</h2>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 120px repeat(5, minmax(0, 1fr)); gap: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,240,255,0.25); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">
+<span>FIELD</span><span>DEFAULT</span><span>HOVER</span><span>FOCUS</span><span>ERROR</span><span>DISABLED</span>
+</div>
+<sc-for list="{{fieldRows}}" as="r" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 120px repeat(5, minmax(0, 1fr)); gap: 20px; padding: 24px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: start">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00F0FF; padding-top: 28px">{{r.name}}</span>
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 6px; opacity: {{c.opacity}}">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">{{r.label}}</span>
+<div style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid {{c.border}}; border-radius: 2px; box-shadow: {{c.shadow}}; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<span style="color: {{c.prompt}}">&gt;</span>
+<span style="flex: 1; color: {{c.textColor}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.text}}</span>
+<sc-if value="{{c.caret}}" hint-placeholder-val="{{ false }}"><span class="caret"></span></sc-if>
+<sc-if value="{{r.isSelect}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></sc-if>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{c.helpColor}}">{{c.help}}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+
+<!-- checkbox + toggle states -->
+<div style="display: grid; grid-template-columns: 120px repeat(5, minmax(0, 1fr)); gap: 20px; padding: 24px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00F0FF">checkbox</span>
+<sc-for list="{{checkCells}}" as="c" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 44px; opacity: {{c.opacity}}">
+<span style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid {{c.border}}; background: {{c.bg}}; border-radius: 2px; box-shadow: {{c.shadow}}; outline: {{c.outline}}; outline-offset: 3px"><sc-if value="{{c.checked}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#05060A" stroke-width="3" aria-hidden="true"><path d="M4 12l5 5L20 6"></path></svg></sc-if></span>
+<span style="font-size: 16px; color: {{c.text}}">{{c.label}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: 120px repeat(5, minmax(0, 1fr)); gap: 20px; padding: 24px 0 0; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00F0FF">toggle</span>
+<sc-for list="{{toggleCells}}" as="c" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 44px; opacity: {{c.opacity}}">
+<span style="width: 48px; height: 24px; position: relative; display: inline-block; border: 1px solid {{c.border}}; background: {{c.bg}}; box-shadow: {{c.shadow}}; outline: {{c.outline}}; outline-offset: 3px"><span style="position: absolute; top: 3px; left: {{c.knobLeft}}; width: 16px; height: 16px; background: {{c.knob}}"></span></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: {{c.text}}">{{c.label}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- live form -->
+<form style="background: rgba(11,14,23,0.6); border: 1px dashed rgba(0,240,255,0.3); padding: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 24px; align-items: end">
+<span style="grid-column: 1 / -1; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #F5E642">LIVE · CLICK AND TYPE</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ng-handle" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">HANDLE</label>
+<div class="term" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid rgba(0,240,255,0.25); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 14px"><span style="color: #00F0FF">&gt;</span><input id="ng-handle" type="text" placeholder="netrunner_07" autocomplete="off"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ng-email" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">EMAIL</label>
+<div class="term" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid rgba(0,240,255,0.25); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 14px"><span style="color: #00F0FF">&gt;</span><input id="ng-email" type="email" placeholder="you@grid.net" autocomplete="off"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ng-district" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">HOME DISTRICT</label>
+<div class="term" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid rgba(0,240,255,0.25); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 14px"><span style="color: #00F0FF">&gt;</span><select id="ng-district"><option>Sector 01</option><option>Sector 07</option><option>Sector 13</option></select></div>
+</div>
+<div style="display: flex; gap: 24px; align-items: center; min-height: 48px">
+<button type="button" class="ck" role="checkbox" aria-checked="{{ckStr}}" onClick="{{toggleCk}}" style="min-height: 44px; display: inline-flex; align-items: center; gap: 10px; background: transparent; border: 0; padding: 0; color: #E8F1FF; font-family: 'Rajdhani', sans-serif; font-size: 16px"><span style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #00F0FF; background: {{ckBg}}; border-radius: 2px"><sc-if value="{{ck}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#05060A" stroke-width="3" aria-hidden="true"><path d="M4 12l5 5L20 6"></path></svg></sc-if></span>Accept terms</button>
+<button type="button" class="tg" role="switch" aria-checked="{{tgStr}}" aria-label="Neon intensity" onClick="{{toggleTg}}" style="min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; gap: 10px; background: transparent; border: 0; padding: 0; color: #E8F1FF; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em"><span style="width: 48px; height: 24px; position: relative; display: inline-block; border: 1px solid {{tgBorder}}; background: {{tgBg}}"><span style="position: absolute; top: 3px; left: {{tgLeft}}; width: 16px; height: 16px; background: {{tgKnob}}; transition: left 150ms cubic-bezier(.16,1,.3,1)"></span></span>{{tgLabel}}</button>
+</div>
+</form>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { ck: true, tg: true }; }
+  renderVals() {
+    var self = this;
+    var CLIP = 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))';
+    var blocks = function (v, color) {
+      var out = [];
+      for (var i = 0; i < 10; i++) {
+        var on = i < Math.round(v / 10);
+        out.push({ bg: on ? color : 'transparent', bd: on ? color : 'rgba(0,240,255,0.2)', glow: on ? '0 0 6px ' + color : 'none' });
+      }
+      return out;
+    };
+    var meter = function (label, v) {
+      var color = v >= 90 ? '#FF2A6D' : (v >= 70 ? '#F5E642' : '#00F0FF');
+      var state = v >= 90 ? 'CRITICAL' : (v >= 70 ? 'WARNING' : 'NORMAL');
+      return { label: label, v: v, color: color, state: state, blocks: blocks(v, color) };
+    };
+    var cyanBlocks = function (v) {
+      var out = [];
+      for (var i = 0; i < 10; i++) { var on = i < v; out.push({ bg: on ? '#00F0FF' : 'rgba(0,240,255,0.15)', glow: on ? '0 0 4px #00F0FF' : 'none' }); }
+      return out;
+    };
+    var cell = function (o) {
+      return Object.assign({ border: 'rgba(0,240,255,0.25)', shadow: 'none', prompt: '#00F0FF', textColor: '#8A93A8', caret: false, help: ' ', helpColor: '#8A93A8', opacity: 1 }, o);
+    };
+    var row = function (name, label, ph, val, isSelect, err) {
+      return { name: name, label: label, isSelect: isSelect, cells: [
+        cell({ text: ph }),
+        cell({ text: ph, border: 'rgba(0,240,255,0.5)' }),
+        cell({ text: val, textColor: '#E8F1FF', border: '#00F0FF', shadow: '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)', caret: !isSelect }),
+        cell({ text: val, textColor: '#E8F1FF', border: '#FF3B3B', prompt: '#FF3B3B', help: err, helpColor: '#FF3B3B' }),
+        cell({ text: ph, border: 'rgba(138,147,168,0.3)', prompt: '#8A93A8', opacity: 0.5 })
+      ]};
+    };
+    var ckCell = function (o) { return Object.assign({ border: '#00F0FF', bg: 'transparent', shadow: 'none', outline: 'none', checked: false, text: '#E8F1FF', label: 'Remember me', opacity: 1 }, o); };
+    var tgCell = function (o) { return Object.assign({ border: 'rgba(0,240,255,0.4)', bg: 'transparent', shadow: 'none', outline: 'none', knob: '#8A93A8', knobLeft: '3px', text: '#8A93A8', label: 'OFF', opacity: 1 }, o); };
+    return {
+      dStates: [
+        { label: 'DEFAULT', note: 'border line/subtle', border: 'rgba(0,240,255,0.12)', shadow: 'none', outline: 'none', transform: 'none', opacity: 1, clip: CLIP, threat: 'MED' },
+        { label: 'HOVER', note: 'cyan border + glow + tilt', border: '#00F0FF', shadow: '0 0 8px rgba(0,240,255,0.6), 0 0 24px rgba(0,240,255,0.3)', outline: 'none', transform: 'perspective(900px) rotateX(4deg) rotateY(-6deg) translateY(-4px)', opacity: 1, clip: 'none', threat: 'MED' },
+        { label: 'FOCUS', note: '2px cyan ring + glow, no tilt', border: 'rgba(0,240,255,0.12)', shadow: '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)', outline: '2px solid #00F0FF', transform: 'none', opacity: 1, clip: 'none', threat: 'MED' },
+        { label: 'LOCKED / DISABLED', note: '50% opacity, aria-disabled', border: 'rgba(138,147,168,0.2)', shadow: 'none', outline: 'none', transform: 'none', opacity: 0.5, clip: CLIP, threat: 'LOCKED' }
+      ],
+      charStats: [
+        { k: 'HACK', v: '08', blocks: cyanBlocks(8) },
+        { k: 'BODY', v: '05', blocks: cyanBlocks(5) },
+        { k: 'COOL', v: '07', blocks: cyanBlocks(7) }
+      ],
+      meters: [meter('NETWORK SIGNAL', 40), meter('CPU LOAD', 60), meter('HEAT', 80), meter('CYBERPSYCHOSIS', 90)],
+      fieldRows: [
+        row('text', 'HANDLE', 'netrunner_07', 'v1per', false, 'Handle already taken'),
+        row('email', 'EMAIL', 'you@grid.net', 'v1per@grid', false, 'Enter a valid email'),
+        row('select', 'DISTRICT', 'Choose district', 'Sector 07', true, 'Pick a district')
+      ],
+      checkCells: [
+        ckCell({}),
+        ckCell({ shadow: '0 0 8px #00F0FF' }),
+        ckCell({ checked: true, bg: '#00F0FF', label: 'Checked' }),
+        ckCell({ checked: true, bg: '#00F0FF', outline: '2px solid #00F0FF', shadow: '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)', label: 'Focus' }),
+        ckCell({ border: 'rgba(138,147,168,0.4)', text: '#8A93A8', opacity: 0.5, label: 'Disabled' })
+      ],
+      toggleCells: [
+        tgCell({}),
+        tgCell({ border: '#00F0FF', knob: '#E8F1FF' }),
+        tgCell({ border: '#00F0FF', bg: 'rgba(0,240,255,0.2)', knob: '#00F0FF', knobLeft: '27px', text: '#00F0FF', label: 'ON', shadow: '0 0 8px rgba(0,240,255,0.6)' }),
+        tgCell({ border: '#00F0FF', bg: 'rgba(0,240,255,0.2)', knob: '#00F0FF', knobLeft: '27px', text: '#00F0FF', label: 'FOCUS', outline: '2px solid #00F0FF', shadow: '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)' }),
+        tgCell({ border: 'rgba(138,147,168,0.3)', knob: '#8A93A8', opacity: 0.5, label: 'DISABLED' })
+      ],
+      ck: !!this.state.ck,
+      ckStr: this.state.ck ? 'true' : 'false',
+      ckBg: this.state.ck ? '#00F0FF' : 'transparent',
+      toggleCk: function () { self.setState({ ck: !self.state.ck }); },
+      tgStr: this.state.tg ? 'true' : 'false',
+      tgBg: this.state.tg ? 'rgba(0,240,255,0.2)' : 'transparent',
+      tgBorder: this.state.tg ? '#00F0FF' : 'rgba(0,240,255,0.4)',
+      tgKnob: this.state.tg ? '#00F0FF' : '#8A93A8',
+      tgLeft: this.state.tg ? '27px' : '3px',
+      tgLabel: this.state.tg ? 'NEON ON' : 'NEON OFF',
+      toggleTg: function () { self.setState({ tg: !self.state.tg }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

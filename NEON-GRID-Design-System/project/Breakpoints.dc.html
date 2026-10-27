@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Responsive rules — breakpoints</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#05060A}</style>
+</helmet>
+<div style="width: 1440px; height: 2500px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px; box-sizing: border-box; display: flex; flex-direction: column; gap: 64px">
+<header style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">SPEC / RESPONSIVE</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">MOBILE-FIRST · 4 BREAKPOINTS</span>
+</div>
+<h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 64px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1">Breakpoints</h1>
+<p style="margin: 0; max-width: 860px; font-size: 19px; color: #8A93A8">Every screen, at every width. Hero, Augments and Join are drawn side by side below this page; the other screens follow the rules in the matrix.</p>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{bps}}" as="b" hint-placeholder-count="4">
+<div style="background: #0B0E17; border: 1px solid {{b.c}}; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.08em">{{b.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{b.c}}">{{b.frame}}</span></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8F1FF">{{b.range}}</span>
+<div aria-hidden="true" style="height: 56px; padding: 0 {{b.pv}}px; display: grid; grid-template-columns: repeat({{b.cols}}, minmax(0, 1fr)); gap: 3px; border: 1px solid rgba(0,240,255,0.2)"><sc-for list="{{b.cl}}" as="x" hint-placeholder-count="4"><span style="background: rgba(255,42,109,0.18); border-left: 1px solid rgba(255,42,109,0.5); border-right: 1px solid rgba(255,42,109,0.5)"></span></sc-for></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">{{b.grid}}</span>
+<span style="font-size: 15px; color: #8A93A8; line-height: 1.45">{{b.note}}</span>
+</div>
+</sc-for>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: 0.08em; text-transform: uppercase">Screen matrix</h2>
+<div role="table" aria-label="Screen behaviour per breakpoint" style="border: 1px solid rgba(0,240,255,0.15)">
+<div role="row" style="display: grid; grid-template-columns: 170px repeat(4, minmax(0, 1fr)); background: #121726; border-bottom: 1px solid rgba(0,240,255,0.25); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">
+<span role="columnheader" style="padding: 12px 14px">SCREEN</span><span role="columnheader" style="padding: 12px 14px">MOBILE 390</span><span role="columnheader" style="padding: 12px 14px">TABLET 834</span><span role="columnheader" style="padding: 12px 14px">DESKTOP 1440</span><span role="columnheader" style="padding: 12px 14px">WIDE 1920</span>
+</div>
+<sc-for list="{{matrix}}" as="r" hint-placeholder-count="12">
+<div role="row" style="display: grid; grid-template-columns: 170px repeat(4, minmax(0, 1fr)); border-bottom: 1px solid rgba(0,240,255,0.1); background: #0B0E17; font-size: 14px; line-height: 1.45">
+<span role="rowheader" style="padding: 12px 14px; font-weight: 700; font-size: 15px">{{r.s}}</span>
+<span role="cell" style="padding: 12px 14px; color: #E8F1FF">{{r.m}}</span>
+<span role="cell" style="padding: 12px 14px; color: #E8F1FF">{{r.t}}</span>
+<span role="cell" style="padding: 12px 14px; color: #8A93A8">{{r.d}}</span>
+<span role="cell" style="padding: 12px 14px; color: #8A93A8">{{r.w}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{rules}}" as="g" hint-placeholder-count="4">
+<div style="background: #121726; border: 1px solid {{g.c}}; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: {{g.c}}">{{g.t}}</span>
+<sc-for list="{{g.items}}" as="i" hint-placeholder-count="4"><span style="display: flex; gap: 8px; font-size: 15px; line-height: 1.45"><span style="color: {{g.c}}; flex: none">›</span>{{i}}</span></sc-for>
+</div>
+</sc-for>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cl = function (n) { var a = []; for (var i = 0; i < n; i++) a.push({ i: i }); return a; };
+    return {
+      bps: [
+        { name: 'MOBILE', frame: '390', range: '< 768px', cols: 4, cl: cl(4), pv: 6, grid: '4 col · 16 margin · 16 gutter', c: '#FF2A6D', note: 'Base styles. Overlay nav, bottom sheets, vertical snap carousels, gyro opt-in.' },
+        { name: 'TABLET', frame: '834', range: '768 – 1199px', cols: 8, cl: cl(8), pv: 10, grid: '8 col · 40 margin · 24 gutter', c: '#F5E642', note: 'Still overlay nav. Text over 3D stacks at the bottom on a scrim. Touch-first.' },
+        { name: 'DESKTOP', frame: '1440', range: '1200 – 1919px', cols: 12, cl: cl(12), pv: 14, grid: '12 col · 80 margin · 24 gutter', c: '#00F0FF', note: 'Full nav bar, pinned horizontal scroll, hover effects, custom cursor.' },
+        { name: 'WIDE', frame: '1920', range: '≥ 1920px', cols: 12, cl: cl(12), pv: 20, grid: '12 col · 160 margin · 32 gutter · max 1600', c: '#7B2CFF', note: 'Same as desktop with bigger type and more air; content caps at 1600px.' }
+      ],
+      matrix: [
+        { s: 'Boot loader', m: 'Stacked, 34px logo, full-width ENTER + icon sound toggle', t: '48px logo, 640px terminal centred', d: 'Reference (1440×900)', w: '120px logo, 860px terminal' },
+        { s: 'Navigation', m: 'Logo + hamburger → full-screen overlay', t: 'Overlay menu (below 1200)', d: 'Full bar: links centre, clock, JACK IN', w: 'Same bar, 64px side padding' },
+        { s: 'Hero', m: 'Text at bottom on dark scrim, CTAs stacked, −60% buildings, no reflections/CA', t: 'Text at bottom on scrim, CTAs in a row, touch parallax off', d: 'Text left on side scrim, mouse parallax', w: '132px H1, wider margins, parallax ×1.2' },
+        { s: 'Districts', m: 'Vertical snap carousel + dots', t: 'Vertical snap carousel, 2-up peek', d: 'Pinned horizontal track', w: 'Pinned track, 560px cards' },
+        { s: 'Augments', m: 'Canvas top, details in bottom sheet; hotspots open the sheet', t: 'Canvas full width, details below, thumbs at bottom', d: 'Canvas left, details right', w: '1040px canvas, 1.2× model' },
+        { s: 'Characters', m: 'Horizontal swipe carousel; dossier full screen', t: '2-column grid; dossier inset 24px', d: '4-column grid; dossier modal', w: '4 columns, max 1600px' },
+        { s: 'Lore', m: 'Single column, line on the left', t: 'Single column, line on the left, bigger cards', d: 'Centre line, cards alternate', w: 'Centre line, 680px cards' },
+        { s: 'Gallery', m: '2-col masonry; swipe lightbox', t: '2-col masonry, larger tiles', d: '3-col masonry; arrow + keyboard lightbox', w: '4-col masonry' },
+        { s: 'Join', m: 'Copy stacked above full-width terminal', t: 'Centred copy, 640px terminal', d: 'Copy left, terminal right', w: '80px H2, 680px terminal, max 1600' },
+        { s: 'Footer', m: '2-col links, 2-line wordmark', t: '4-col links under brand block', d: 'Brand + 4 link columns, 1-line wordmark', w: 'Wordmark 180px' },
+        { s: '404', m: 'Hologram on top, CTAs stacked', t: 'Hologram on top, CTAs in a row', d: 'Copy left, hologram right', w: 'Larger hologram, more air' },
+        { s: 'Modals', m: 'Become bottom sheets', t: 'Centred, 24px inset', d: 'Centred modal', w: 'Centred, max 1400px' }
+      ],
+      rules: [
+        { t: 'LAYOUT', c: '#00F0FF', items: ['Grids collapse 12 → 8 → 4 columns', 'Horizontal scroll sections become vertical snap carousels on mobile', 'Text over 3D always sits on a dark scrim', 'Nav becomes the overlay below 1200px', 'Modals become bottom sheets on mobile'] },
+        { t: '3D ON SMALL SCREENS', c: '#FF2A6D', items: ['Hero: −60% buildings, no reflections, no chromatic aberration, light bloom, portrait camera', 'Augments: touch-drag rotate, pinch zoom off, hotspots open the bottom sheet', 'Low power / no WebGL: pre-rendered still or short MP4 loop'] },
+        { t: 'TOUCH', c: '#F5E642', items: ['Nothing is hover-only: hover detail is also shown on tap / press', 'Tap targets ≥ 44×44px with 8px spacing', 'Custom cursor hidden on touch devices'] },
+        { t: 'REDUCED MOTION', c: '#2BFF88', items: ['No camera flights, no scroll-jacking', 'No glitch flicker', 'Simple fades only', 'Static hero image'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

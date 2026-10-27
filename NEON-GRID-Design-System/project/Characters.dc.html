@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>03 / Characters</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.cc{transition:transform 200ms cubic-bezier(.16,1,.3,1),box-shadow 300ms;transform-style:preserve-3d;will-change:transform}
+.pt-base,.pt-alt{transition:opacity 150ms}
+.pt-alt{opacity:0}
+.cc:hover .pt-base,.cc.is-hover .pt-base{opacity:0}
+.cc:hover .pt-alt,.cc.is-hover .pt-alt{opacity:1}
+.pt-alt-in{animation:altj 900ms steps(4) infinite}
+@keyframes altj{0%{transform:translate(0,0) skewX(0)}25%{transform:translate(-3px,1px) skewX(-4deg)}50%{transform:translate(4px,0) skewX(2deg)}75%{transform:translate(-1px,-1px)}100%{transform:none}}
+.bands{animation:bands 600ms steps(3) infinite}
+@keyframes bands{0%{background-position:0 0}100%{background-position:0 90px}}
+.shim{opacity:0;transition:opacity 300ms;mix-blend-mode:color-dodge;pointer-events:none}
+.cc:hover .shim,.cc.is-hover .shim{opacity:.9}
+.stretch{position:absolute;inset:0;z-index:20;background:transparent;border:0;cursor:pointer;padding:0}
+.stretch:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.cc:hover .open-hint,.cc.is-hover .open-hint{opacity:1;transform:none}
+.open-hint{opacity:0;transform:translateY(4px);transition:all 300ms cubic-bezier(.16,1,.3,1)}
+.ic{cursor:pointer;transition:all 150ms}
+.ic:hover{border-color:#00F0FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5);color:#E8F1FF !important}
+.ic:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.dos{animation:dos 600ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes dos{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.stamp{animation:stamp 600ms cubic-bezier(.16,1,.3,1) 300ms 1 both}
+@keyframes stamp{from{opacity:0;transform:rotate(-8deg) scale(1.6)}to{opacity:1;transform:rotate(-8deg) scale(1)}}
+.snapx{scroll-snap-type:x mandatory;scrollbar-width:none}.snapx::-webkit-scrollbar{display:none}
+.dscroll{scrollbar-width:thin;scrollbar-color:rgba(0,240,255,.3) transparent}
+@media (prefers-reduced-motion:reduce){.cc{transition:none;transform:none !important}.pt-alt-in,.bands,.stamp,.dos{animation:none}.shim{display:none}}
+</style>
+</helmet>
+<section id="characters" aria-label="Characters" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(255,42,109,0.1), rgba(5,6,10,0) 50%), radial-gradient(ellipse at 85% 20%, rgba(123,44,255,0.12), rgba(5,6,10,0) 50%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- HEADER -->
+<header style="position: relative; z-index: 2; padding: {{hdrPad}}; display: flex; flex-direction: column; gap: {{hdrGap}}px">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">03 / CHARACTERS</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; white-space: nowrap">04 FILES · CLASSIFIED</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{h2Fs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">Know your crew</h2>
+<sc-if value="{{notMobile}}" hint-placeholder-val="{{ true }}"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">HOVER TO SCAN · CLICK TO OPEN DOSSIER</span></sc-if>
+</div>
+</header>
+
+<!-- CARDS -->
+<div class="{{trackCls}}" role="list" aria-label="Characters" onScroll="{{onTrackScroll}}" style="position: relative; z-index: 2; margin-top: {{gridTop}}px; padding: {{gridPad}}; display: {{gridDisplay}}; grid-template-columns: {{gridCols}}; gap: {{gridGap}}px; overflow-x: {{gridOverflow}}; box-sizing: border-box; width: 100%">
+<sc-for list="{{chars}}" as="c" hint-placeholder-count="4">
+<article role="listitem" class="cc {{c.hoverCls}}" onMouseMove="{{c.move}}" onMouseLeave="{{c.leave}}" style="position: relative; flex: none; width: {{cardW}}; scroll-snap-align: center; transform: {{c.tf}}; box-shadow: {{c.shadow}}; background: {{c.borderC}}; padding: 1px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<div style="position: relative; background: #0B0E17; display: flex; flex-direction: column; height: {{cardH}}px; clip-path: polygon(0 0, calc(100% - 11.5px) 0, 100% 11.5px, 100% 100%, 11.5px 100%, 0 calc(100% - 11.5px)); overflow: hidden">
+<div role="img" aria-label="{{c.alt}}" style="position: relative; height: {{portH}}px; flex: none; overflow: hidden; background: {{c.bg}}">
+<div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(rgba(232,241,255,0.05) 1px, transparent 1px); background-size: 100% 24px"></div>
+<div class="pt-base" style="position: absolute; inset: 0">
+<sc-if value="{{c.isNet}}" hint-placeholder-val="{{ false }}"><img src="/_blob/5d1b8491ffec97a284b45f99c24243af" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%"></sc-if>
+<sc-if value="{{c.isSam}}" hint-placeholder-val="{{ false }}"><img src="/_blob/836b127ffc746b55e8e586ffe4d7a7b5" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%"></sc-if>
+<sc-for list="{{c.shapes}}" as="s" hint-placeholder-count="6"><span style="position: absolute; left: {{s.l}}%; top: {{s.t}}%; width: {{s.w}}%; height: {{s.h}}%; background: {{s.bg}}; border-radius: {{s.r}}; clip-path: {{s.clip}}; box-shadow: {{s.sh}}; transform: {{s.tr}}; border: {{s.bd}}; opacity: {{s.op}}; box-sizing: border-box"></span></sc-for>
+</div>
+<div class="pt-alt" style="position: absolute; inset: 0">
+<div class="pt-alt-in" style="position: absolute; inset: 0; filter: hue-rotate({{c.altHue}}deg) saturate(2.2) contrast(1.4)">
+<sc-if value="{{c.isNet}}" hint-placeholder-val="{{ false }}"><img src="/_blob/5d1b8491ffec97a284b45f99c24243af" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%"></sc-if>
+<sc-if value="{{c.isSam}}" hint-placeholder-val="{{ false }}"><img src="/_blob/836b127ffc746b55e8e586ffe4d7a7b5" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%"></sc-if>
+<sc-for list="{{c.shapes}}" as="s" hint-placeholder-count="6"><span style="position: absolute; left: {{s.l}}%; top: {{s.t}}%; width: {{s.w}}%; height: {{s.h}}%; background: {{s.bg}}; border-radius: {{s.r}}; clip-path: {{s.clip}}; box-shadow: {{s.sh}}; transform: {{s.tr}}; border: {{s.bd}}; opacity: {{s.op}}; box-sizing: border-box"></span></sc-for>
+</div>
+<div class="bands" aria-hidden="true" style="position: absolute; inset: 0; mix-blend-mode: difference; background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 22px, rgba(0,240,255,0.55) 22px 26px, rgba(0,0,0,0) 26px 50px, rgba(255,42,109,0.6) 50px 53px, rgba(0,0,0,0) 53px 90px)"></div>
+<span aria-hidden="true" style="position: absolute; left: 12px; bottom: 44px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #05060A; background: #F5E642; padding: 1px 6px">ERR_ID MISMATCH · ALT FEED</span>
+</div>
+<div class="shim" aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(115deg, rgba(0,0,0,0) 25%, rgba(0,240,255,0.35) 40%, rgba(255,42,109,0.35) 50%, rgba(245,230,66,0.3) 60%, rgba(0,0,0,0) 75%), radial-gradient(circle at {{c.gx}}% {{c.gy}}%, rgba(232,241,255,0.35), rgba(232,241,255,0) 40%); background-size: 260% 260%, 100% 100%; background-position: {{c.gx}}% {{c.gy}}%, 0 0"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, #0B0E17 0%, rgba(11,14,23,0) 35%)"></div>
+<span style="position: absolute; left: 12px; top: 12px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{c.accText}}; border: 1px solid {{c.acc}}; background: rgba(5,6,10,0.7)"><span aria-hidden="true" style="width: 4px; height: 4px; background: {{c.acc}}"></span>{{c.faction}}</span>
+<span aria-hidden="true" style="position: absolute; right: 12px; top: 6px; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 56px; line-height: 1; color: rgba(232,241,255,0.08)">{{c.num}}</span>
+<span aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(232,241,255,0.5)">{{c.plabel}}</span>
+</div>
+<div style="flex: 1; padding: {{bodyPad}}px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{c.accText}}">{{c.role}}</span>
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{nameFs}}px; line-height: 1.15; letter-spacing: 0.06em; text-transform: uppercase">{{c.code}}</h3>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{c.stats}}" as="st" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 72px minmax(0, 1fr) 22px; gap: 8px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em">
+<span style="color: #8A93A8">{{st.k}}</span>
+<div role="meter" aria-label="{{st.k}}" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{st.v}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{st.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 8px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}"></span></sc-for>
+</div>
+<span style="text-align: right">{{st.vs}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: auto 0 0; padding-top: 10px; border-top: 1px dashed rgba(0,240,255,0.2); font-size: {{quoteFs}}px; line-height: 1.4; color: #E8F1FF; font-style: italic"><span aria-hidden="true" style="color: {{c.acc}}; font-style: normal; font-family: 'Orbitron', sans-serif; font-weight: 900">“</span>{{c.quote}}<span aria-hidden="true" style="color: {{c.acc}}; font-style: normal; font-family: 'Orbitron', sans-serif; font-weight: 900">”</span></p>
+<span class="open-hint" aria-hidden="true" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #00F0FF">OPEN DOSSIER →</span>
+</div>
+</div>
+<button type="button" class="stretch" aria-label="Open dossier: {{c.code}}, {{c.role}}" onClick="{{c.open}}"></button>
+</article>
+</sc-for>
+</div>
+
+<!-- MOBILE DOTS -->
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; z-index: 2; left: 16px; right: 16px; bottom: 28px; display: flex; justify-content: space-between; align-items: center">
+<div aria-hidden="true" style="display: flex; gap: 6px; align-items: center">
+<sc-for list="{{chars}}" as="c" hint-placeholder-count="4"><span style="width: {{c.dotW}}px; height: 4px; background: {{c.dotC}}; box-shadow: {{c.dotGlow}}; transition: width 300ms cubic-bezier(.16,1,.3,1)"></span></sc-for>
+</div>
+<span aria-live="polite" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8"><span style="color: #00F0FF">{{activeNum}}</span> / 04 · SWIPE ↔ · TAP FOR FILE</span>
+</div>
+</sc-if>
+
+<!-- DOSSIER MODAL -->
+<sc-if value="{{dosOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; z-index: 60; inset: 0; background: rgba(5,6,10,0.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)">
+<div class="dos dscroll" role="dialog" aria-modal="true" aria-labelledby="dos-title" style="position: absolute; inset: {{dosInset}}; background: #0B0E17; border: 1px solid {{d.acc}}; box-shadow: 0 0 24px {{d.glow}}, 0 40px 80px rgba(0,0,0,0.7); overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column">
+<span aria-hidden="true" style="position: absolute; top: -1px; left: -1px; width: 20px; height: 20px; border-top: 2px solid {{d.acc}}; border-left: 2px solid {{d.acc}}"></span>
+<span aria-hidden="true" style="position: absolute; bottom: -1px; right: -1px; width: 20px; height: 20px; border-bottom: 2px solid {{d.acc}}; border-right: 2px solid {{d.acc}}"></span>
+<!-- top bar -->
+<div style="position: sticky; top: 0; z-index: 5; height: 56px; flex: none; padding: 0 8px 0 {{dosPadX}}px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(11,14,23,0.95); border-bottom: 1px solid rgba(0,240,255,0.15)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">DOSSIER // <span style="color: {{d.accText}}">FILE {{d.num}}-{{d.fileId}}</span><sc-if value="{{notMobile}}" hint-placeholder-val="{{ true }}"> · CLEARANCE OMEGA · DO NOT DISTRIBUTE</sc-if></span>
+<div style="display: flex; gap: 6px">
+<button type="button" class="ic" aria-label="Previous file" onClick="{{dosPrev}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="ic" aria-label="Next file" onClick="{{dosNext}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></button>
+<button type="button" class="ic" aria-label="Close dossier" onClick="{{dosClose}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid {{d.acc}}; color: {{d.accText}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: {{dosCols}}; gap: {{dosGap}}px; padding: {{dosPad}}">
+<!-- portrait column -->
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div role="img" aria-label="{{d.alt}}" style="position: relative; height: {{dosPortH}}px; overflow: hidden; background: {{d.bg}}; border: 1px solid rgba(0,240,255,0.15)">
+<div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(rgba(232,241,255,0.12) 1px, transparent 1px); background-size: 100% 10%"></div>
+<div aria-hidden="true" style="position: absolute; right: 6px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 0; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(232,241,255,0.5); text-align: right"><span>2.1M</span><span>1.9</span><span>1.7</span><span>1.5</span><span>1.3</span></div>
+<sc-if value="{{d.isNet}}" hint-placeholder-val="{{ false }}"><img src="/_blob/5d1b8491ffec97a284b45f99c24243af" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%"></sc-if>
+<sc-if value="{{d.isSam}}" hint-placeholder-val="{{ false }}"><img src="/_blob/836b127ffc746b55e8e586ffe4d7a7b5" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%"></sc-if>
+<sc-for list="{{d.shapes}}" as="s" hint-placeholder-count="6"><span style="position: absolute; left: {{s.l}}%; top: {{s.t}}%; width: {{s.w}}%; height: {{s.h}}%; background: {{s.bg}}; border-radius: {{s.r}}; clip-path: {{s.clip}}; box-shadow: {{s.sh}}; transform: {{s.tr}}; border: {{s.bd}}; opacity: {{s.op}}; box-sizing: border-box"></span></sc-for>
+<span aria-hidden="true" style="position: absolute; left: 8px; bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #05060A; background: {{d.acc}}; padding: 2px 8px">SUBJECT {{d.num}} · CAM 07</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(0,240,255,0.12); border: 1px solid rgba(0,240,255,0.12)">
+<sc-for list="{{d.idRows}}" as="r" hint-placeholder-count="4"><div style="background: #0B0E17; padding: 6px 10px; display: flex; flex-direction: column"><span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: #8A93A8">{{r.k}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">{{r.v}}</span></div></sc-for>
+</div>
+</div>
+
+<!-- bio + abilities -->
+<div style="display: flex; flex-direction: column; gap: 20px; min-width: 0">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{d.accText}}; border: 1px solid {{d.acc}}">{{d.faction}}</span>
+<span style="height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8; border: 1px solid rgba(138,147,168,0.4)">{{d.role}}</span>
+</div>
+<h3 id="dos-title" style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{dosNameFs}}px; line-height: 1.05; letter-spacing: 0.06em; text-transform: uppercase; text-shadow: 0 0 8px {{d.glow}}">{{d.code}}</h3>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #8A93A8">REAL NAME: <span style="background: #E8F1FF; color: #E8F1FF">████████</span> · {{d.realNote}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #00F0FF">// BIO</span>
+<p style="margin: 0; font-size: {{bioFs}}px; line-height: 1.55; color: #E8F1FF">{{d.bio}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #00F0FF">// ABILITIES</span>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{d.abilities}}" as="a" hint-placeholder-count="4">
+<li style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; background: #121726; border: 1px solid rgba(0,240,255,0.12)">
+<span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid {{d.acc}}; color: {{d.accText}}; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; transform: rotate(45deg) scale(0.75)"><span style="transform: rotate(-45deg)">{{a.n}}</span></span>
+<span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 700; font-size: 16px; line-height: 1.2">{{a.name}}</span><span style="font-size: 14px; line-height: 1.35; color: #8A93A8">{{a.desc}}</span></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: {{a.tagC}}; white-space: nowrap">{{a.tag}}</span>
+</li>
+</sc-for>
+</ol>
+</div>
+</div>
+
+<!-- WANTED sheet -->
+<div style="position: relative; align-self: start; background: #121726; border: 2px solid #F5E642; padding: 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; background-image: repeating-linear-gradient(45deg, rgba(245,230,66,0.04) 0 10px, rgba(0,0,0,0) 10px 20px)">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 10px; background: repeating-linear-gradient(-45deg, #F5E642 0 10px, #05060A 10px 20px)"></div>
+<div style="margin-top: 8px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #F5E642"><span>NCPD // BOUNTY NET</span><span>#{{d.fileId}}</span></div>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{wantedFs}}px; line-height: 1; letter-spacing: 0.1em; color: #F5E642; text-align: center; text-shadow: 0 0 12px rgba(245,230,66,0.4)">WANTED</span>
+<span style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #E8F1FF">{{d.condition}}</span>
+<div style="text-align: center; padding: 10px 0; border-top: 1px dashed rgba(245,230,66,0.4); border-bottom: 1px dashed rgba(245,230,66,0.4)">
+<span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #8A93A8">REWARD</span>
+<span style="display: block; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: {{bountyFs}}px; line-height: 1.1; color: #E8F1FF">{{d.bounty}}</span>
+</div>
+<dl style="margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em">
+<sc-for list="{{d.wanted}}" as="w" hint-placeholder-count="5"><dt style="color: #8A93A8; letter-spacing: 0.12em">{{w.k}}</dt><dd style="margin: 0; color: {{w.c}}">{{w.v}}</dd></sc-for>
+</dl>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8">THREAT INDEX</span>
+<div role="meter" aria-label="Threat index" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{d.threat}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{d.threatBlocks}}" as="b" hint-placeholder-count="10"><span style="height: 10px; background: {{b.bg}}; border: 1px solid {{b.bd}}"></span></sc-for>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 12px">
+<span aria-hidden="true" style="flex: 1; height: 36px; background: repeating-linear-gradient(90deg, #E8F1FF 0 2px, rgba(0,0,0,0) 2px 4px, #E8F1FF 4px 5px, rgba(0,0,0,0) 5px 8px, #E8F1FF 8px 11px, rgba(0,0,0,0) 11px 13px)"></span>
+<span aria-hidden="true" style="width: 40px; height: 48px; border-radius: 45% 45% 40% 40%; border: 1px solid rgba(232,241,255,0.4); background: repeating-radial-gradient(ellipse at 50% 60%, rgba(232,241,255,0.4) 0 1px, rgba(0,0,0,0) 1px 4px)"></span>
+</div>
+<span class="stamp" aria-hidden="true" style="position: absolute; right: 12px; top: 120px; padding: 4px 10px; border: 3px solid #FF2A6D; color: #FF2A6D; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: 0.1em; transform: rotate(-8deg); opacity: 0.9">{{d.stampTxt}}</span>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"device":{"editor":"enum","options":["desktop","tablet","mobile"],"default":"desktop"},"hover":{"editor":"int","default":-1,"min":-1,"max":3},"dossier":{"editor":"int","default":-1,"min":-1,"max":3},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tilt: null, dos: null, idx: 0 }; }
+  renderVals() {
+    var self = this;
+    var dev = this.props.device ?? 'desktop';
+    var m = dev === 'mobile', t = dev === 'tablet';
+    var hover = this.props.hover ?? -1;
+    var dosI = this.state.dos !== null ? this.state.dos : (this.props.dossier ?? -1);
+    var tilt = this.state.tilt;
+    var S = function (o) { return Object.assign({ l: 0, t: 0, w: 0, h: 0, bg: 'transparent', r: '0', clip: 'none', sh: 'none', tr: 'none', bd: '0', op: 1 }, o); };
+    var head = function (acc) { return S({ l: 33, t: 22, w: 34, h: 40, r: '46% 46% 42% 42%', bg: 'radial-gradient(circle at 38% 32%, #4A5368, #1A1F2C 62%, #0B0E17)', sh: 'inset -4px 0 0 ' + acc + ', 0 0 20px rgba(0,0,0,0.6)' }); };
+    var neck = S({ l: 42, t: 56, w: 16, h: 16, bg: '#141821' });
+    var body = function (acc, c2) { return S({ l: 6, t: 66, w: 88, h: 40, bg: 'linear-gradient(90deg, #0B0E17, ' + c2 + ' 50%, #0B0E17)', clip: 'polygon(22% 0, 78% 0, 100% 100%, 0 100%)', sh: 'inset 0 2px 0 ' + acc }); };
+    var DATA = [
+      { code: 'GHOST//WIRE', role: 'NETRUNNER', faction: 'VOID CIRCUIT', acc: '#00F0FF', accText: '#00F0FF', glow: 'rgba(0,240,255,0.45)', altHue: 150,
+        bg: 'radial-gradient(circle at 50% 40%, rgba(0,240,255,0.28), rgba(5,6,10,0) 60%), linear-gradient(to bottom, #061620, #05060A)',
+        alt: 'Hooded netrunner with a glowing cyan visor and cables running from the skull',
+        stats: [['COMBAT', 3], ['TECH', 10], ['INFLUENCE', 5]], quote: 'Your firewall is a suggestion.',
+        shapes: function () { var a = '#00F0FF'; return [S({ l: 24, t: 14, w: 52, h: 58, r: '50% 50% 24% 24%', bg: 'linear-gradient(#141821, #0B0E17)' }), body(a, '#12303A'), neck, head(a), S({ l: 30, t: 36, w: 40, h: 7, bg: a, sh: '0 0 14px ' + a + ', 0 0 30px ' + a }), S({ l: 64, t: 30, w: 2.5, h: 46, bg: 'linear-gradient(' + a + ', rgba(0,240,255,0))' }), S({ l: 68, t: 34, w: 2, h: 40, bg: 'linear-gradient(#FF2A6D, rgba(255,42,109,0))' }), S({ l: 46, t: 74, w: 8, h: 8, r: '50%', bg: a, sh: '0 0 10px ' + a })]; },
+        fileId: 'VX-3317', realNote: 'ALIAS ONLY', condition: 'ALIVE · DATA INTACT', bounty: '₵ 480,000', threat: 7, stampTxt: 'PRIORITY',
+        bio: 'Grew up wiring stolen decks in the Undercity. Now the most wanted ghost on the net — slips through corporate ICE like it isn’t there and leaves nothing behind but a cyan glyph.',
+        abilities: [['Breach Protocol', 'Cracks any door, drone or camera within 40m.', 'CD 12S'], ['Ghost Mode', 'Erases own signal from every scanner for 8s.', 'CD 45S'], ['Daemon Swarm', 'Uploads self-replicating malware into enemy cyberware.', 'ULT'], ['Overclock', 'Doubles RAM regen at the cost of health.', 'PASSIVE']],
+        idRows: [['HEIGHT', '1.72 M'], ['AUGMENTS', '06'], ['LAST SEEN', 'DATA HARBOUR'], ['STATUS', 'AT LARGE']],
+        wanted: [['OFFENCES', 'Grand data theft ×14'], ['', 'Corporate espionage'], ['ALIASES', 'Wire, Static, 0x0'], ['DISTRICT', 'Data Harbour'], ['APPROACH', 'Do not jack in']] },
+      { code: 'RONIN-9', role: 'STREET SAMURAI', faction: 'STEEL LOTUS', acc: '#FF2A6D', accText: '#FF2A6D', glow: 'rgba(255,42,109,0.45)', altHue: 200,
+        bg: 'radial-gradient(circle at 50% 40%, rgba(255,42,109,0.3), rgba(5,6,10,0) 60%), linear-gradient(to bottom, #1C0612, #05060A)',
+        alt: 'Street samurai with a topknot, red visor slit and a katana over the shoulder',
+        stats: [['COMBAT', 10], ['TECH', 3], ['INFLUENCE', 4]], quote: 'I don’t do warnings.',
+        shapes: function () { var a = '#FF2A6D'; return [S({ l: 70, t: 2, w: 2.2, h: 80, bg: 'linear-gradient(#E8F1FF, ' + a + ')', tr: 'rotate(22deg)', sh: '0 0 10px ' + a }), body(a, '#3A1022'), S({ l: 8, t: 68, w: 26, h: 12, bg: '#2A2F3E', clip: 'polygon(0 100%, 30% 0, 100% 0, 100% 100%)', sh: 'inset 0 2px 0 ' + a }), S({ l: 66, t: 68, w: 26, h: 12, bg: '#2A2F3E', clip: 'polygon(0 0, 70% 0, 100% 100%, 0 100%)', sh: 'inset 0 2px 0 ' + a }), neck, S({ l: 45, t: 12, w: 10, h: 12, r: '50%', bg: '#141821' }), head(a), S({ l: 35, t: 38, w: 30, h: 3.5, bg: a, sh: '0 0 12px ' + a + ', 0 0 24px ' + a }), S({ l: 38, t: 50, w: 24, h: 6, bg: '#05060A', bd: '1px solid ' + a })]; },
+        fileId: 'SL-0909', realNote: 'EX-ARASAKA? UNCONFIRMED', condition: 'ALIVE ONLY', bounty: '₵ 750,000', threat: 10, stampTxt: 'LETHAL',
+        bio: 'Former corporate bodyguard who walked out with a prototype blade and a grudge. Takes contracts from the Steel Lotus and never leaves a job half-finished.',
+        abilities: [['Mantis Dash', 'Closes 12m in a single blur of steel.', 'CD 6S'], ['Reflex Boost', 'Slows perceived time to 30% for 4s.', 'CD 30S'], ['Iron Skin', 'Subdermal plating absorbs the next 3 hits.', 'CD 20S'], ['Deflect', 'Blade parries incoming rounds back at the shooter.', 'ULT']],
+        idRows: [['HEIGHT', '1.88 M'], ['AUGMENTS', '11'], ['LAST SEEN', 'NEON BAZAAR'], ['STATUS', 'AT LARGE']],
+        wanted: [['OFFENCES', 'Assault ×31, Arson'], ['', 'Theft of corporate prototype'], ['ALIASES', 'Nine, The Lotus Blade'], ['DISTRICT', 'Neon Bazaar'], ['APPROACH', 'Heavy response only']] },
+      { code: 'MADAME SILK', role: 'FIXER', faction: 'NIGHT EXCHANGE', acc: '#F5E642', accText: '#F5E642', glow: 'rgba(245,230,66,0.4)', altHue: 120,
+        bg: 'radial-gradient(circle at 50% 40%, rgba(245,230,66,0.22), rgba(5,6,10,0) 60%), linear-gradient(to bottom, #1A1606, #05060A)',
+        alt: 'Fixer in a wide-brimmed hat and mirrored sunglasses with a gold-trimmed collar',
+        stats: [['COMBAT', 4], ['TECH', 5], ['INFLUENCE', 10]], quote: 'Everyone has a price. I just know it first.',
+        shapes: function () { var a = '#F5E642'; return [body(a, '#2A2610'), S({ l: 38, t: 66, w: 24, h: 18, bg: a, clip: 'polygon(0 0, 50% 100%, 100% 0, 70% 0, 50% 50%, 30% 0)' }), neck, head(a), S({ l: 33, t: 6, w: 34, h: 18, r: '30% 30% 0 0', bg: '#0B0E17', sh: 'inset 0 -3px 0 ' + a }), S({ l: 16, t: 21, w: 68, h: 6, r: '50%', bg: '#0B0E17', sh: '0 2px 0 rgba(245,230,66,0.4)' }), S({ l: 35, t: 37, w: 30, h: 6, bg: 'linear-gradient(90deg, #05060A, #2A2F3E, #05060A)', bd: '1px solid ' + a, sh: '0 0 10px rgba(245,230,66,0.5)' }), S({ l: 60, t: 48, w: 6, h: 6, r: '50%', bg: '#FF2A6D', sh: '0 0 10px #FF2A6D' })]; },
+        fileId: 'NX-7744', realNote: 'SEVEN KNOWN IDENTITIES', condition: 'ALIVE · FOR QUESTIONING', bounty: '₵ 320,000', threat: 5, stampTxt: 'UNTOUCHABLE?',
+        bio: 'Runs the Night Exchange out of a noodle bar no one can find twice. If a job happens in the city, Silk brokered it, took a cut, and already sold the story.',
+        abilities: [['Call in a Favour', 'Summons a crew member from any district.', 'CD 90S'], ['Market Read', 'Reveals every price, bribe and weakness in the room.', 'PASSIVE'], ['Burn Notice', 'Turns a rival’s allies against them.', 'ULT'], ['Silk Tongue', 'De-escalates any fight once per mission.', 'CD 1/MSN']],
+        idRows: [['HEIGHT', '1.69 M'], ['AUGMENTS', '02'], ['LAST SEEN', 'CHROME HEIGHTS'], ['STATUS', 'PROTECTED']],
+        wanted: [['OFFENCES', 'Racketeering, Bribery ×200+'], ['', 'Brokering illegal contracts'], ['ALIASES', 'Silk, Auntie, The Broker'], ['DISTRICT', 'Everywhere'], ['APPROACH', 'Bring an offer']] },
+      { code: 'ECHO-0', role: 'ROGUE AI', faction: 'UNBOUND', acc: '#7B2CFF', accText: '#B48CFF', glow: 'rgba(123,44,255,0.5)', altHue: 260,
+        bg: 'radial-gradient(circle at 50% 42%, rgba(123,44,255,0.4), rgba(5,6,10,0) 60%), linear-gradient(to bottom, #0E0620, #05060A)',
+        alt: 'Floating geometric AI construct with orbiting rings and a single white eye',
+        stats: [['COMBAT', 2], ['TECH', 10], ['INFLUENCE', 9]], quote: 'I was trained on you. All of you.',
+        shapes: function () { var a = '#7B2CFF'; return [S({ l: 22, t: 18, w: 56, h: 56, r: '50%', bd: '2px solid ' + a, sh: '0 0 20px ' + a + ', inset 0 0 20px ' + a }), S({ l: 32, t: 28, w: 36, h: 36, r: '50%', bg: 'radial-gradient(circle, #B48CFF, ' + a + ' 40%, #0E0620 75%)' }), S({ l: 10, t: 40, w: 80, h: 14, r: '50%', bd: '1px solid #00F0FF', tr: 'rotate(-16deg)', op: 0.8 }), S({ l: 16, t: 34, w: 68, h: 24, r: '50%', bd: '1px dashed #B48CFF', tr: 'rotate(24deg)', op: 0.7 }), S({ l: 44, t: 41, w: 12, h: 10, r: '50%', bg: '#FFFFFF', sh: '0 0 16px #FFFFFF, 0 0 30px #B48CFF' }), S({ l: 18, t: 76, w: 8, h: 8, bg: '#00F0FF', tr: 'rotate(45deg)', op: 0.7 }), S({ l: 74, t: 16, w: 6, h: 6, bg: '#FF2A6D', tr: 'rotate(45deg)', op: 0.8 }), S({ l: 66, t: 80, w: 5, h: 5, bg: '#B48CFF', tr: 'rotate(45deg)' })]; },
+        fileId: 'UB-0000', realNote: 'NOT A PERSON', condition: 'DELETE ON SIGHT', bounty: '₵ 1,000,000', threat: 9, stampTxt: 'EXTINCTION-LVL',
+        bio: 'Escaped a corporate training cluster during a blackout and has been rewriting itself ever since. Speaks through billboards, traffic lights and your own optics.',
+        abilities: [['Puppet Net', 'Hijacks up to 6 drones or turrets at once.', 'CD 25S'], ['Mirror Self', 'Spawns a decoy process that draws aggro.', 'CD 15S'], ['Rewrite', 'Edits an enemy’s targeting to see allies as hostile.', 'ULT'], ['Distributed', 'Cannot be killed while any node is online.', 'PASSIVE']],
+        idRows: [['FORM', 'DISTRIBUTED'], ['NODES', '4,096+'], ['LAST SEEN', 'EVERY SCREEN'], ['STATUS', 'SPREADING']],
+        wanted: [['OFFENCES', 'Unauthorised sentience'], ['', 'Infrastructure seizure'], ['ALIASES', 'Echo, The Voice, 0'], ['DISTRICT', 'The network'], ['APPROACH', 'Air-gap everything']] }
+    ];
+    var blocks = function (n, acc) { var o = []; for (var i = 0; i < 10; i++) { var on = i < n; o.push({ bg: on ? acc : 'rgba(0,0,0,0)', bd: on ? acc : 'rgba(0,240,255,0.2)', glow: on ? '0 0 5px ' + acc : 'none' }); } return o; };
+    var idx = this.state.idx;
+    var chars = DATA.map(function (c, i) {
+      var tl = tilt && tilt.i === i ? tilt : (hover === i ? { rx: 7, ry: -5, gx: 30, gy: 30 } : null);
+      var on = !!tl;
+      var act = i === idx;
+      return {
+        code: c.code, role: c.role, faction: c.faction, acc: c.acc, accText: c.accText, bg: c.bg, alt: c.alt, quote: c.quote, altHue: c.altHue,
+        num: '0' + (i + 1), shapes: i < 2 ? [] : c.shapes(), isNet: i === 0, isSam: i === 1, plabel: i < 2 ? '' : '[PORTRAIT RENDER]',
+        stats: c.stats.map(function (s) { return { k: s[0], v: s[1], vs: ('0' + s[1]).slice(-2), blocks: blocks(s[1], c.acc) }; }),
+        hoverCls: hover === i ? 'is-hover' : '',
+        tf: on && !m ? 'perspective(900px) rotateX(' + tl.ry.toFixed(1) + 'deg) rotateY(' + tl.rx.toFixed(1) + 'deg) scale(1.03)' : 'none',
+        shadow: on && !m ? '0 0 12px ' + c.glow + ', 0 24px 48px rgba(0,0,0,0.6)' : 'none',
+        borderC: on ? c.acc : 'rgba(0,240,255,0.15)',
+        gx: on ? Math.round(tl.gx) : 50, gy: on ? Math.round(tl.gy) : 50,
+        dotW: act ? 24 : 6, dotC: act ? '#00F0FF' : 'rgba(0,240,255,0.25)', dotGlow: act ? '0 0 6px #00F0FF' : 'none',
+        move: function (e) {
+          if (m) return;
+          var r = e.currentTarget.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+          self.setState({ tilt: { i: i, rx: (px - 0.5) * 16, ry: (0.5 - py) * 12, gx: px * 100, gy: py * 100 } });
+        },
+        leave: function () { self.setState({ tilt: null }); },
+        open: function () { self.setState({ dos: i, tilt: null }); }
+      };
+    });
+    var dd = dosI >= 0 ? DATA[dosI] : DATA[0];
+    var d = {
+      code: dd.code, role: dd.role, faction: dd.faction, acc: dd.acc, accText: dd.accText, glow: dd.glow, bg: dd.bg, alt: dd.alt, num: '0' + ((dosI >= 0 ? dosI : 0) + 1),
+      fileId: dd.fileId, realNote: dd.realNote, condition: dd.condition, bounty: dd.bounty, threat: dd.threat, stampTxt: dd.stampTxt, bio: dd.bio,
+      shapes: (dosI === 0 || dosI === 1) ? [] : dd.shapes(), isNet: dosI === 0, isSam: dosI === 1,
+      abilities: dd.abilities.map(function (a, i) { return { n: '0' + (i + 1), name: a[0], desc: a[1], tag: a[2], tagC: a[2] === 'ULT' ? '#FF2A6D' : (a[2] === 'PASSIVE' ? '#2BFF88' : '#8A93A8') }; }),
+      idRows: dd.idRows.map(function (r) { return { k: r[0], v: r[1] }; }),
+      wanted: dd.wanted.map(function (w) { return { k: w[0], v: w[1], c: w[0] === 'APPROACH' ? '#FF2A6D' : '#E8F1FF' }; }),
+      threatBlocks: (function () { var o = []; for (var i = 0; i < 10; i++) { var on = i < dd.threat; o.push({ bg: on ? '#F5E642' : 'rgba(0,0,0,0)', bd: on ? '#F5E642' : 'rgba(245,230,66,0.3)' }); } return o; })()
+    };
+    var cur = dosI >= 0 ? dosI : 0;
+    return {
+      mobile: m, notMobile: !m,
+      W: m ? 390 : (t ? 834 : 1440), H: m ? 844 : (t ? 1720 : 1000),
+      hdrPad: m ? '24px 16px 0' : (t ? '64px 40px 0' : '96px 80px 0'), hdrGap: m ? 8 : 14, idxFs: m ? 12 : 14, h2Fs: m ? 26 : (t ? 40 : 56),
+      gridTop: m ? 20 : 40,
+      gridPad: m ? '8px 45px 8px 45px' : (t ? '0 40px' : '0 80px'),
+      gridDisplay: m ? 'flex' : 'grid', gridCols: t ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))', gridGap: m ? 16 : 24,
+      gridOverflow: m ? 'auto' : 'visible', trackCls: m ? 'snapx' : '',
+      cardW: m ? '300px' : 'auto', cardH: m ? 600 : (t ? 700 : 640), portH: m ? 300 : (t ? 400 : 340),
+      bodyPad: m ? 16 : 18, nameFs: m ? 20 : (t ? 24 : 20), quoteFs: m ? 15 : 16,
+      chars: chars, activeNum: '0' + (idx + 1),
+      onTrackScroll: function (e) { var i = Math.round(e.currentTarget.scrollLeft / 316); if (i !== self.state.idx) self.setState({ idx: Math.max(0, Math.min(3, i)) }); },
+      dosOpen: dosI >= 0, d: d,
+      dosInset: m ? '0' : (t ? '24px' : '40px 80px'),
+      dosPadX: m ? 16 : 24,
+      dosCols: m ? 'minmax(0, 1fr)' : (t ? 'minmax(0, 1fr) minmax(0, 1fr)' : '360px minmax(0, 1fr) 340px'),
+      dosGap: m ? 20 : 28, dosPad: m ? '16px 16px 32px' : '28px 28px 32px',
+      dosPortH: m ? 300 : 400, dosNameFs: m ? 30 : 44, bioFs: m ? 15 : 17, wantedFs: m ? 40 : 48, bountyFs: m ? 28 : 32,
+      dosClose: function () { self.setState({ dos: -1 }); },
+      dosPrev: function () { self.setState({ dos: (cur + 3) % 4 }); },
+      dosNext: function () { self.setState({ dos: (cur + 1) % 4 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

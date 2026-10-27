@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>404 — Signal lost</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.05;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.05) 0 2px,transparent 2px 4px);z-index:89}
+.gl-wrap{position:relative;display:inline-block}
+.gl{position:absolute;left:0;top:0;width:100%;pointer-events:none}
+.gl-a{color:#00F0FF;animation:gla 2400ms steps(1) infinite}
+.gl-b{color:#FF2A6D;animation:glb 2400ms steps(1) infinite}
+@keyframes gla{0%,70%{clip-path:inset(100% 0 0 0);transform:none}72%{clip-path:inset(8% 0 70% 0);transform:translate(-10px,0)}76%{clip-path:inset(50% 0 26% 0);transform:translate(8px,0)}80%{clip-path:inset(28% 0 50% 0);transform:translate(-5px,0)}84%,100%{clip-path:inset(100% 0 0 0);transform:none}}
+@keyframes glb{0%,71%{clip-path:inset(100% 0 0 0);transform:none}73%{clip-path:inset(60% 0 12% 0);transform:translate(10px,0)}77%{clip-path:inset(16% 0 66% 0);transform:translate(-8px,0)}81%{clip-path:inset(40% 0 40% 0);transform:translate(5px,0)}85%,100%{clip-path:inset(100% 0 0 0);transform:none}}
+.gl-main{animation:glm 2400ms steps(1) infinite}
+@keyframes glm{0%,71%{transform:none;opacity:1}72%{transform:translate(3px,0) skewX(-6deg);opacity:.8}76%{transform:translate(-3px,0);opacity:1}80%{opacity:.6}84%,100%{transform:none;opacity:1}}
+.holo{animation:hflick 3200ms steps(1) infinite}
+@keyframes hflick{0%,100%{opacity:.9}12%{opacity:.35}13%{opacity:.9}47%{opacity:.6}48%{opacity:.9}71%{opacity:.15}73%{opacity:.85}}
+.band{animation-name:band;animation-timing-function:steps(3);animation-iteration-count:infinite}
+@keyframes band{0%,100%{transform:translateX(0)}33%{transform:translateX(var(--dx))}66%{transform:translateX(calc(var(--dx) * -0.5))}}
+.spin{animation:spin 10s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.beam{animation:beam 1600ms steps(2) infinite}
+@keyframes beam{0%,100%{opacity:.55}50%{opacity:.25}}
+.caret{display:inline-block;width:8px;height:16px;background:#FF3B3B;vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.bw{display:inline-flex;transition:filter 150ms cubic-bezier(.16,1,.3,1)}
+.bw:hover{filter:drop-shadow(0 0 8px #FF2A6D) drop-shadow(0 0 16px rgba(255,42,109,.5))}
+.bw:focus-within{outline:2px solid #00F0FF;outline-offset:3px}
+.b-pri{transition:background 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-pri:focus{outline:none}
+.b-sec{transition:all 150ms}
+.b-sec:hover{background:rgba(0,240,255,.1) !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.b-sec:focus-visible,.sug:focus-visible{outline:2px solid #00F0FF;outline-offset:3px}
+.sug{transition:all 150ms}
+.sug:hover{border-color:#00F0FF !important;color:#E8F1FF !important}
+@media (prefers-reduced-motion:reduce){.gl-a,.gl-b,.gl-main,.holo,.band,.spin,.beam,.caret{animation:none}.holo{opacity:.8}}
+</style>
+</helmet>
+<main style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at {{glowPos}}, rgba(0,240,255,0.12), rgba(5,6,10,0) 45%), radial-gradient(ellipse at 50% 100%, rgba(255,59,59,0.12), rgba(5,6,10,0) 50%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- minimal header -->
+<header style="position: absolute; z-index: 5; left: 0; right: 0; top: 0; height: {{barH}}px; padding: 0 {{padX}}px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,240,255,0.12)">
+<a href="#" style="text-decoration: none; color: #E8F1FF; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{logoFs}}px; letter-spacing: 0.08em; min-height: 44px; display: inline-flex; align-items: center">NEON<span style="color: #FF2A6D">//</span>GRID</a>
+<span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #FF3B3B"><span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B3B; box-shadow: 0 0 8px #FF3B3B"></span>SIGNAL 0%</span>
+</header>
+
+<div style="position: absolute; inset: {{barH}}px 0 0 0; padding: {{pad}}; display: flex; flex-direction: {{dir}}; align-items: center; justify-content: center; gap: {{colGap}}px">
+
+<!-- HOLOGRAM -->
+<div aria-hidden="true" style="position: relative; flex: none; width: {{holoW}}px; height: {{holoH}}px; order: {{holoOrder}}">
+<!-- projector base -->
+<div style="position: absolute; left: 50%; bottom: 0; width: {{baseW}}px; margin-left: -{{baseHalf}}px; height: 36px">
+<div style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid #00F0FF; box-shadow: 0 0 12px #00F0FF, inset 0 0 12px rgba(0,240,255,0.6); background: radial-gradient(ellipse, rgba(0,240,255,0.35), rgba(0,0,0,0) 70%)"></div>
+<div style="position: absolute; left: 0; right: 0; top: 50%; height: 18px; background: linear-gradient(#121726, #05060A); border-left: 1px solid rgba(0,240,255,0.3); border-right: 1px solid rgba(0,240,255,0.3); border-radius: 0 0 50% 50% / 0 0 60% 60%; z-index: -1"></div>
+<span style="position: absolute; left: 30%; top: 42%; width: 6px; height: 6px; background: #FF3B3B; box-shadow: 0 0 8px #FF3B3B"></span>
+</div>
+<!-- beam -->
+<div class="beam" style="position: absolute; left: 50%; bottom: 18px; width: {{baseW}}px; margin-left: -{{baseHalf}}px; height: {{beamH}}px; background: linear-gradient(to top, rgba(0,240,255,0.4), rgba(0,240,255,0)); clip-path: polygon(30% 100%, 70% 100%, 100% 0, 0 0)"></div>
+<!-- broken globe in slices -->
+<div class="holo" style="position: absolute; left: 50%; top: {{globeTop}}px; width: {{globe}}px; height: {{globe}}px; margin-left: -{{globeHalf}}px">
+<sc-for list="{{bands}}" as="b" hint-placeholder-count="6">
+<div class="band" style="position: absolute; left: 0; right: 0; top: {{b.top}}%; height: {{b.h}}%; overflow: hidden; --dx: {{b.dx}}px; animation-duration: {{b.dur}}; opacity: {{b.op}}">
+<div style="position: absolute; left: 0; width: {{globe}}px; height: {{globe}}px; top: -{{b.offPx}}px">
+<div style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid #00F0FF; box-shadow: 0 0 16px rgba(0,240,255,0.6), inset 0 0 24px rgba(0,240,255,0.35); background: repeating-linear-gradient(to bottom, rgba(0,240,255,0.35) 0 1px, rgba(0,0,0,0) 1px 18px)"></div>
+<div style="position: absolute; left: 25%; right: 25%; top: 0; bottom: 0; border-radius: 50%; border: 1px solid rgba(0,240,255,0.7)"></div>
+<div style="position: absolute; left: 42%; right: 42%; top: 0; bottom: 0; border-radius: 50%; border: 1px solid rgba(0,240,255,0.5)"></div>
+<div style="position: absolute; left: 0; right: 0; top: 49%; height: 2px; background: #00F0FF"></div>
+</div>
+</div>
+</sc-for>
+<div class="spin" style="position: absolute; inset: -18%; border-radius: 50%; border: 1px dashed rgba(255,42,109,0.6)"></div>
+<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{holoNumFs}}px; color: #FF2A6D; text-shadow: 0 0 12px #FF2A6D, 0 0 30px rgba(255,42,109,0.5); letter-spacing: 0.06em">404</span>
+</div>
+<!-- dropped pixels -->
+<sc-for list="{{pix}}" as="p" hint-placeholder-count="8"><span style="position: absolute; left: {{p.x}}%; top: {{p.y}}%; width: {{p.s}}px; height: {{p.s}}px; background: {{p.c}}; box-shadow: 0 0 6px {{p.c}}; opacity: 0.8"></span></sc-for>
+<span style="position: absolute; right: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(232,241,255,0.45)">[BROKEN HOLOGRAM · 3D]</span>
+</div>
+
+<!-- COPY -->
+<div style="display: flex; flex-direction: column; gap: {{copyGap}}px; max-width: {{copyMax}}px; order: {{copyOrder}}">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{codeFs}}px; letter-spacing: 0.16em; color: #FF3B3B">ERR_404 // NODE NOT FOUND</span>
+<h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{h1Fs}}px; line-height: 0.95; letter-spacing: 0.06em; text-transform: uppercase; white-space: pre-line"><span class="gl-wrap"><span class="gl-main" style="display: block; text-shadow: 0 0 8px rgba(0,240,255,0.6), 0 0 32px rgba(0,240,255,0.3)">{{h1}}</span><span class="gl gl-a" aria-hidden="true">{{h1}}</span><span class="gl gl-b" aria-hidden="true">{{h1}}</span></span></h1>
+<p style="margin: 0; font-size: {{leadFs}}px; line-height: 1.5; color: #8A93A8">The page you’re looking for was disconnected from the grid — or never existed. Your link is safe; this node just isn’t answering.</p>
+<div role="log" style="padding: 12px 14px; background: rgba(11,14,23,0.8); border: 1px solid rgba(255,59,59,0.35); font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; display: flex; flex-direction: column">
+<span style="color: #8A93A8">&gt; trace /districts/sector-13</span>
+<span style="color: #8A93A8">&gt; hop 01 node-07 ......... 12ms</span>
+<span style="color: #8A93A8">&gt; hop 02 relay-harbour .... 48ms</span>
+<span style="color: #FF3B3B">&gt; hop 03 ??? ............. TIMEOUT<span class="caret" aria-hidden="true" style="margin-left: 6px"></span></span>
+</div>
+<div style="display: flex; flex-direction: {{ctaDir}}; gap: 12px; margin-top: 4px">
+<span class="bw" style="{{ctaStretch}}"><a href="#" class="b-pri" style="width: 100%; box-sizing: border-box; height: 56px; padding: 0 32px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; background: #FF2A6D; color: #05060A; font-weight: 700; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6"></path></svg>Return to grid</a></span>
+<a href="#" class="b-sec" style="height: 56px; padding: 0 24px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; background: transparent; border: 1px solid #00F0FF; color: #00F0FF; font-weight: 700; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase">Report broken link</a>
+</div>
+<nav aria-label="Try instead" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; margin-right: 4px">TRY:</span>
+<a href="#" class="sug" style="height: 44px; padding: 0 12px; display: inline-flex; align-items: center; text-decoration: none; border: 1px solid rgba(0,240,255,0.25); color: #8A93A8; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em">DISTRICTS</a>
+<a href="#" class="sug" style="height: 44px; padding: 0 12px; display: inline-flex; align-items: center; text-decoration: none; border: 1px solid rgba(0,240,255,0.25); color: #8A93A8; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em">AUGMENTS</a>
+<a href="#" class="sug" style="height: 44px; padding: 0 12px; display: inline-flex; align-items: center; text-decoration: none; border: 1px solid rgba(0,240,255,0.25); color: #8A93A8; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em">CHARACTERS</a>
+</nav>
+</div>
+</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var m = !!(this.props.mobile ?? false);
+    var globe = m ? 180 : 300;
+    var bandsDef = [[0, 16, 0, '2.4s', 1], [16, 14, 14, '1.8s', 0.9], [30, 20, -6, '3.1s', 1], [50, 8, 22, '1.2s', 0.6], [58, 22, -10, '2.7s', 1], [80, 20, 8, '2s', 0.85]];
+    var bands = bandsDef.map(function (b) { return { top: b[0], h: b[1], dx: Math.round(b[2] * (m ? 0.6 : 1)), dur: b[3], op: b[4], offPx: Math.round(globe * b[0] / 100) }; });
+    var pix = [[18, 22, 6, '#00F0FF'], [78, 30, 4, '#FF2A6D'], [66, 12, 8, '#00F0FF'], [26, 62, 4, '#F5E642'], [84, 58, 6, '#00F0FF'], [12, 44, 4, '#FF2A6D'], [70, 70, 4, '#00F0FF'], [40, 8, 4, '#E8F1FF']].map(function (p) { return { x: p[0], y: p[1], s: p[2], c: p[3] }; });
+    return {
+      W: m ? 390 : 1440, H: m ? 1060 : 900, barH: m ? 60 : 72, padX: m ? 16 : 40, logoFs: m ? 16 : 20,
+      pad: m ? '20px 16px 32px' : '0 120px', dir: m ? 'column' : 'row', colGap: m ? 20 : 96,
+      holoW: m ? 300 : 460, holoH: m ? 280 : 520, holoOrder: m ? 0 : 2, copyOrder: m ? 1 : 1,
+      baseW: m ? 180 : 280, baseHalf: m ? 90 : 140, beamH: m ? 220 : 400,
+      globe: globe, globeHalf: globe / 2, globeTop: m ? 10 : 40, holoNumFs: m ? 40 : 64,
+      bands: bands, pix: pix,
+      glowPos: m ? '50% 20%' : '75% 45%',
+      copyGap: m ? 14 : 20, copyMax: m ? 358 : 600, codeFs: m ? 12 : 14,
+      h1Fs: m ? 46 : 104, h1: m ? 'Signal\nlost' : 'Signal\nlost', leadFs: m ? 16 : 19,
+      ctaDir: m ? 'column' : 'row', ctaStretch: m ? 'width: 100%' : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

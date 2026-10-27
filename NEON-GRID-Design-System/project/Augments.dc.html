@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>02 / Augments — 3D product viewer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.cv{cursor:grab;touch-action:none;user-select:none}
+.cv:active{cursor:grabbing}
+.model{transition:transform 150ms linear;transform-style:preserve-3d}
+.float{animation:float 3600ms ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.spin{animation:spin 8s linear infinite}
+.spin-r{animation:spin 5s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.beam{animation:beam 2400ms ease-in-out infinite}
+@keyframes beam{0%,100%{opacity:.55}50%{opacity:.9}}
+.hs{cursor:pointer;transition:transform 150ms}
+.hs:hover .hs-dot{transform:scale(1.3)}
+.hs:focus-visible,.sw:focus-visible,.th:focus-visible,.ic:focus-visible,.hdl:focus-visible,.b-gh:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.hs-dot{transition:transform 150ms cubic-bezier(.16,1,.3,1)}
+.hs-ring{animation:hsr 1600ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes hsr{0%{transform:scale(1);opacity:.8}100%{transform:scale(3);opacity:0}}
+.co{animation:co 300ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes co{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sw,.th,.ic,.hdl,.b-gh{cursor:pointer;transition:all 150ms cubic-bezier(.16,1,.3,1)}
+.th:hover{border-color:rgba(0,240,255,.6) !important}
+.ic:hover,.b-gh:hover{border-color:#00F0FF !important;color:#E8F1FF !important;background:rgba(0,240,255,.08) !important}
+.bw{display:inline-flex;transition:filter 150ms cubic-bezier(.16,1,.3,1)}
+.bw:hover{filter:drop-shadow(0 0 8px #FF2A6D) drop-shadow(0 0 16px rgba(255,42,109,.5))}
+.bw:focus-within{outline:2px solid #00F0FF;outline-offset:3px;filter:drop-shadow(0 0 8px rgba(0,240,255,.6))}
+.b-pri{cursor:pointer;transition:background 150ms cubic-bezier(.16,1,.3,1),transform 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-pri:active{background:#D91E5B !important;transform:translateY(1px)}
+.b-pri:focus{outline:none}
+.sheet{transition:height 600ms cubic-bezier(.16,1,.3,1)}
+.sheet-body{scrollbar-width:none}.sheet-body::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:reduce){.float,.spin,.spin-r,.beam,.hs-ring{animation:none}.co{animation:fade 300ms ease 1}@keyframes fade{from{opacity:0}to{opacity:1}}.sheet,.model{transition:none}.b-pri:active{transform:none}}
+</style>
+</helmet>
+<section id="augments" aria-label="Augments" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 55%, {{accSoft}}, rgba(5,6,10,0) 55%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- HEADER -->
+<header style="position: absolute; z-index: 5; left: {{padX}}px; right: {{padX}}px; top: {{hdrTop}}px; display: flex; flex-direction: column; gap: {{hdrGap}}px">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">02 / AUGMENTS</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; white-space: nowrap">RIPPERDOC CATALOGUE</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{h2Fs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">Upgrade the hardware</h2>
+</header>
+
+<!-- CANVAS -->
+<div class="cv" role="group" aria-label="3D viewer: {{name}}. Drag to rotate." onMouseDown="{{dragStart}}" onMouseMove="{{dragMove}}" onMouseUp="{{dragEnd}}" onMouseLeave="{{dragEnd}}" onTouchStart="{{touchStart}}" onTouchMove="{{touchMove}}" onTouchEnd="{{dragEnd}}" style="position: absolute; z-index: 2; left: {{cvX}}px; top: {{cvY}}px; width: {{cvW}}px; height: {{cvH}}px; overflow: hidden; background: #070910; border: {{cvBorder}}; clip-path: {{cvClip}}">
+<div aria-hidden="true" style="position: absolute; left: -30%; right: -30%; bottom: -20px; height: 50%; background-image: linear-gradient(rgba(0,240,255,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.22) 1px, transparent 1px); background-size: 48px 48px; transform: perspective(420px) rotateX(64deg); transform-origin: 50% 100%; -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 85%); mask-image: linear-gradient(to top, #000 5%, transparent 85%)"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 48%, {{accSoft}}, rgba(7,9,16,0) 45%)"></div>
+
+<!-- pedestal -->
+<div aria-hidden="true" style="position: absolute; left: 50%; bottom: {{pedB}}px; width: {{pedW}}px; height: {{pedH}}px; margin-left: -{{pedHalf}}px; opacity: {{pedOp}}">
+<div class="beam" style="position: absolute; left: 12%; right: 12%; bottom: 50%; height: {{beamH}}px; background: linear-gradient(to top, {{accBeam}}, rgba(0,0,0,0)); clip-path: polygon(0 100%, 100% 100%, 82% 0, 18% 0)"></div>
+<div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(ellipse, {{accBeam}} 0%, rgba(0,0,0,0) 70%)"></div>
+<div style="position: absolute; inset: 0; transform: scaleY(1)"><div style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid {{acc}}; box-shadow: 0 0 12px {{acc}}, inset 0 0 12px {{acc}}"></div></div>
+<div style="position: absolute; inset: 14%; border-radius: 50%; border: 1px dashed {{acc}}; opacity: 0.7"></div>
+<div style="position: absolute; left: 0; right: 0; top: 50%; height: {{pedDepth}}px; background: linear-gradient(to bottom, #121726, #05060A); border-left: 1px solid rgba(0,240,255,0.3); border-right: 1px solid rgba(0,240,255,0.3); border-radius: 0 0 50% 50% / 0 0 40% 40%; z-index: -1"></div>
+</div>
+
+<!-- model -->
+<div aria-hidden="true" style="position: absolute; left: 50%; top: {{modelTop}}px; width: 240px; height: 420px; margin-left: -120px; perspective: 900px; transform: scale({{modelScale}}); transform-origin: 50% 100%">
+<div class="float" style="position: absolute; inset: 0">
+<div class="model" style="position: absolute; inset: 0; transform: rotateY({{rot}}deg)">
+
+<sc-if value="{{isArm}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 70px; top: 10px; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #F2F6FF, {{metal}} 38%, #2A2F3E 72%, #121726); box-shadow: 0 0 0 3px #0B0E17, 0 0 0 5px {{acc}}, 0 0 24px {{accGlow}}"></div>
+<div style="position: absolute; left: 80px; top: 92px; width: 80px; height: 130px; background: linear-gradient(90deg, #1C2130, {{metal}} 45%, #2A2F3E); clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%)"><span style="position: absolute; left: 50%; top: 10px; bottom: 10px; width: 4px; margin-left: -2px; background: {{acc}}; box-shadow: 0 0 10px {{acc}}"></span><span style="position: absolute; left: 14px; right: 14px; top: 40px; height: 1px; background: rgba(5,6,10,0.7)"></span><span style="position: absolute; left: 14px; right: 14px; top: 80px; height: 1px; background: rgba(5,6,10,0.7)"></span></div>
+<div style="position: absolute; left: 88px; top: 210px; width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #F2F6FF, {{metal}} 40%, #1C2130 75%); box-shadow: 0 0 0 2px {{acc}}"></div>
+<div style="position: absolute; left: 86px; top: 262px; width: 68px; height: 110px; background: linear-gradient(90deg, #1C2130, {{metal}} 50%, #2A2F3E); clip-path: polygon(0 0, 100% 0, 86% 100%, 14% 100%)"><span style="position: absolute; left: 22px; top: 30px; width: 24px; height: 24px; border-radius: 50%; background: {{acc}}; box-shadow: 0 0 16px {{acc}}"></span><span style="position: absolute; left: 12px; right: 12px; top: 70px; height: 3px; background: {{acc}}; opacity: 0.7"></span></div>
+<div style="position: absolute; left: 92px; top: 366px; width: 56px; height: 34px; background: linear-gradient(90deg, #1C2130, {{metal}} 50%, #2A2F3E)"></div>
+<div style="position: absolute; left: 94px; top: 398px; width: 52px; height: 20px; background: repeating-linear-gradient(90deg, {{metal}} 0 9px, rgba(0,0,0,0) 9px 13px)"></div>
+</sc-if>
+
+<sc-if value="{{isOptic}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 10px; top: 90px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #F2F6FF 0 3%, {{metal}} 16%, #1C2130 58%, #05060A 82%); box-shadow: 0 0 0 4px #0B0E17, 0 0 0 6px {{acc}}, 0 0 40px {{accGlow}}"></div>
+<div style="position: absolute; left: 60px; top: 140px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #05060A 0 20%, {{acc}} 22% 30%, #0B0E17 32% 46%, {{acc}} 48% 50%, rgba(0,0,0,0) 52%); box-shadow: 0 0 30px {{accGlow}}"></div>
+<div class="spin" style="position: absolute; left: 46px; top: 126px; width: 148px; height: 148px; border-radius: 50%; border: 1px dashed {{acc}}"></div>
+<div class="spin-r" style="position: absolute; left: 30px; top: 110px; width: 180px; height: 180px; border-radius: 50%; border: 2px solid rgba(0,0,0,0); border-top-color: {{acc}}; border-bottom-color: {{acc}}; opacity: 0.6"></div>
+<div style="position: absolute; left: 70px; top: 130px; width: 40px; height: 22px; border-radius: 50%; background: rgba(242,246,255,0.7); transform: rotate(-30deg); filter: blur(2px)"></div>
+<div style="position: absolute; left: 96px; top: 306px; width: 4px; height: 100px; background: linear-gradient({{acc}}, rgba(0,0,0,0))"></div>
+<div style="position: absolute; left: 118px; top: 310px; width: 4px; height: 90px; background: linear-gradient({{metal}}, rgba(0,0,0,0))"></div>
+<div style="position: absolute; left: 140px; top: 306px; width: 4px; height: 100px; background: linear-gradient({{acc}}, rgba(0,0,0,0))"></div>
+</sc-if>
+
+<sc-if value="{{isChip}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 20px; top: 150px; width: 200px; height: 200px; transform: rotateX(58deg) rotateZ(45deg)">
+<div style="position: absolute; inset: -18px; border: 2px dashed {{acc}}; opacity: 0.8"></div>
+<div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1C2130, {{metal}} 50%, #121726); border: 2px solid {{acc}}; box-shadow: 0 0 30px {{accGlow}}"></div>
+<div style="position: absolute; inset: 10px; background: repeating-linear-gradient(90deg, {{acc}} 0 1px, rgba(0,0,0,0) 1px 16px), repeating-linear-gradient(0deg, {{acc}} 0 1px, rgba(0,0,0,0) 1px 24px); opacity: 0.35"></div>
+<div style="position: absolute; left: 70px; top: 70px; width: 60px; height: 60px; background: #05060A; border: 2px solid {{acc}}; box-shadow: 0 0 24px {{acc}}, inset 0 0 18px {{acc}}"></div>
+</div>
+<div style="position: absolute; left: 60px; top: 330px; width: 120px; height: 30px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,0.7), rgba(0,0,0,0) 70%)"></div>
+</sc-if>
+
+</div>
+</div>
+</div>
+
+<!-- product render (stand-in for the GLB) -->
+<div aria-hidden="true" style="position: absolute; left: 50%; top: {{imgTop}}px; width: {{imgS}}px; height: {{imgS}}px; margin-left: -{{imgHalf}}px; perspective: 1100px; pointer-events: none">
+<div class="float" style="position: absolute; inset: 0">
+<div class="model" style="position: absolute; inset: 0; transform: rotateY({{imgRot}}deg); filter: {{imgFilter}}">
+<sc-if value="{{imgArm}}" hint-placeholder-val="{{ true }}"><img src="/_blob/7c3eeb33b5ee094448d356ca99619ac9" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{imgOptic}}" hint-placeholder-val="{{ false }}"><img src="/_blob/25a5890a57af19f991703bf426d89952" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{imgChip}}" hint-placeholder-val="{{ false }}"><img src="/_blob/c87ab4ec868ba1b24ff6780852c169e4" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen"></sc-if>
+</div>
+</div>
+</div>
+
+<!-- hotspots -->
+<sc-for list="{{spots}}" as="s" hint-placeholder-count="3">
+<sc-if value="{{s.visible}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="hs" aria-label="{{s.t}}" aria-expanded="{{s.openStr}}" onClick="{{s.toggle}}" onMouseDown="{{stop}}" style="position: absolute; z-index: 6; left: {{s.x}}%; top: {{s.y}}%; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 0; background: transparent; border: 0; display: flex; align-items: center; justify-content: center">
+<span class="hs-ring" aria-hidden="true" style="position: absolute; width: 12px; height: 12px; border-radius: 50%; border: 1px solid {{s.c}}"></span>
+<span class="hs-dot" aria-hidden="true" style="position: relative; width: 12px; height: 12px; border-radius: 50%; background: {{s.c}}; box-shadow: 0 0 0 3px rgba(5,6,10,0.8), 0 0 12px {{s.c}}; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 8px; font-weight: 700; color: #05060A">{{s.n}}</span>
+</button>
+<sc-if value="{{s.open}}" hint-placeholder-val="{{ false }}">
+<div class="co" role="note" style="position: absolute; z-index: 7; top: calc({{s.y}}% - 18px); {{s.side}}; width: {{coW}}px; background: rgba(11,14,23,0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid {{s.c}}; box-shadow: 0 0 16px {{accGlow}}; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; pointer-events: none">
+<span aria-hidden="true" style="position: absolute; top: 17px; {{s.lineSide}}; width: 26px; height: 1px; background: {{s.c}}"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{s.c}}">NODE {{s.n}} // {{s.code}}</span>
+<span style="font-weight: 700; font-size: {{coTitleFs}}px; line-height: 1.2">{{s.t}}</span>
+<span style="font-size: {{coFs}}px; line-height: 1.4; color: #8A93A8">{{s.d}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #E8F1FF; padding-top: 4px; border-top: 1px dashed rgba(0,240,255,0.2)">{{s.spec}}</span>
+</div>
+</sc-if>
+</sc-if>
+</sc-for>
+
+<!-- canvas HUD -->
+<div aria-hidden="true" style="position: absolute; left: 16px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8; display: flex; flex-direction: column; gap: 2px">
+<span>[THREE.JS CANVAS] · {{file}}</span>
+<span>ROT <span style="color: #E8F1FF">{{rotStr}}°</span> · {{polyStr}}</span>
+</div>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 8px" onMouseDown="{{stop}}">
+<button type="button" class="ic" aria-label="Rotate left" onClick="{{rotL}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.6); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 108-8H8"></path><path d="M10 1L7 4l3 3"></path></svg></button>
+<button type="button" class="ic" aria-label="Reset view" onClick="{{reset}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.6); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="5" width="14" height="14"></rect><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg></button>
+<button type="button" class="ic" aria-label="Rotate right" onClick="{{rotR}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.6); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 12a8 8 0 11-8-8h4"></path><path d="M14 1l3 3-3 3"></path></svg></button>
+</div>
+</sc-if>
+<span aria-hidden="true" style="position: absolute; left: 50%; bottom: {{hintB}}px; transform: translateX(-50%); height: 30px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #E8F1FF; background: rgba(5,6,10,0.7); border: 1px solid rgba(0,240,255,0.25)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2"><path d="M7 12H2m0 0l3-3m-3 3l3 3M17 12h5m0 0l-3-3m3 3l-3 3"></path><circle cx="12" cy="12" r="2"></circle></svg>DRAG TO ROTATE · TAP NODES</span>
+<span aria-hidden="true" style="position: absolute; top: 8px; left: 8px; width: 16px; height: 16px; border-top: 2px solid {{acc}}; border-left: 2px solid {{acc}}"></span>
+<span aria-hidden="true" style="position: absolute; bottom: 8px; right: 8px; width: 16px; height: 16px; border-bottom: 2px solid {{acc}}; border-right: 2px solid {{acc}}"></span>
+
+<!-- mobile thumbs over canvas -->
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div role="tablist" aria-label="Choose augment" onMouseDown="{{stop}}" onTouchStart="{{stop}}" style="position: absolute; right: 8px; top: 48px; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<button type="button" class="th" role="tab" aria-selected="{{it.selStr}}" aria-label="{{it.name}}" onClick="{{it.pick}}" style="width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.7); border: 1px solid {{it.border}}; box-shadow: {{it.glow}}; color: {{it.ic}}">
+<sc-if value="{{it.isArm}}" hint-placeholder-val="{{ true }}"><img src="/_blob/7c3eeb33b5ee094448d356ca99619ac9" alt="" style="width: 46px; height: 46px; object-fit: cover; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{it.isOptic}}" hint-placeholder-val="{{ false }}"><img src="/_blob/25a5890a57af19f991703bf426d89952" alt="" style="width: 46px; height: 46px; object-fit: cover; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{it.isChip}}" hint-placeholder-val="{{ false }}"><img src="/_blob/c87ab4ec868ba1b24ff6780852c169e4" alt="" style="width: 46px; height: 46px; object-fit: cover; mix-blend-mode: screen"></sc-if>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<!-- DESKTOP DETAILS -->
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<aside aria-label="Augment details" style="position: absolute; z-index: 3; left: {{asideL}}px; right: {{asideR}}px; top: {{asideTop}}px; height: {{asideH}}px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="height: 26px; padding: 0 10px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF; border: 1px solid rgba(0,240,255,0.5)">AUGMENT {{num}} / 03</span>
+<span style="height: 26px; padding: 0 10px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; border: 1px solid rgba(138,147,168,0.4)">{{cls}}</span>
+<span style="height: 26px; padding: 0 10px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #05060A; background: #F5E642; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))">{{rarity}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 36px; line-height: 1.1; letter-spacing: 0.06em; text-transform: uppercase">{{name}}</h3>
+<p style="margin: 0; font-size: 18px; line-height: 1.4; color: #8A93A8">{{tagline}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{stats}}" as="st" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 108px minmax(0, 1fr) 36px; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em">
+<span style="color: #8A93A8">{{st.k}}</span>
+<div role="meter" aria-label="{{st.k}}" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{st.v}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px">
+<sc-for list="{{st.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 12px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}; clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%)"></span></sc-for>
+</div>
+<span style="text-align: right">{{st.vs}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: rgba(0,240,255,0.12); border: 1px solid rgba(0,240,255,0.12)">
+<sc-for list="{{specs}}" as="sp" hint-placeholder-count="3">
+<div style="background: #0B0E17; padding: 8px 12px; display: flex; flex-direction: column"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8">{{sp.k}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: {{sp.c}}">{{sp.v}}</span></div>
+</sc-for>
+</div>
+<div role="radiogroup" aria-label="Finish" style="display: flex; align-items: center; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; width: 108px">FINISH · <span style="color: #E8F1FF">{{variantName}}</span></span>
+<sc-for list="{{variants}}" as="v" hint-placeholder-count="3">
+<button type="button" class="sw" role="radio" aria-checked="{{v.selStr}}" aria-label="{{v.name}} finish" onClick="{{v.pick}}" style="width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid {{v.ring}}; box-shadow: {{v.glow}}"><span style="width: 26px; height: 26px; background: {{v.fill}}; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))"></span></button>
+</sc-for>
+</div>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 14px; padding-top: 16px; border-top: 1px solid rgba(0,240,255,0.15)">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">PRICE</span><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 40px; line-height: 1.1; text-shadow: 0 0 8px rgba(0,240,255,0.4)">{{price}}</span></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #2BFF88; display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #2BFF88; box-shadow: 0 0 6px #2BFF88"></span>{{stock}}</span>
+</div>
+<div style="display: flex; gap: 12px">
+<sc-if value="{{notEquipped}}" hint-placeholder-val="{{ true }}">
+<span class="bw" style="flex: 1"><button type="button" class="b-pri" onClick="{{equip}}" style="width: 100%; height: 56px; border: 0; background: #FF2A6D; color: #05060A; display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Equip<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 4v16M4 12h16"></path></svg></button></span>
+</sc-if>
+<sc-if value="{{equipped}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="b-gh" onClick="{{equip}}" aria-pressed="true" style="flex: 1; height: 56px; background: rgba(43,255,136,0.08); border: 1px solid #2BFF88; color: #2BFF88; display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase">Equipped<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12l5 5L20 6"></path></svg></button>
+</sc-if>
+<button type="button" class="b-gh" style="height: 56px; padding: 0 20px; background: transparent; border: 1px solid rgba(0,240,255,0.35); color: #00F0FF; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase">Compare</button>
+</div>
+</div>
+</aside>
+
+<!-- DESKTOP THUMBS -->
+<div role="tablist" aria-label="Choose augment" style="position: absolute; z-index: 3; left: {{thX}}px; right: {{thX}}px; top: {{thTop}}px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<button type="button" class="th" role="tab" aria-selected="{{it.selStr}}" onClick="{{it.pick}}" style="height: 96px; padding: 0 20px 0 12px; display: flex; align-items: center; gap: 16px; text-align: left; background: {{it.bg}}; border: 1px solid {{it.border}}; box-shadow: {{it.glow}}; color: #E8F1FF; font-family: 'Rajdhani', sans-serif">
+<span style="width: 72px; height: 72px; flex: none; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,240,255,0.14), rgba(0,0,0,0) 70%); border: 1px solid rgba(0,240,255,0.15); color: {{it.ic}}">
+<sc-if value="{{it.isArm}}" hint-placeholder-val="{{ true }}"><img src="/_blob/7c3eeb33b5ee094448d356ca99619ac9" alt="" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{it.isOptic}}" hint-placeholder-val="{{ false }}"><img src="/_blob/25a5890a57af19f991703bf426d89952" alt="" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen"></sc-if>
+<sc-if value="{{it.isChip}}" hint-placeholder-val="{{ false }}"><img src="/_blob/c87ab4ec868ba1b24ff6780852c169e4" alt="" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen"></sc-if>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{it.ic}}">{{it.num}} · {{it.cls}}</span>
+<span style="font-weight: 700; font-size: 18px; line-height: 1.2">{{it.name}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8A93A8">{{it.price}}</span>
+</span>
+<sc-if value="{{it.sel}}" hint-placeholder-val="{{ false }}"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #00F0FF">VIEWING</span></sc-if>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- MOBILE BOTTOM SHEET -->
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div class="sheet" role="region" aria-label="Augment details" style="position: absolute; z-index: 10; left: 0; right: 0; bottom: 0; height: {{sheetH}}px; background: rgba(11,14,23,0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid rgba(0,240,255,0.3); box-shadow: 0 -16px 40px rgba(0,0,0,0.6); display: flex; flex-direction: column; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)">
+<button type="button" class="hdl" aria-expanded="{{sheetOpenStr}}" aria-label="{{sheetLabel}}" onClick="{{toggleSheet}}" style="height: 36px; flex: none; background: transparent; border: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #8A93A8; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em"><span aria-hidden="true" style="width: 40px; height: 3px; background: #00F0FF; box-shadow: 0 0 6px #00F0FF"></span>{{sheetHint}}</button>
+<div class="sheet-body" style="flex: 1; overflow-y: auto; padding: 0 16px 16px; display: flex; flex-direction: column; gap: 14px">
+<sc-if value="{{hasPart}}" hint-placeholder-val="{{ false }}">
+<div class="co" role="status" style="position: relative; padding: 10px 12px; background: #121726; border: 1px solid {{acc}}; box-shadow: 0 0 12px {{accGlow}}; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{acc}}">NODE {{part.n}} // {{part.code}}</span><button type="button" class="ic" aria-label="Close part info" onClick="{{closePart}}" style="width: 44px; height: 32px; margin-right: -8px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; color: #8A93A8"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button></div>
+<span style="font-weight: 700; font-size: 16px; line-height: 1.2">{{part.t}}</span>
+<span style="font-size: 14px; line-height: 1.4; color: #8A93A8">{{part.d}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #E8F1FF">{{part.spec}}</span>
+</div>
+</sc-if>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #00F0FF; border: 1px solid rgba(0,240,255,0.5)">{{num}} / 03</span>
+<span style="height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8; border: 1px solid rgba(138,147,168,0.4)">{{cls}}</span>
+<span style="height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #05060A; background: #F5E642">{{rarity}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15; letter-spacing: 0.05em; text-transform: uppercase">{{name}}</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.4; color: #8A93A8">{{tagline}}</p>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 20px; white-space: nowrap">{{price}}</span>
+</div>
+<div role="radiogroup" aria-label="Finish" style="display: flex; align-items: center; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8; flex: 1">FINISH · <span style="color: #E8F1FF">{{variantName}}</span></span>
+<sc-for list="{{variants}}" as="v" hint-placeholder-count="3">
+<button type="button" class="sw" role="radio" aria-checked="{{v.selStr}}" aria-label="{{v.name}} finish" onClick="{{v.pick}}" style="width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid {{v.ring}}; box-shadow: {{v.glow}}"><span style="width: 24px; height: 24px; background: {{v.fill}}"></span></button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px dashed rgba(0,240,255,0.2)">
+<sc-for list="{{stats}}" as="st" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 28px; gap: 8px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em">
+<span style="color: #8A93A8">{{st.k}}</span>
+<div role="meter" aria-label="{{st.k}}" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{st.v}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{st.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 10px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}"></span></sc-for>
+</div>
+<span style="text-align: right">{{st.vs}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: rgba(0,240,255,0.12); border: 1px solid rgba(0,240,255,0.12)">
+<sc-for list="{{specs}}" as="sp" hint-placeholder-count="3">
+<div style="background: #0B0E17; padding: 6px 10px; display: flex; flex-direction: column"><span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: #8A93A8">{{sp.k}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{sp.c}}">{{sp.v}}</span></div>
+</sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #2BFF88">● {{stock}}</span>
+</div>
+<div style="flex: none; padding: 12px 16px 16px; border-top: 1px solid rgba(0,240,255,0.15); display: flex; gap: 8px; background: rgba(11,14,23,0.98)">
+<sc-if value="{{notEquipped}}" hint-placeholder-val="{{ true }}">
+<a href="#" class="b-pri" onClick="{{equipLink}}" style="flex: 1; height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; background: #FF2A6D; color: #05060A; font-weight: 700; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Equip · {{price}}</a>
+</sc-if>
+<sc-if value="{{equipped}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="b-gh" onClick="{{equip}}" aria-pressed="true" style="flex: 1; height: 52px; background: rgba(43,255,136,0.08); border: 1px solid #2BFF88; color: #2BFF88; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase">Equipped ✓</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"item":{"editor":"enum","options":["0","1","2"],"default":"0"},"variant":{"editor":"enum","options":["0","1","2"],"default":"0"},"hotspot":{"editor":"enum","options":["-1","0","1","2"],"default":"0"},"sheet":{"editor":"enum","options":["peek","full"],"default":"peek"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { item: null, variant: null, spot: null, rot: -18, drag: false, x0: 0, r0: 0, equipped: false, sheet: null }; }
+  renderVals() {
+    var self = this;
+    var bp = this.props.bp || ((this.props.mobile ?? false) ? 'mobile' : 'desktop');
+    var m = bp === 'mobile', tb = bp === 'tablet', wd = bp === 'wide';
+    var item = this.state.item !== null ? this.state.item : Number(this.props.item ?? 0);
+    var variant = this.state.variant !== null ? this.state.variant : Number(this.props.variant ?? 0);
+    var spot = this.state.spot !== null ? this.state.spot : Number(this.props.hotspot ?? 0);
+    var sheet = this.state.sheet !== null ? this.state.sheet : (this.props.sheet ?? 'peek');
+    var rot = this.state.rot;
+    var VAR = [
+      { name: 'CYAN', acc: '#00F0FF', glow: 'rgba(0,240,255,0.5)', soft: 'rgba(0,240,255,0.14)', beam: 'rgba(0,240,255,0.35)', metal: '#8A93A8', fill: '#00F0FF' },
+      { name: 'MAGENTA', acc: '#FF2A6D', glow: 'rgba(255,42,109,0.5)', soft: 'rgba(255,42,109,0.14)', beam: 'rgba(255,42,109,0.35)', metal: '#8A93A8', fill: '#FF2A6D' },
+      { name: 'CHROME', acc: '#C9D3E3', glow: 'rgba(201,211,227,0.45)', soft: 'rgba(201,211,227,0.1)', beam: 'rgba(201,211,227,0.28)', metal: '#D8E0EE', fill: 'linear-gradient(135deg, #F2F6FF, #8A93A8 50%, #E8F1FF 70%, #5A6378)' }
+    ];
+    var v = VAR[variant];
+    var ITEMS = [
+      { key: 'arm', name: 'Titan Mk.IV Cyber-Arm', cls: 'LIMB · CLASS A', rarity: 'LEGENDARY', price: '₵ 12,400', stock: 'IN STOCK · 04 LEFT', file: 'TITAN_MK4.GLB', poly: '182K TRIS',
+        tagline: 'Military-grade myomer limb. Lifts a car, threads a needle.',
+        stats: [['POWER', 9], ['STABILITY', 6], ['NEURAL SYNC', 5]],
+        specs: [['WEIGHT', '4.2 KG', '#E8F1FF'], ['INSTALL', '3 H', '#E8F1FF'], ['HUMANITY', '−12', '#FF2A6D']],
+        spots: [
+          { x: 50, y: 22, t: 'Servo shoulder', code: 'SRV-01', d: 'Gimbal ball joint, 340° range with shock-damped mount.', spec: 'TORQUE 2.4 kNm' },
+          { x: 55, y: 44, t: 'Myomer bundle', code: 'MYO-08', d: 'Synthetic muscle fibre wound around a titanium core.', spec: 'GRIP 680 KG' },
+          { x: 50, y: 66, t: 'Haptic hand', code: 'HAP-16', d: '16 pressure sensors per finger feed the cortex in real time.', spec: 'LATENCY 3 MS' }
+        ] },
+      { key: 'optic', name: 'Oracle Optic Eye', cls: 'OCULAR · CLASS B', rarity: 'EPIC', price: '₵ 8,950', stock: 'IN STOCK · 11 LEFT', file: 'ORACLE_EYE.GLB', poly: '96K TRIS',
+        tagline: 'See in the dark, through the rain, past the lies.',
+        stats: [['POWER', 4], ['STABILITY', 8], ['NEURAL SYNC', 9]],
+        specs: [['WEIGHT', '38 G', '#E8F1FF'], ['INSTALL', '45 MIN', '#E8F1FF'], ['HUMANITY', '−4', '#FF2A6D']],
+        spots: [
+          { x: 44, y: 38, t: 'Adaptive iris', code: 'IRS-02', d: 'Liquid-crystal aperture switches from low-light to thermal.', spec: 'ZOOM 12×' },
+          { x: 58, y: 52, t: 'Targeting ring', code: 'TGT-05', d: 'Rotating HUD ring paints threats and tags faces.', spec: 'LOCK 0.2 S' },
+          { x: 50, y: 70, t: 'Optic nerve bus', code: 'NRV-03', d: 'Three-strand bus straight into the visual cortex.', spec: '8K · 240 FPS' }
+        ] },
+      { key: 'chip', name: 'Synapse Neural Chip', cls: 'NEURAL · CLASS S', rarity: 'MYTHIC', price: '₵ 21,700', stock: 'LOW STOCK · 02 LEFT', file: 'SYNAPSE_CHIP.GLB', poly: '64K TRIS',
+        tagline: 'Think faster than the net. Dream in code.',
+        stats: [['POWER', 6], ['STABILITY', 5], ['NEURAL SYNC', 10]],
+        specs: [['WEIGHT', '6 G', '#E8F1FF'], ['INSTALL', '6 H', '#E8F1FF'], ['HUMANITY', '−18', '#FF2A6D']],
+        spots: [
+          { x: 50, y: 50, t: 'Quantum core', code: 'QC-01', d: 'Entangled processor running 40 parallel thought threads.', spec: '9.6 PFLOPS' },
+          { x: 36, y: 52, t: 'Synapse lattice', code: 'SYN-12', d: 'Bio-gold traces bond directly to neurons.', spec: '12M CONTACTS' },
+          { x: 62, y: 44, t: 'ICE firewall', code: 'ICE-07', d: 'Hardware black-ICE against brain hacks.', spec: 'TIER 5 ICE' }
+        ] }
+    ];
+    var it = ITEMS[item];
+    var facing = Math.cos(rot * Math.PI / 180) > -0.2;
+    var mkBlocks = function (n) { var o = []; for (var i = 0; i < 10; i++) { var on = i < n; o.push({ bg: on ? v.acc : 'rgba(0,0,0,0)', bd: on ? v.acc : 'rgba(0,240,255,0.2)', glow: on ? '0 0 6px ' + v.acc : 'none' }); } return o; };
+    var cvW = m ? 390 : (tb ? 754 : (wd ? 1040 : 820)), cvH = m ? 380 : (tb ? 480 : (wd ? 680 : 560));
+    var spots = it.spots.map(function (s, i) {
+      var open = spot === i;
+      var left = s.x > 52;
+      return {
+        n: i + 1, x: s.x, y: s.y, t: s.t, code: s.code, d: s.d, spec: s.spec, c: v.acc,
+        visible: facing, open: open && facing && !m, openStr: open ? 'true' : 'false',
+        side: left ? 'right: calc(' + (100 - s.x) + '% + 28px)' : 'left: calc(' + s.x + '% + 28px)',
+        lineSide: left ? 'right: -27px' : 'left: -27px',
+        toggle: function () { self.setState({ spot: open ? -1 : i }); }
+      };
+    });
+    var items = ITEMS.map(function (x, i) {
+      var sel = i === item;
+      return { name: x.name, cls: x.cls, price: x.price, num: '0' + (i + 1), sel: sel, selStr: sel ? 'true' : 'false',
+        isArm: x.key === 'arm', isOptic: x.key === 'optic', isChip: x.key === 'chip',
+        bg: sel ? 'rgba(0,240,255,0.06)' : '#0B0E17', border: sel ? '#00F0FF' : 'rgba(0,240,255,0.15)', glow: sel ? '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.35)' : 'none', ic: sel ? '#00F0FF' : '#8A93A8',
+        pick: function () { self.setState({ item: i, spot: 0, rot: -18, equipped: false }); } };
+    });
+    var variants = VAR.map(function (x, i) {
+      var sel = i === variant;
+      return { name: x.name.charAt(0) + x.name.slice(1).toLowerCase(), fill: x.fill, selStr: sel ? 'true' : 'false', ring: sel ? '#E8F1FF' : 'rgba(138,147,168,0.35)', glow: sel ? '0 0 10px ' + x.glow : 'none', pick: function () { self.setState({ variant: i }); } };
+    });
+    var r = ((Math.round(rot) % 360) + 360) % 360;
+    var full = sheet === 'full';
+    return {
+      desktop: !m, mobile: m, W: m ? 390 : (tb ? 834 : (wd ? 1920 : 1440)), H: m ? 844 : (tb ? 1440 : (wd ? 1200 : 1000)),
+      padX: m ? 16 : (tb ? 40 : (wd ? 160 : 80)), hdrTop: m ? 20 : (tb ? 56 : (wd ? 110 : 96)), hdrGap: m ? 6 : 14, idxFs: m ? 12 : 14, h2Fs: m ? 22 : (tb ? 40 : (wd ? 64 : 56)),
+      cvX: m ? 0 : (tb ? 40 : (wd ? 160 : 80)), cvY: m ? 92 : (tb ? 190 : (wd ? 300 : 256)), cvW: cvW, cvH: cvH,
+      asideL: tb ? 40 : (wd ? 1260 : 940), asideR: tb ? 40 : (wd ? 160 : 80), asideTop: tb ? 702 : (wd ? 300 : 256), asideH: tb ? 520 : (wd ? 680 : 560),
+      thX: tb ? 40 : (wd ? 160 : 80), thTop: tb ? 1262 : (wd ? 1020 : 848),
+      hasPart: m && spot >= 0 && facing,
+      part: (function () { var sp = it.spots[Math.max(0, spot)]; return { n: Math.max(0, spot) + 1, t: sp.t, d: sp.d, spec: sp.spec, code: sp.code }; })(),
+      closePart: function () { self.setState({ spot: -1 }); },
+      cvBorder: m ? '0' : '1px solid rgba(0,240,255,0.15)',
+      cvClip: m ? 'none' : 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))',
+      pedW: m ? 220 : 340, pedHalf: m ? 110 : 170, pedH: m ? 50 : 80, pedDepth: m ? 18 : 28, pedB: m ? 64 : 70, beamH: m ? 200 : 320,
+      modelTop: m ? -84 : (tb ? 20 : (wd ? 150 : 50)), modelScale: m ? 0.66 : (tb ? 0.95 : (wd ? 1.2 : 1)),
+      hintB: m ? 16 : 20, coW: m ? 180 : 250, coFs: m ? 12 : 14, coTitleFs: m ? 14 : 16,
+      acc: v.acc, accGlow: v.glow, accSoft: v.soft, accBeam: v.beam, metal: v.metal, variantName: v.name,
+      isArm: false, isOptic: false, isChip: false,
+      imgArm: it.key === 'arm', imgOptic: it.key === 'optic', imgChip: it.key === 'chip',
+      pedOp: it.key === 'arm' ? 0 : 1,
+      imgS: m ? 300 : (tb ? 420 : (wd ? 600 : 470)), imgHalf: (m ? 300 : (tb ? 420 : (wd ? 600 : 470))) / 2, imgTop: m ? 8 : (tb ? 20 : (wd ? 30 : 30)),
+      imgRot: (function () { var a = ((rot + 180) % 360 + 360) % 360 - 180; return (Math.max(-40, Math.min(40, a)) * 0.7).toFixed(1); })(),
+      imgFilter: (function () { var base = { arm: 185, optic: 300, chip: 268 }[it.key]; if (variant === 2) return 'saturate(0.12) brightness(1.15) contrast(1.1)'; var tgt = variant === 0 ? 185 : 335; return 'hue-rotate(' + (tgt - base) + 'deg) saturate(1.15)'; })(),
+      rot: rot.toFixed(1), rotStr: ('00' + r).slice(-3), polyStr: it.poly, file: it.file,
+      name: it.name, cls: it.cls, rarity: it.rarity, price: it.price, stock: it.stock, tagline: it.tagline, num: '0' + (item + 1),
+      stats: it.stats.map(function (s) { return { k: s[0], v: s[1], vs: ('0' + s[1]).slice(-2), blocks: mkBlocks(s[1]) }; }),
+      specs: it.specs.map(function (s) { return { k: s[0], v: s[1], c: s[2] }; }),
+      spots: spots, items: items, variants: variants,
+      equipped: !!this.state.equipped, notEquipped: !this.state.equipped,
+      equip: function () { self.setState({ equipped: !self.state.equipped }); },
+      equipLink: function (e) { if (e && e.preventDefault) e.preventDefault(); self.setState({ equipped: true }); },
+      sheetH: full ? 724 : 392, sheetOpenStr: full ? 'true' : 'false',
+      sheetLabel: full ? 'Collapse details' : 'Expand details', sheetHint: full ? 'SWIPE DOWN' : 'SWIPE UP FOR STATS',
+      toggleSheet: function () { self.setState({ sheet: full ? 'peek' : 'full' }); },
+      stop: function (e) { if (e && e.stopPropagation) e.stopPropagation(); },
+      dragStart: function (e) { self.setState({ drag: true, x0: e.clientX, r0: self.state.rot }); },
+      dragMove: function (e) { if (self.state.drag) self.setState({ rot: self.state.r0 + (e.clientX - self.state.x0) * 0.6 }); },
+      dragEnd: function () { if (self.state.drag) self.setState({ drag: false }); },
+      touchStart: function (e) { var t = e.touches && e.touches[0]; if (t) self.setState({ drag: true, x0: t.clientX, r0: self.state.rot }); },
+      touchMove: function (e) { var t = e.touches && e.touches[0]; if (t && self.state.drag) self.setState({ rot: self.state.r0 + (t.clientX - self.state.x0) * 0.6 }); },
+      rotL: function () { self.setState({ rot: self.state.rot - 45 }); },
+      rotR: function () { self.setState({ rot: self.state.rot + 45 }); },
+      reset: function () { self.setState({ rot: -18 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

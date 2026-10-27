@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Footer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.wm{color:transparent;-webkit-text-stroke:1.5px rgba(0,240,255,.55);transition:color 600ms cubic-bezier(.16,1,.3,1),-webkit-text-stroke-color 300ms,text-shadow 600ms}
+.wm:hover{color:rgba(0,240,255,.08);-webkit-text-stroke-color:#00F0FF;text-shadow:0 0 24px rgba(0,240,255,.5)}
+.wm-sl{animation:wmsl 5s steps(1) infinite}
+@keyframes wmsl{0%,90%{clip-path:inset(100% 0 0 0)}91%{clip-path:inset(20% 0 64% 0);transform:translateX(-10px)}93%{clip-path:inset(58% 0 22% 0);transform:translateX(12px)}95%,100%{clip-path:inset(100% 0 0 0);transform:none}}
+.ticker{animation:tick 28s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-wrap:hover .ticker{animation-play-state:paused}
+.fl{transition:color 150ms}
+.fl:hover{color:#00F0FF !important}
+.fl:focus-visible,.soc:focus-visible,.top:focus-visible{outline:2px solid #00F0FF;outline-offset:2px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.soc{transition:all 150ms}
+.soc:hover{border-color:#00F0FF !important;color:#E8F1FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.fld:focus-within{border-color:#00F0FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.b-pri{cursor:pointer;transition:background 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-pri:focus-visible{outline:2px solid #00F0FF;outline-offset:3px}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:ng-pulse 1200ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes ng-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.8);opacity:0}}
+@media (prefers-reduced-motion:reduce){.wm-sl,.ticker,.pulse::after{animation:none}.wm{transition:none}}
+</style>
+</helmet>
+<footer style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; border-top: 1px solid rgba(0,240,255,0.2)">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(to top, rgba(255,42,109,0.2), rgba(123,44,255,0.06) 50%, rgba(5,6,10,0))"></div>
+<div aria-hidden="true" style="position: absolute; left: -30%; right: -30%; bottom: -30px; height: 40%; background-image: linear-gradient(rgba(0,240,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.2) 1px, transparent 1px); background-size: 56px 56px; transform: perspective(420px) rotateX(64deg); transform-origin: 50% 100%; -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 85%); mask-image: linear-gradient(to top, #000 5%, transparent 85%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- TICKER -->
+<div class="ticker-wrap" role="marquee" aria-label="System status: uptime 99.97%, ping 12 milliseconds, sector 07" style="position: relative; z-index: 2; height: 40px; overflow: hidden; border-bottom: 1px solid rgba(0,240,255,0.15); background: rgba(11,14,23,0.8); display: flex; align-items: center">
+<div class="ticker" aria-hidden="true" style="display: flex; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #8A93A8">
+<sc-for list="{{tick}}" as="t" hint-placeholder-count="12"><span style="padding: 0 18px; display: inline-flex; align-items: center; gap: 10px"><span style="color: {{t.c}}">{{t.k}}</span>{{t.v}}<span style="color: rgba(0,240,255,0.4); margin-left: 18px">//</span></span></sc-for>
+</div>
+</div>
+
+<div style="position: relative; z-index: 2; padding: {{pad}}; display: flex; flex-direction: column; gap: {{gap}}px">
+<!-- top row -->
+<div style="display: grid; grid-template-columns: {{gridCols}}; gap: {{gridGap}}px">
+<div style="display: flex; flex-direction: column; gap: 16px; grid-column: {{brandSpan}}">
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 0.08em">NEON<span style="color: #FF2A6D">//</span>GRID</span>
+<p style="margin: 0; font-size: 16px; color: #8A93A8; max-width: 320px">A living city on the other side of the screen. [One-line brand statement.]</p>
+<form style="display: flex; flex-direction: column; gap: 8px; max-width: 380px">
+<label for="ft-email" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #00F0FF">SUBSCRIBE TO TRANSMISSIONS</label>
+<div style="display: flex; gap: 8px">
+<div class="fld" style="flex: 1; height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid rgba(0,240,255,0.25); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 14px; transition: all 150ms"><span aria-hidden="true" style="color: #00F0FF">&gt;</span><input id="ft-email" type="email" autocomplete="email" placeholder="you@grid.net" style="flex: 1; min-width: 0; height: 100%; background: transparent; border: 0; outline: none; color: #E8F1FF; font: inherit; caret-color: #00F0FF"></div>
+<button type="button" class="b-pri" style="height: 48px; padding: 0 18px; border: 0; background: #FF2A6D; color: #05060A; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))">Sync</button>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #8A93A8">1 transmission a month. No spam, no trackers.</span>
+</form>
+</div>
+<sc-for list="{{cols}}" as="c" hint-placeholder-count="4">
+<nav aria-label="{{c.title}}" style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #00F0FF; margin-bottom: 8px">{{c.n}} · {{c.title}}</span>
+<sc-for list="{{c.links}}" as="l" hint-placeholder-count="4"><a href="#" class="fl" style="min-height: 36px; display: flex; align-items: center; text-decoration: none; color: #8A93A8; font-size: 16px">{{l}}</a></sc-for>
+</nav>
+</sc-for>
+</div>
+
+<!-- WORDMARK -->
+<a href="#" aria-label="NEON//GRID — back to top" style="text-decoration: none; display: block; position: relative; line-height: 0.9">
+<span class="wm" aria-hidden="true" style="display: block; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{wmFs}}px; line-height: 0.9; letter-spacing: 0.02em; white-space: pre-line; text-align: {{wmAlign}}">{{wm}}</span>
+<span class="wm-sl" aria-hidden="true" style="position: absolute; inset: 0; display: block; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{wmFs}}px; line-height: 0.9; letter-spacing: 0.02em; white-space: pre-line; text-align: {{wmAlign}}; color: rgba(255,42,109,0.35); -webkit-text-stroke: 1.5px #FF2A6D">{{wm}}</span>
+</a>
+
+<!-- bottom row -->
+<div style="display: flex; flex-direction: {{botDir}}; justify-content: space-between; align-items: {{botAlign}}; gap: 16px; padding-top: 20px; border-top: 1px solid rgba(0,240,255,0.12)">
+<div style="display: flex; gap: 8px">
+<sc-for list="{{socials}}" as="s" hint-placeholder-count="5"><a href="#" class="soc" aria-label="{{s.name}}" style="width: 48px; height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.08em">{{s.abbr}}</a></sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8A93A8">© 2087 [STUDIO NAME] · ALL SIGNALS RESERVED</span>
+<div style="display: flex; align-items: center; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em">
+<span style="display: inline-flex; align-items: center; gap: 8px; color: #2BFF88"><span class="pulse" aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #2BFF88"></span>ALL SYSTEMS NOMINAL</span>
+<a href="#" class="top fl" style="min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; color: #00F0FF">BACK TO TOP ↑</a>
+</div>
+</div>
+</div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var m = !!(this.props.mobile ?? false);
+    var T = [['UPTIME', '99.97%', '#2BFF88'], ['PING', '12ms', '#00F0FF'], ['SECTOR', '07', '#F5E642'], ['RUNNERS ONLINE', '04,217', '#00F0FF'], ['RAIN', '92%', '#8A93A8'], ['HEAT', 'ELEVATED', '#FF2A6D']];
+    var tick = T.concat(T).map(function (t) { return { k: t[0], v: t[1], c: t[2] }; });
+    return {
+      W: m ? 390 : 1440, H: m ? 1180 : 760,
+      pad: m ? '40px 16px 28px' : '64px 80px 32px', gap: m ? 40 : 48,
+      gridCols: m ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 2fr) repeat(4, minmax(0, 1fr))', gridGap: m ? 28 : 32, brandSpan: m ? '1 / -1' : 'auto',
+      cols: [
+        { n: '01', title: 'EXPLORE', links: ['Districts', 'Augments', 'Characters', 'Lore'] },
+        { n: '02', title: 'ARCHIVE', links: ['Gallery', 'Timeline', 'Press kit', 'Devlog'] },
+        { n: '03', title: 'SUPPORT', links: ['Help desk', 'System status', 'Contact', 'Careers'] },
+        { n: '04', title: 'LEGAL', links: ['Privacy', 'Terms', 'Cookies', 'Accessibility'] }
+      ],
+      wm: m ? 'NEON//\nGRID' : 'NEON//GRID', wmFs: m ? 64 : 136, wmAlign: m ? 'left' : 'center',
+      botDir: m ? 'column' : 'row', botAlign: m ? 'flex-start' : 'center',
+      tick: tick,
+      socials: [{ abbr: 'X', name: 'X (Twitter)' }, { abbr: 'DC', name: 'Discord' }, { abbr: 'YT', name: 'YouTube' }, { abbr: 'IG', name: 'Instagram' }, { abbr: 'TW', name: 'Twitch' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero — Welcome to the Grid</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:80}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:79}
+.lyr{position:absolute;inset:0;pointer-events:none;transition:transform 600ms cubic-bezier(.16,1,.3,1);will-change:transform}
+.bld{position:absolute}
+.beacon{position:absolute;top:-6px;left:50%;width:4px;height:4px;margin-left:-2px;background:#FF3B3B;box-shadow:0 0 8px #FF3B3B;animation:beacon 1600ms steps(1) infinite}
+@keyframes beacon{0%,60%{opacity:1}60.01%,100%{opacity:.15}}
+.holo{animation:flick 4s steps(1) infinite}
+@keyframes flick{0%,90%,100%{opacity:1}91%{opacity:.35}92%{opacity:1}95%{opacity:.55}96%{opacity:1}}
+.car{position:absolute;height:2px;width:14%;animation-timing-function:linear;animation-iteration-count:infinite}
+.car-r{animation-name:fly-r}.car-l{animation-name:fly-l}
+@keyframes fly-r{from{left:-25%}to{left:112%}}
+@keyframes fly-l{from{left:112%}to{left:-25%}}
+.rain{position:absolute;inset:-20% -20%;transform:rotate(12deg);background-image:repeating-linear-gradient(to bottom,rgba(190,220,255,.32) 0 18px,transparent 18px 60px);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 1px,transparent 1px 13px);mask-image:repeating-linear-gradient(90deg,#000 0 1px,transparent 1px 13px);animation-name:rain;animation-timing-function:linear;animation-iteration-count:infinite}
+.rain-b{background-image:repeating-linear-gradient(to bottom,rgba(190,220,255,.18) 0 12px,transparent 12px 44px);-webkit-mask-image:repeating-linear-gradient(90deg,transparent 0 6px,#000 6px 7px,transparent 7px 21px);mask-image:repeating-linear-gradient(90deg,transparent 0 6px,#000 6px 7px,transparent 7px 21px)}
+@keyframes rain{from{background-position:0 0}to{background-position:0 120px}}
+.fog{animation:fog 18s ease-in-out infinite alternate}
+@keyframes fog{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+.ripple{animation:ripple 2400ms linear infinite}
+@keyframes ripple{from{background-position:0 0}to{background-position:0 16px}}
+.gl-wrap{position:relative;display:inline-block}
+.gl{position:absolute;left:0;top:0;width:100%;pointer-events:none;white-space:inherit}
+.gl-a{color:#00F0FF;animation:gla 3600ms steps(1) infinite}
+.gl-b{color:#FF2A6D;animation:glb 3600ms steps(1) infinite}
+@keyframes gla{0%,87%{clip-path:inset(100% 0 0 0);transform:none}88%{clip-path:inset(10% 0 72% 0);transform:translate(-8px,0)}90%{clip-path:inset(54% 0 22% 0);transform:translate(6px,0)}92%{clip-path:inset(30% 0 50% 0);transform:translate(-4px,0)}94%,100%{clip-path:inset(100% 0 0 0);transform:none}}
+@keyframes glb{0%,88%{clip-path:inset(100% 0 0 0);transform:none}89%{clip-path:inset(62% 0 14% 0);transform:translate(8px,0)}91%{clip-path:inset(18% 0 64% 0);transform:translate(-6px,0)}93%{clip-path:inset(40% 0 40% 0);transform:translate(4px,0)}95%,100%{clip-path:inset(100% 0 0 0);transform:none}}
+.gl-wrap:hover .gl-a,.gl-wrap:hover .gl-b{animation-duration:700ms}
+.gl-main{animation:glm 3600ms steps(1) infinite}
+@keyframes glm{0%,87%{transform:none}88%{transform:translate(2px,0) skewX(-3deg)}91%{transform:translate(-2px,0)}94%,100%{transform:none}}
+.bw{display:inline-flex;transition:filter 150ms cubic-bezier(.16,1,.3,1)}
+.bw:hover{filter:drop-shadow(0 0 8px #FF2A6D) drop-shadow(0 0 16px rgba(255,42,109,.5))}
+.bw:focus-within{outline:2px solid #00F0FF;outline-offset:3px;filter:drop-shadow(0 0 8px rgba(0,240,255,.6))}
+.b-pri{cursor:pointer;transition:background 150ms cubic-bezier(.16,1,.3,1),transform 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-pri:active{background:#D91E5B !important;transform:translateY(1px)}
+.b-pri:focus{outline:none}
+.b-sec{cursor:pointer;transition:all 150ms cubic-bezier(.16,1,.3,1)}
+.b-sec:hover{background:rgba(0,240,255,.12) !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.b-sec:active{background:rgba(0,240,255,.2) !important}
+.b-sec:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:ng-pulse 1200ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes ng-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.8);opacity:0}}
+.cue-dot{animation:cue 1600ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(40px);opacity:0}}
+.mk{animation:mk 2400ms ease-in-out infinite}
+@keyframes mk{0%,100%{box-shadow:0 0 0 0 rgba(232,241,255,.5)}50%{box-shadow:0 0 0 6px rgba(232,241,255,0)}}
+@media (prefers-reduced-motion:reduce){.lyr{transition:none;transform:none !important}.beacon,.holo,.car,.rain,.fog,.ripple,.gl-a,.gl-b,.gl-main,.pulse::after,.cue-dot,.mk{animation:none}.car{display:none}.b-pri:active{transform:none}}
+</style>
+</helmet>
+<div style="width: {{totalW}}px; height: {{H}}px; display: flex; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+
+<section aria-label="Hero" onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}" onWheel="{{onWheel}}" style="width: {{W}}px; height: {{H}}px; flex: none; position: relative; overflow: hidden; background: #05060A">
+
+<!-- SKY -->
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to bottom, #05060A 0%, #0D0820 34%, #2A0F3A 58%, #4A1238 68%, #05060A 70%)"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 46%; height: 26%; background: radial-gradient(ellipse at 50% 100%, rgba(255,42,109,0.35), rgba(123,44,255,0.12) 45%, rgba(5,6,10,0) 72%)"></div>
+
+<!-- FAR SKYLINE -->
+<div aria-hidden="true" class="lyr" style="transform: {{tFar}}; transform-origin: 50% 66%">
+<sc-for list="{{far}}" as="b" hint-placeholder-count="20">
+<div class="bld" style="left: {{b.x}}%; width: {{b.w}}%; bottom: 30%; height: {{b.h}}%; background-color: #140D2A; background-image: linear-gradient(90deg, #140D2A 0 3px, transparent 3px), linear-gradient(to bottom, {{b.win}} 0 2px, #140D2A 2px); background-size: 7px 100%, 100% 9px"></div>
+</sc-for>
+<div class="fog" style="position: absolute; left: -10%; right: -10%; bottom: 26%; height: 22%; background: radial-gradient(ellipse at 50% 70%, rgba(123,44,255,0.35), rgba(123,44,255,0) 70%)"></div>
+</div>
+
+<!-- BACK CARS -->
+<div aria-hidden="true" class="lyr" style="transform: {{tCars}}; transform-origin: 50% 66%">
+<sc-for list="{{carsBack}}" as="c" hint-placeholder-count="2">
+<span class="car {{c.dir}}" style="top: {{c.top}}%; background: {{c.trail}}; box-shadow: 0 0 6px {{c.color}}; animation-duration: {{c.dur}}; animation-delay: {{c.delay}}; opacity: 0.6"></span>
+</sc-for>
+</div>
+
+<!-- MID TOWERS + BILLBOARDS -->
+<div aria-hidden="true" class="lyr" style="transform: {{tMid}}; transform-origin: 50% 66%">
+<sc-for list="{{mid}}" as="b" hint-placeholder-count="12">
+<div class="bld" style="left: {{b.x}}%; width: {{b.w}}%; bottom: 30%; height: {{b.h}}%; background-color: #0A0916; background-image: linear-gradient(90deg, #0A0916 0 4px, transparent 4px), linear-gradient(to bottom, {{b.win}} 0 3px, #0A0916 3px); background-size: 9px 100%, 100% 12px; box-shadow: inset 1px 0 0 {{b.rim}}">
+<sc-if value="{{b.beacon}}" hint-placeholder-val="{{ false }}"><span class="beacon"></span></sc-if>
+</div>
+</sc-for>
+<sc-for list="{{boards}}" as="h" hint-placeholder-count="4">
+<div class="holo" style="position: absolute; left: {{h.x}}%; top: {{h.y}}%; width: {{h.w}}%; height: {{h.h}}%; border: 1px solid {{h.c}}; background: {{h.bg}}; box-shadow: 0 0 12px {{h.c}}, 0 0 40px {{h.glow}}, inset 0 0 20px {{h.glow}}; display: flex; align-items: center; justify-content: center; overflow: hidden; animation-delay: {{h.delay}}">
+<span style="writing-mode: {{h.mode}}; font-family: 'JetBrains Mono', 'Noto Sans JP', monospace; font-weight: 700; font-size: {{h.fs}}px; letter-spacing: 0.12em; color: #E8F1FF; text-shadow: 0 0 8px {{h.c}}; white-space: nowrap">{{h.t}}</span>
+</div>
+</sc-for>
+</div>
+
+<!-- FRONT FOG -->
+<div aria-hidden="true" class="fog" style="position: absolute; left: -10%; right: -10%; bottom: 24%; height: 18%; pointer-events: none; background: radial-gradient(ellipse at 40% 80%, rgba(232,241,255,0.08), rgba(232,241,255,0) 60%), radial-gradient(ellipse at 75% 90%, rgba(0,240,255,0.08), rgba(0,240,255,0) 55%)"></div>
+
+<!-- FRONT CARS -->
+<div aria-hidden="true" class="lyr" style="transform: {{tCarsF}}; transform-origin: 50% 66%">
+<sc-for list="{{carsFront}}" as="c" hint-placeholder-count="4">
+<span class="car {{c.dir}}" style="top: {{c.top}}%; background: {{c.trail}}; box-shadow: 0 0 8px {{c.color}}, 0 0 20px {{c.color}}; animation-duration: {{c.dur}}; animation-delay: {{c.delay}}"></span>
+</sc-for>
+</div>
+
+<!-- WET STREET -->
+<div aria-hidden="true" class="lyr" style="transform: {{tStreet}}; transform-origin: 50% 0%; top: 70%">
+<div style="position: absolute; inset: 0; background: linear-gradient(to bottom, #0A0814, #05060A 70%)"></div>
+<div style="position: absolute; inset: 0; filter: blur(3px); opacity: {{reflOp}}; background: repeating-linear-gradient(90deg, rgba(0,240,255,0) 0 14px, rgba(0,240,255,0.28) 14px 17px, rgba(0,240,255,0) 17px 46px, rgba(255,42,109,0.3) 46px 50px, rgba(255,42,109,0) 50px 83px, rgba(245,230,66,0.14) 83px 85px, rgba(245,230,66,0) 85px 120px); -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%); mask-image: linear-gradient(to bottom, #000, transparent 85%)"></div>
+<div style="position: absolute; left: 20%; right: 20%; top: 0; height: 60%; background: radial-gradient(ellipse at 50% 0%, rgba(255,42,109,0.35), rgba(255,42,109,0) 70%)"></div>
+<div class="ripple" style="position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(5,6,10,0) 0 6px, rgba(5,6,10,0.55) 6px 8px)"></div>
+<div style="position: absolute; left: -40%; right: -40%; top: 0; bottom: -10%; background-image: linear-gradient(rgba(0,240,255,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.18) 1px, transparent 1px); background-size: 72px 72px; transform: perspective(300px) rotateX(58deg); transform-origin: 50% 0; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, transparent 95%); mask-image: linear-gradient(to bottom, transparent, #000 30%, transparent 95%)"></div>
+</div>
+
+<!-- NEAR TOWERS -->
+<div aria-hidden="true" class="lyr" style="transform: {{tNear}}; transform-origin: 50% 60%">
+<div style="position: absolute; left: -4%; width: {{nearW}}%; top: -10%; bottom: 22%; background: linear-gradient(90deg, #030306, #0A0C16); box-shadow: inset -2px 0 0 rgba(0,240,255,0.55), 12px 0 40px rgba(0,240,255,0.12)">
+<div style="position: absolute; right: 10%; top: 30%; width: 30%; height: 26%; border: 1px solid #FF2A6D; box-shadow: 0 0 12px #FF2A6D, inset 0 0 18px rgba(255,42,109,0.4); background: rgba(255,42,109,0.08)"></div>
+</div>
+<div style="position: absolute; right: -5%; width: {{nearW}}%; top: -6%; bottom: 20%; background: linear-gradient(270deg, #030306, #0A0C16); box-shadow: inset 2px 0 0 rgba(255,42,109,0.55), -12px 0 40px rgba(255,42,109,0.12)">
+<div style="position: absolute; left: 14%; top: 18%; width: 10px; height: 46%; background: linear-gradient(#00F0FF, #7B2CFF); box-shadow: 0 0 12px #00F0FF"></div>
+</div>
+</div>
+
+<!-- KEY ART (stand-in for the Three.js scene) -->
+<div aria-hidden="true" class="lyr" style="transform: {{tImg}}; transform-origin: 50% 62%">
+<sc-if value="{{landImg}}" hint-placeholder-val="{{ true }}"><img src="/_blob/f518f9a79ccdd805fd93fe7415f72928" alt="" style="position: absolute; left: -4%; top: -4%; width: 108%; height: 108%; object-fit: cover; object-position: 50% 55%"></sc-if>
+<sc-if value="{{portImg}}" hint-placeholder-val="{{ false }}"><img src="/_blob/ce9c31b8b1c8b220db884f46c0d6eb05" alt="" style="position: absolute; left: -4%; top: -4%; width: 108%; height: 108%; object-fit: cover; object-position: 50% 40%"></sc-if>
+</div>
+
+<!-- RAIN -->
+<div aria-hidden="true" class="lyr" style="transform: {{tRain}}; overflow: hidden">
+<div class="rain" style="animation-duration: {{rainDur}}"></div>
+<div class="rain rain-b" style="animation-duration: {{rainDur2}}"></div>
+</div>
+
+<!-- SCRIMS -->
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: {{scrim}}"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(5,6,10,0) 50%, rgba(5,6,10,0.7) 100%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- COPY -->
+<div style="position: absolute; z-index: 20; left: {{tx}}px; right: {{tRight}}px; {{tAnchor}}; display: flex; flex-direction: column; gap: {{tGap}}px; transform: {{tText}}; opacity: {{textOp}}; transition: transform 600ms cubic-bezier(.16,1,.3,1), opacity 300ms">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{eyeFs}}px; letter-spacing: 0.18em; color: #00F0FF; text-transform: uppercase">// Transmission 001 · Neo-Tokyo</span>
+<h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{h1Fs}}px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; white-space: pre-line"><span class="gl-wrap"><span class="gl-main" style="display: block; text-shadow: 0 0 8px #00F0FF, 0 0 32px rgba(0,240,255,0.45)">{{h1}}</span><span class="gl gl-a" aria-hidden="true">{{h1}}</span><span class="gl gl-b" aria-hidden="true">{{h1}}</span></span></h1>
+<p style="margin: 0; max-width: 560px; font-size: {{subFs}}px; line-height: 1.4; font-weight: 500; color: #E8F1FF">Year 2087. 40 million souls. <span style="color: #FF2A6D; text-shadow: 0 0 12px rgba(255,42,109,0.5)">One network.</span></p>
+<div style="display: flex; flex-direction: {{ctaDir}}; gap: 12px; margin-top: {{ctaTop}}px">
+<span class="bw" style="{{ctaStretch}}"><a href="#" class="b-pri" style="width: 100%; box-sizing: border-box; height: {{ctaH}}px; padding: 0 32px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; background: #FF2A6D; color: #05060A; font-weight: 700; font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Jack in<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></a></span>
+<a href="#" class="b-sec" style="box-sizing: border-box; height: {{ctaH}}px; padding: 0 28px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; background: rgba(5,6,10,0.4); border: 1px solid #00F0FF; color: #00F0FF; font-weight: 700; font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)">Explore districts</a>
+</div>
+</div>
+
+<!-- HUD -->
+<span aria-hidden="true" style="position: absolute; z-index: 21; top: {{bkTop}}px; left: {{bk}}px; width: 18px; height: 18px; border-top: 2px solid rgba(0,240,255,0.6); border-left: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 21; top: {{bkTop}}px; right: {{bk}}px; width: 18px; height: 18px; border-top: 2px solid rgba(0,240,255,0.6); border-right: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 21; bottom: {{bk}}px; left: {{bk}}px; width: 18px; height: 18px; border-bottom: 2px solid rgba(0,240,255,0.6); border-left: 2px solid rgba(0,240,255,0.6)"></span>
+<span aria-hidden="true" style="position: absolute; z-index: 21; bottom: {{bk}}px; right: {{bk}}px; width: 18px; height: 18px; border-bottom: 2px solid rgba(0,240,255,0.6); border-right: 2px solid rgba(0,240,255,0.6)"></span>
+
+<div style="position: absolute; z-index: 22; top: {{hudTop}}px; left: {{hudX}}px; display: flex; flex-direction: column; gap: 2px; font-family: 'JetBrains Mono', monospace; font-size: {{hudFs}}px; letter-spacing: 0.14em; color: #8A93A8">
+<span><span style="color: #00F0FF">LAT</span> 35.6762° N</span>
+<span><span style="color: #00F0FF">LON</span> 139.6503° E</span>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}"><span><span style="color: #00F0FF">ALT</span> 412 M · {{camZ}}</span></sc-if>
+</div>
+<div style="position: absolute; z-index: 22; top: {{hudTop}}px; right: {{hudX}}px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: 'JetBrains Mono', monospace; font-size: {{hudFs}}px; letter-spacing: 0.14em; color: #8A93A8">
+<span style="display: inline-flex; align-items: center; gap: 8px; color: #2BFF88"><span class="pulse" style="width: 7px; height: 7px; border-radius: 50%; background: #2BFF88"></span>SYS.ONLINE</span>
+<span>NODE 07 · 2087.10.27</span>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}"><span>RAIN 92% · VIS 1.2 KM</span></sc-if>
+</div>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; z-index: 22; bottom: 40px; left: 48px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; display: flex; flex-direction: column; gap: 2px">
+<span>[THREE.JS SCENE] · 60 FPS</span>
+<span>CAM <span style="color: #E8F1FF">{{camXY}}</span></span>
+</div>
+</sc-if>
+<a href="#districts" aria-label="Scroll to dive into the districts" style="position: absolute; z-index: 22; {{cuePos}}; min-height: 44px; display: flex; flex-direction: {{cueDir}}; align-items: center; gap: 12px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #E8F1FF; opacity: {{cueOp}}; transition: opacity 300ms">
+<span>SCROLL TO DIVE ↓</span>
+<span aria-hidden="true" style="position: relative; width: 1px; height: {{cueLine}}px; background: rgba(0,240,255,0.3); overflow: hidden"><span class="cue-dot" style="position: absolute; left: -1px; top: 0; width: 3px; height: 10px; background: #00F0FF; box-shadow: 0 0 6px #00F0FF"></span></span>
+</a>
+
+<!-- ANNOTATION MARKERS -->
+<sc-if value="{{annotate}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{marks}}" as="k" hint-placeholder-count="10">
+<span aria-hidden="true" class="mk" style="position: absolute; z-index: 60; left: {{k.x}}%; top: {{k.y}}%; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; background: {{k.fill}}; border: 2px solid #05060A; color: #05060A; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px">{{k.n}}</span>
+</sc-for>
+</sc-if>
+</section>
+
+<!-- ANNOTATION PANEL -->
+<sc-if value="{{annotate}}" hint-placeholder-val="{{ false }}">
+<aside aria-label="Motion annotations" style="width: {{panelW}}px; flex: none; box-sizing: border-box; height: {{H}}px; overflow: hidden; background: #0B0E17; border-left: 1px solid rgba(0,240,255,0.15); padding: {{panelPad}}px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #00F0FF">MOTION MAP · {{deviceLabel}}</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.08em">WHAT MOVES</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em">
+<span style="padding: 2px 8px; color: #05060A; background: #00F0FF">MOUSE · PARALLAX</span>
+<span style="padding: 2px 8px; color: #05060A; background: #FF2A6D">SCROLL · FLY FORWARD</span>
+<span style="padding: 2px 8px; color: #05060A; background: #F5E642">BOTH</span>
+<span style="padding: 2px 8px; color: #E8F1FF; border: 1px solid #8A93A8">FIXED</span>
+</div>
+</div>
+<sc-for list="{{marks}}" as="k" hint-placeholder-count="10">
+<div style="display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; padding-top: 10px; border-top: 1px solid rgba(0,240,255,0.12)">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: {{k.fill}}; color: #05060A; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px">{{k.n}}</span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-weight: 700; font-size: {{panelTitleFs}}px; line-height: 1.2">{{k.name}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: #00F0FF">{{k.mouse}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: #FF2A6D">{{k.scroll}}</span>
+</div>
+</div>
+</sc-for>
+<span style="margin-top: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.6; color: #8A93A8">{{panelFoot}}</span>
+</aside>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"annotate":{"editor":"boolean","default":false},"dive":{"editor":"range","default":0,"min":0,"max":100,"step":1,"unit":"%"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { mx: 0, my: 0, d: null }; }
+  renderVals() {
+    var self = this;
+    var bp = this.props.bp || ((this.props.mobile ?? false) ? 'mobile' : 'desktop');
+    var m = bp === 'mobile', tb = bp === 'tablet', wd = bp === 'wide';
+    var ann = !!(this.props.annotate ?? false);
+    var W = m ? 390 : (tb ? 834 : (wd ? 1920 : 1440)), H = m ? 844 : (tb ? 1112 : (wd ? 1080 : 900));
+    var panelW = ann ? (m ? 400 : 460) : 0;
+    var mx = this.state.mx, my = this.state.my;
+    var d = this.state.d !== null ? this.state.d : Math.max(0, Math.min(1, (this.props.dive ?? 0) / 100));
+
+    var seed = 7;
+    var rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var far = [], x = -2;
+    while (x < 102) { var w = 2.4 + rnd() * 3.2; far.push({ x: x.toFixed(2), w: w.toFixed(2), h: (16 + rnd() * 26).toFixed(1), win: rnd() > 0.5 ? 'rgba(123,44,255,0.35)' : 'rgba(0,240,255,0.18)' }); x += w * (0.7 + rnd() * 0.4); }
+    var wins = ['rgba(0,240,255,0.45)', 'rgba(255,42,109,0.4)', 'rgba(245,230,66,0.3)', 'rgba(232,241,255,0.22)'];
+    var mid = []; x = 6;
+    while (x < 92) { var w2 = 4.5 + rnd() * 3.6; mid.push({ x: x.toFixed(2), w: w2.toFixed(2), h: (28 + rnd() * 34).toFixed(1), win: wins[Math.floor(rnd() * 4)], rim: rnd() > 0.5 ? 'rgba(0,240,255,0.35)' : 'rgba(255,42,109,0.3)', beacon: rnd() > 0.55 }); x += w2 + rnd() * 3.5; }
+    if (m) { far = far.filter(function (b, i) { return i % 5 < 2; }); mid = mid.filter(function (b, i) { return i % 5 < 2; }); }
+    var boards = [
+      { x: 18, y: 26, w: 3.2, h: 22, c: '#FF2A6D', bg: 'rgba(255,42,109,0.18)', glow: 'rgba(255,42,109,0.35)', t: '電脳都市', mode: 'vertical-rl', fs: m ? 9 : 18, delay: '0s' },
+      { x: 61, y: 30, w: 9, h: 7, c: '#00F0FF', bg: 'linear-gradient(135deg, rgba(123,44,255,0.35), rgba(0,240,255,0.25))', glow: 'rgba(0,240,255,0.35)', t: '[HOLO BILLBOARD]', mode: 'horizontal-tb', fs: m ? 5 : 11, delay: '1.3s' },
+      { x: 78, y: 22, w: 2.6, h: 18, c: '#F5E642', bg: 'rgba(245,230,66,0.14)', glow: 'rgba(245,230,66,0.3)', t: 'ネオン', mode: 'vertical-rl', fs: m ? 8 : 16, delay: '2.1s' },
+      { x: 40, y: 40, w: 6, h: 5, c: '#7B2CFF', bg: 'rgba(123,44,255,0.3)', glow: 'rgba(123,44,255,0.45)', t: 'SECTOR 07', mode: 'horizontal-tb', fs: m ? 5 : 11, delay: '0.6s' }
+    ];
+    var speed = 1 + d * 3;
+    var car = function (top, dur, color, dir, delay) {
+      var trail = dir === 'car-r' ? 'linear-gradient(90deg, rgba(0,0,0,0), ' + color + ' 70%, #FFFFFF)' : 'linear-gradient(270deg, rgba(0,0,0,0), ' + color + ' 70%, #FFFFFF)';
+      return { top: top, dur: (dur / speed).toFixed(2) + 's', color: color, dir: dir, delay: delay, trail: trail };
+    };
+    var t = function (depth, k) {
+      return 'translate3d(' + (-mx * depth).toFixed(1) + 'px, ' + (-my * depth * 0.5).toFixed(1) + 'px, 0) scale(' + (1 + d * k).toFixed(3) + ')';
+    };
+    var p = (m || tb) ? 0.5 : (wd ? 1.2 : 1);
+    var marksD = [
+      { n: 1, x: 88, y: 46, name: 'Far skyline', mouse: 'MOUSE ±6px · slowest layer', scroll: 'SCROLL scale ×1.15', kind: 'both' },
+      { n: 2, x: 52, y: 52, name: 'Mid towers', mouse: 'MOUSE ±14px', scroll: 'SCROLL scale ×1.4', kind: 'both' },
+      { n: 3, x: 66, y: 33, name: 'Holo billboards', mouse: 'MOUSE ±14px (with towers) · flicker 4s', scroll: 'SCROLL grow + pass overhead', kind: 'both' },
+      { n: 4, x: 57, y: 21, name: 'Flying cars + light trails', mouse: 'MOUSE ±10–20px', scroll: 'SCROLL speed ×4 as camera dives', kind: 'both' },
+      { n: 5, x: 94, y: 12, name: 'Near towers', mouse: 'MOUSE ±32px · strongest depth cue', scroll: 'SCROLL ×2.2, rush past the lens', kind: 'both' },
+      { n: 6, x: 72, y: 62, name: 'Rain + fog', mouse: 'MOUSE ±40px (closest to camera)', scroll: 'SCROLL streaks fall 2× faster', kind: 'both' },
+      { n: 7, x: 70, y: 86, name: 'Wet street + reflections', mouse: '—', scroll: 'SCROLL grid flows toward camera', kind: 'scroll' },
+      { n: 8, x: 46, y: 34, name: 'H1 + subline', mouse: 'MOUSE counter-shift 4px (floats above scene)', scroll: 'SCROLL rises 80px + fades out by 40%', kind: 'both' },
+      { n: 9, x: 30, y: 73, name: 'CTAs', mouse: 'FIXED — never move, always clickable', scroll: 'Fade out with H1 group only', kind: 'fixed' },
+      { n: 10, x: 92, y: 92, name: 'HUD corners + scroll cue', mouse: 'FIXED to viewport', scroll: 'Cue fades out after 5% scroll', kind: 'fixed' }
+    ];
+    var mpos = { 1: [86, 40], 2: [40, 30], 3: [64, 26], 4: [58, 18], 5: [92, 14], 6: [14, 34], 7: [80, 47], 8: [50, 54], 9: [50, 79], 10: [50, 95] };
+    var fills = { both: '#F5E642', mouse: '#00F0FF', scroll: '#FF2A6D', fixed: '#E8F1FF' };
+    var marks = marksD.map(function (k) { var pos = (m || tb) ? mpos[k.n] : [k.x, k.y]; return { n: k.n, x: pos[0], y: pos[1], name: k.name, mouse: k.mouse, scroll: k.scroll, fill: fills[k.kind] }; });
+
+    return {
+      desktop: !m, annotate: ann,
+      W: W, H: H, totalW: W + panelW, panelW: panelW, panelPad: m ? 20 : 28, panelTitleFs: m ? 14 : 15,
+      deviceLabel: m ? 'MOBILE 390' : (tb ? 'TABLET 834' : (wd ? 'WIDE 1920' : 'DESKTOP 1440')),
+      reflOp: m ? 0 : 0.9,
+      landImg: !(m || tb), portImg: m || tb, tImg: t(12 * p, 0.55),
+      panelFoot: m ? 'Mobile: no mouse. Parallax driven by device tilt (gyro, opt-in) at 50% strength; scroll dive identical. Reduced motion: static poster frame, no parallax.' : 'Parallax eases with motion/slow (600ms cyber-out). Scroll dive maps the first 100vh of scroll to camera z 0 → −400. Reduced motion: static poster frame, no parallax, no dive.',
+      far: far, mid: mid, boards: boards,
+      carsBack: [car(27, 9, '#7B2CFF', 'car-l', '-2s'), car(36, 11, '#00F0FF', 'car-r', '-5s')],
+      carsFront: [car(18, 5, '#FF2A6D', 'car-r', '-1s'), car(24, 6.5, '#00F0FF', 'car-l', '-3s'), car(44, 4.2, '#F5E642', 'car-r', '-2.5s'), car(52, 7, '#FF2A6D', 'car-l', '-4s')],
+      tFar: t(6 * p, 0.15), tCars: t(10 * p, 0.3), tMid: t(14 * p, 0.4), tCarsF: t(20 * p, 0.7), tStreet: t(8 * p, 0.6), tNear: t(32 * p, 1.2), tRain: t(40 * p, 0.2),
+      nearW: m ? 16 : (tb ? 14 : 11),
+      rainDur: (0.45 / (1 + d)).toFixed(2) + 's', rainDur2: (0.7 / (1 + d)).toFixed(2) + 's',
+      scrim: (m || tb) ? 'linear-gradient(to top, rgba(5,6,10,0.97) 0%, rgba(5,6,10,0.9) 38%, rgba(5,6,10,0.4) 58%, rgba(5,6,10,0) 72%)' : 'linear-gradient(90deg, rgba(5,6,10,0.88) 0%, rgba(5,6,10,0.55) 34%, rgba(5,6,10,0) 60%), linear-gradient(to top, rgba(5,6,10,0.6), rgba(5,6,10,0) 30%)',
+      tx: m ? 16 : (tb ? 40 : (wd ? 160 : 80)), tRight: m ? 16 : (tb ? 40 : (wd ? 400 : 160)),
+      tAnchor: m ? 'bottom: 92px' : (tb ? 'bottom: 128px' : (wd ? 'top: 320px' : 'top: 250px')),
+      tGap: m ? 14 : (tb ? 18 : (wd ? 24 : 20)),
+      tText: 'translate3d(' + (mx * 4 * p).toFixed(1) + 'px, ' + (my * 2 * p - d * 80).toFixed(1) + 'px, 0)',
+      textOp: Math.max(0, 1 - d * 2.5).toFixed(2),
+      eyeFs: m ? 11 : 12, h1Fs: m ? 44 : (tb ? 68 : (wd ? 132 : 104)), subFs: m ? 19 : (tb ? 22 : (wd ? 30 : 26)),
+      h1: m ? 'Welcome\nto the\ngrid' : 'Welcome to\nthe grid',
+      ctaDir: m ? 'column' : 'row', ctaTop: m ? 6 : 16, ctaH: m ? 52 : 56,
+      ctaStretch: m ? 'width: 100%' : '',
+      bk: m ? 10 : 24, bkTop: m ? 74 : (tb ? 84 : 100),
+      hudTop: m ? 80 : (tb ? 96 : 112), hudX: m ? 18 : (tb ? 40 : (wd ? 64 : 48)), hudFs: m ? 10 : 11,
+      camZ: 'Z ' + Math.round(-d * 400), camXY: 'X ' + (mx * 4).toFixed(1) + ' · Y ' + (my * 2).toFixed(1) + ' · Z ' + Math.round(-d * 400),
+      cuePos: m ? 'left: 50%; bottom: 20px; transform: translateX(-50%)' : (tb ? 'left: 50%; bottom: 36px; transform: translateX(-50%)' : (wd ? 'right: 64px; bottom: 40px' : 'right: 48px; bottom: 32px')),
+      cueDir: (m || tb) ? 'row' : 'column', cueLine: (m || tb) ? 24 : 48,
+      cueOp: Math.max(0, 1 - d * 20).toFixed(2),
+      marks: marks,
+      onMove: function (e) {
+        var r = e.currentTarget.getBoundingClientRect();
+        self.setState({ mx: ((e.clientX - r.left) / r.width) * 2 - 1, my: ((e.clientY - r.top) / r.height) * 2 - 1 });
+      },
+      onLeave: function () { self.setState({ mx: 0, my: 0 }); },
+      onWheel: function (e) {
+        var cur = self.state.d !== null ? self.state.d : d;
+        self.setState({ d: Math.max(0, Math.min(1, cur + e.deltaY / 1500)) });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

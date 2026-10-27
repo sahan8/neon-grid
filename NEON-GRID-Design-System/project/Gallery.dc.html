@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>05 / Gallery</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.tile{cursor:pointer;display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;position:relative}
+.tile:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.t-img{transition:transform 600ms cubic-bezier(.16,1,.3,1)}
+.t-scan{opacity:0;transition:opacity 150ms}
+.t-cap{transform:translateY(100%);transition:transform 300ms cubic-bezier(.16,1,.3,1)}
+.t-frame{transition:border-color 150ms,box-shadow 300ms}
+.tile:hover .t-img,.tile:focus-visible .t-img,.tile.is-hover .t-img{transform:scale(1.05)}
+.tile:hover .t-scan,.tile:focus-visible .t-scan,.tile.is-hover .t-scan{opacity:1}
+.tile:hover .t-cap,.tile:focus-visible .t-cap,.tile.is-hover .t-cap{transform:none}
+.tile:hover .t-frame,.tile.is-hover .t-frame{border-color:#00F0FF !important;box-shadow:0 0 8px rgba(0,240,255,.6),0 0 24px rgba(0,240,255,.25)}
+.t-scan{animation:tscan 1200ms linear infinite}
+@keyframes tscan{from{background-position:0 0}to{background-position:0 24px}}
+.tab{cursor:pointer;transition:all 150ms}
+.tab:hover{color:#E8F1FF !important}
+.tab:focus-visible,.lb-btn:focus-visible,.lb-th:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.lb-btn{cursor:pointer;transition:all 150ms}
+.lb-btn:hover{border-color:#00F0FF !important;color:#E8F1FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.lb-th{cursor:pointer}
+.lb-in{animation:lbin 300ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes lbin{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.mas{column-gap:var(--g)}
+.mas > *{break-inside:avoid;margin-bottom:var(--g)}
+@media (prefers-reduced-motion:reduce){.t-img,.t-cap{transition:opacity 150ms}.tile:hover .t-img,.tile.is-hover .t-img{transform:none}.t-scan{animation:none}.lb-in{animation:none}}
+</style>
+</helmet>
+<section id="gallery" aria-label="Gallery" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<header style="position: relative; z-index: 2; padding: {{hdrPad}}; display: flex; flex-direction: column; gap: {{hdrGap}}px">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">05 / GALLERY</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; white-space: nowrap">{{countLabel}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{h2Fs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">Captured frames</h2>
+<div role="tablist" aria-label="Filter gallery" style="display: flex; gap: 4px; flex-wrap: wrap">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button type="button" class="tab" role="tab" aria-selected="{{t.selStr}}" onClick="{{t.pick}}" style="height: 44px; padding: 0 {{tabPad}}px; display: inline-flex; align-items: center; gap: 8px; background: {{t.bg}}; border: 1px solid {{t.border}}; color: {{t.color}}; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; box-shadow: {{t.glow}}">{{t.label}}<span style="font-size: 10px; color: {{t.countC}}">{{t.count}}</span></button>
+</sc-for>
+</div>
+</div>
+</header>
+
+<div class="mas" style="position: relative; z-index: 2; margin-top: {{gridTop}}px; padding: 0 {{padX}}px; column-count: {{cols}}; --g: {{gap}}px">
+<sc-for list="{{shown}}" as="g" hint-placeholder-count="9">
+<button type="button" class="tile {{g.hoverCls}}" aria-label="Open image {{g.num}} of 9: {{g.title}}" onClick="{{g.open}}">
+<span class="t-frame" style="display: block; position: relative; height: {{g.h}}px; overflow: hidden; border: 1px solid rgba(0,240,255,0.15); background: #0B0E17">
+<span class="t-img" role="img" aria-label="{{g.alt}}" style="position: absolute; inset: 0; display: block; background: {{g.scene}}"></span>
+<span class="t-scan" aria-hidden="true" style="position: absolute; inset: 0; display: block; background: repeating-linear-gradient(to bottom, rgba(0,240,255,0.14) 0 1px, rgba(0,0,0,0) 1px 4px), linear-gradient(to top, rgba(5,6,10,0.75), rgba(5,6,10,0) 50%)"></span>
+<span aria-hidden="true" style="position: absolute; left: 10px; top: 10px; height: 22px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{g.catC}}; background: rgba(5,6,10,0.7); border: 1px solid {{g.catC}}">{{g.cat}}</span>
+<span class="t-cap" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 2px; padding: 12px 12px 10px; background: rgba(5,6,10,0.88); border-top: 1px solid #00F0FF; font-family: 'JetBrains Mono', monospace">
+<span style="font-size: 12px; letter-spacing: 0.12em; color: #E8F1FF">#{{g.num}} · {{g.titleUp}}</span>
+<span style="font-size: 10px; letter-spacing: 0.12em; color: #8A93A8">{{g.meta}}</span>
+</span>
+</span>
+</button>
+</sc-for>
+</div>
+
+<!-- LIGHTBOX -->
+<sc-if value="{{lbOpen}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-label="Image viewer" onTouchStart="{{tStart}}" onTouchEnd="{{tEnd}}" style="position: absolute; z-index: 60; inset: 0; background: rgba(5,6,10,0.96); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; flex-direction: column">
+<div style="height: 64px; flex: none; padding: 0 {{lbPadX}}px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(0,240,255,0.15)">
+<span aria-live="polite" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: {{cntFs}}px; letter-spacing: 0.06em"><span style="color: #00F0FF">{{lbNum}}</span><span style="color: #8A93A8"> / 09</span></span>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="display: flex; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8">
+<span style="display: inline-flex; align-items: center; gap: 6px"><kbd style="min-width: 22px; height: 22px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(0,240,255,0.4); color: #E8F1FF; font-family: inherit">←</kbd><kbd style="min-width: 22px; height: 22px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(0,240,255,0.4); color: #E8F1FF; font-family: inherit">→</kbd>NAVIGATE</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; margin-left: 12px"><kbd style="height: 22px; padding: 0 6px; display: inline-flex; align-items: center; border: 1px solid rgba(0,240,255,0.4); color: #E8F1FF; font-family: inherit">ESC</kbd>CLOSE</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; margin-left: 12px"><kbd style="min-width: 22px; height: 22px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(0,240,255,0.4); color: #E8F1FF; font-family: inherit">F</kbd>FULLSCREEN</span>
+</div>
+</sc-if>
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #8A93A8">SWIPE ← →</span></sc-if>
+<button type="button" class="lb-btn" aria-label="Close viewer" onClick="{{close}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.35); color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+<div style="flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: {{stagePad}}">
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="lb-btn" aria-label="Previous image" onClick="{{prev}}" style="position: absolute; left: 32px; top: 50%; margin-top: -28px; width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.6); border: 1px solid rgba(0,240,255,0.35); color: #00F0FF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="lb-btn" aria-label="Next image" onClick="{{next}}" style="position: absolute; right: 32px; top: 50%; margin-top: -28px; width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.6); border: 1px solid rgba(0,240,255,0.35); color: #00F0FF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></button>
+</sc-if>
+<figure class="lb-in" style="margin: 0; width: 100%; max-width: {{figMax}}px; height: 100%; display: flex; flex-direction: column; gap: 12px">
+<div role="img" aria-label="{{cur.alt}}" style="flex: 1; min-height: 0; position: relative; overflow: hidden; background: {{cur.full}}; border: 1px solid rgba(0,240,255,0.25); box-shadow: 0 0 40px rgba(0,240,255,0.12)">
+<span aria-hidden="true" style="position: absolute; top: 8px; left: 8px; width: 18px; height: 18px; border-top: 2px solid #00F0FF; border-left: 2px solid #00F0FF"></span>
+<span aria-hidden="true" style="position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; border-bottom: 2px solid #00F0FF; border-right: 2px solid #00F0FF"></span>
+</div>
+<figcaption style="flex: none; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; font-family: 'JetBrains Mono', monospace">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 10px; letter-spacing: 0.14em; color: {{cur.catC}}">{{cur.cat}}</span><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{capFs}}px; letter-spacing: 0.06em; text-transform: uppercase">{{cur.title}}</span><span style="font-size: 11px; letter-spacing: 0.1em; color: #8A93A8">{{cur.meta}}</span></span>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}"><span style="font-size: 11px; letter-spacing: 0.12em; color: #8A93A8">© [PHOTOGRAPHER] · [LICENCE]</span></sc-if>
+</figcaption>
+</figure>
+</div>
+<div style="flex: none; padding: 12px {{lbPadX}}px {{thBottom}}px; display: flex; gap: {{thGap}}px; justify-content: center; border-top: 1px solid rgba(0,240,255,0.12)">
+<sc-for list="{{all}}" as="g" hint-placeholder-count="9">
+<sc-if value="{{showThumbs}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="lb-th" aria-label="View image {{g.num}}" aria-current="{{g.curStr}}" onClick="{{g.open}}" style="width: 64px; height: 44px; padding: 0; background: {{g.scene}}; border: 1px solid {{g.thBorder}}; opacity: {{g.thOp}}; box-shadow: {{g.thGlow}}"></button>
+</sc-if>
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width: {{g.dotW}}px; height: 4px; background: {{g.dotC}}; transition: width 300ms cubic-bezier(.16,1,.3,1)"></span></sc-if>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"filter":{"editor":"enum","options":["ALL","STREETS","TECH","PEOPLE"],"default":"ALL"},"hover":{"editor":"int","default":-1,"min":-1,"max":8},"lightbox":{"editor":"int","default":-1,"min":-1,"max":8},"$preview":{"width":1440,"height":1460}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { filter: null, lb: null, tx: 0 }; }
+  renderVals() {
+    var self = this;
+    var m = !!(this.props.mobile ?? false);
+    var filter = this.state.filter !== null ? this.state.filter : (this.props.filter ?? 'ALL');
+    var hover = this.props.hover ?? -1;
+    var lb = this.state.lb !== null ? this.state.lb : (this.props.lightbox ?? -1);
+    var CAT = { STREETS: '#FF2A6D', TECH: '#00F0FF', PEOPLE: '#F5E642' };
+    var IMG = [
+      { title: 'Kabuki Alley', cat: 'STREETS', h: 420, meta: 'SECTOR 01 · 02:14 · ISO 6400', alt: 'Rain-soaked alley lit by stacked magenta signs',
+        scene: 'linear-gradient(#FF2A6D, #FF2A6D) 18% 22% / 6% 28% no-repeat, linear-gradient(#00F0FF, #00F0FF) 78% 30% / 5% 22% no-repeat, linear-gradient(#F5E642, #F5E642) 72% 14% / 14% 4% no-repeat, linear-gradient(90deg, #0B0E17 0 30%, rgba(0,0,0,0) 30% 70%, #0B0E17 70%), repeating-linear-gradient(100deg, rgba(190,220,255,0.18) 0 1px, rgba(0,0,0,0) 1px 9px), radial-gradient(ellipse at 50% 100%, rgba(255,42,109,0.5), rgba(0,0,0,0) 60%), linear-gradient(#12061A, #2A0F2A 70%, #05060A)' },
+      { title: 'Overpass 9', cat: 'STREETS', h: 260, meta: 'SECTOR 04 · 23:40 · 4S EXPOSURE', alt: 'Highway overpass streaked with red and cyan light trails',
+        scene: 'linear-gradient(170deg, rgba(0,0,0,0) 46%, rgba(255,42,109,0.9) 47% 48%, rgba(0,0,0,0) 49% 52%, rgba(0,240,255,0.9) 53% 54%, rgba(0,0,0,0) 55%), linear-gradient(#141821, #141821) 0 62% / 100% 8% no-repeat, linear-gradient(#141821, #141821) 30% 100% / 4% 40% no-repeat, linear-gradient(#141821, #141821) 70% 100% / 4% 40% no-repeat, linear-gradient(#0A1422, #1D1236 60%, #05060A)' },
+      { title: 'Night Market', cat: 'STREETS', h: 320, meta: 'NEON BAZAAR · 01:02 · 35MM', alt: 'Crowded night market under strings of lanterns',
+        scene: 'radial-gradient(circle at 20% 26%, #F5E642 0 4px, rgba(245,230,66,0) 22px), radial-gradient(circle at 45% 18%, #FF2A6D 0 4px, rgba(255,42,109,0) 22px), radial-gradient(circle at 70% 28%, #F5E642 0 4px, rgba(245,230,66,0) 22px), radial-gradient(circle at 88% 20%, #00F0FF 0 4px, rgba(0,240,255,0) 20px), repeating-linear-gradient(90deg, #FF2A6D 0 14px, #3A0D24 14px 28px) 0 54% / 100% 8% no-repeat, linear-gradient(#24101C, #24101C) 0 100% / 100% 38% no-repeat, linear-gradient(#12061A, #3D1030)' },
+      { title: 'Mantis Blade', cat: 'TECH', h: 300, meta: 'STEEL LOTUS ARMOURY · PROTOTYPE', alt: 'Close-up of a forearm blade implant glowing magenta',
+        scene: 'linear-gradient(150deg, rgba(0,0,0,0) 40%, #E8F1FF 41% 42%, #FF2A6D 43% 47%, rgba(0,0,0,0) 48%), radial-gradient(ellipse at 40% 60%, rgba(255,42,109,0.4), rgba(0,0,0,0) 50%), linear-gradient(90deg, #1C2130, #8A93A8, #1C2130) 30% 80% / 30% 30% no-repeat, linear-gradient(#0B0E17, #1C0612)' },
+      { title: 'Deck 7 Rig', cat: 'TECH', h: 400, meta: 'GHOST//WIRE · HOME SETUP', alt: 'Cramped netrunner rig with three cyan monitors and cables',
+        scene: 'linear-gradient(rgba(0,240,255,0.7), rgba(0,240,255,0.2)) 15% 25% / 30% 22% no-repeat, linear-gradient(rgba(0,240,255,0.7), rgba(0,240,255,0.2)) 60% 20% / 30% 26% no-repeat, linear-gradient(rgba(123,44,255,0.7), rgba(123,44,255,0.2)) 40% 52% / 26% 18% no-repeat, repeating-linear-gradient(90deg, #2A2F3E 0 6px, #141821 6px 9px) 50% 82% / 70% 8% no-repeat, radial-gradient(ellipse at 50% 40%, rgba(0,240,255,0.3), rgba(0,0,0,0) 60%), linear-gradient(#05060A, #0A1A24)' },
+      { title: 'Drone Swarm', cat: 'TECH', h: 240, meta: 'CHROME HEIGHTS · SECURITY FLEET', alt: 'Formation of glowing drones over corporate towers',
+        scene: 'radial-gradient(circle at 20% 30%, #00F0FF 0 3px, rgba(0,0,0,0) 10px), radial-gradient(circle at 35% 22%, #00F0FF 0 3px, rgba(0,0,0,0) 10px), radial-gradient(circle at 50% 34%, #FF3B3B 0 3px, rgba(0,0,0,0) 10px), radial-gradient(circle at 65% 20%, #00F0FF 0 3px, rgba(0,0,0,0) 10px), radial-gradient(circle at 80% 30%, #00F0FF 0 3px, rgba(0,0,0,0) 10px), linear-gradient(90deg, #0C1A2A, #1D3A52, #0C1A2A) 30% 100% / 16% 50% no-repeat, linear-gradient(90deg, #0C1A2A, #1D3A52, #0C1A2A) 70% 100% / 16% 60% no-repeat, linear-gradient(#04101C, #0A2A3A)' },
+      { title: 'Netrunner, Off-Shift', cat: 'PEOPLE', h: 360, meta: 'PORTRAIT · DATA HARBOUR', alt: 'Silhouetted netrunner with a cyan visor in a dark room',
+        scene: 'linear-gradient(#00F0FF, #00F0FF) 50% 36% / 30% 4% no-repeat, radial-gradient(ellipse 18% 22% at 50% 38%, #1A1F2C 98%, rgba(0,0,0,0) 100%), radial-gradient(ellipse 40% 30% at 50% 100%, #12303A 98%, rgba(0,0,0,0) 100%), radial-gradient(circle at 50% 38%, rgba(0,240,255,0.35), rgba(0,0,0,0) 50%), linear-gradient(#061620, #05060A)' },
+      { title: 'Ronin at Dawn', cat: 'PEOPLE', h: 280, meta: 'PORTRAIT · ROOFTOP · 05:48', alt: 'Samurai silhouette on a rooftop against a magenta sunrise',
+        scene: 'linear-gradient(110deg, rgba(0,0,0,0) 62%, #E8F1FF 62.5% 63%, rgba(0,0,0,0) 63.5%), radial-gradient(ellipse 10% 14% at 46% 46%, #0B0E17 98%, rgba(0,0,0,0) 100%), radial-gradient(ellipse 24% 26% at 46% 82%, #0B0E17 98%, rgba(0,0,0,0) 100%), linear-gradient(#0B0E17, #0B0E17) 0 100% / 100% 14% no-repeat, linear-gradient(to top, #FF2A6D, #7B2CFF 50%, #12061A)' },
+      { title: 'The Broker', cat: 'PEOPLE', h: 340, meta: 'PORTRAIT · NIGHT EXCHANGE', alt: 'Figure in a wide hat and mirrored glasses lit gold',
+        scene: 'linear-gradient(#0B0E17, #0B0E17) 50% 20% / 56% 4% no-repeat, linear-gradient(#0B0E17, #0B0E17) 50% 13% / 26% 10% no-repeat, linear-gradient(#F5E642, #F5E642) 50% 34% / 22% 3% no-repeat, radial-gradient(ellipse 16% 20% at 50% 36%, #2A2610 98%, rgba(0,0,0,0) 100%), radial-gradient(ellipse 40% 30% at 50% 100%, #1A1606 98%, rgba(0,0,0,0) 100%), radial-gradient(circle at 50% 40%, rgba(245,230,66,0.3), rgba(0,0,0,0) 55%), linear-gradient(#1A1606, #05060A)' }
+    ];
+    var U = function (id, pos) { return 'url(/_blob/' + id + ') ' + (pos || '50% 50%') + ' / cover no-repeat'; };
+    var F = function (id) { return 'url(/_blob/' + id + ') center / contain no-repeat, #05060A'; };
+    IMG = [
+      { title: 'Neon Avenue', cat: 'STREETS', h: 260, meta: 'SECTOR 07 · MAIN STREET · 23:41', alt: 'Lone figure in a long coat walking down a rain-soaked neon avenue', id: 'f518f9a79ccdd805fd93fe7415f72928', pos: '50% 60%' },
+      { title: 'Noodle Row', cat: 'STREETS', h: 420, meta: 'NEON BAZAAR · 01:02 · 35MM', alt: 'Night market with steaming noodle stalls, neon signs and glowing umbrellas', id: '6fbdad1e066b1da64c216533141b5e5d' },
+      { title: 'Under the Overpass', cat: 'STREETS', h: 380, meta: 'THE UNDERCITY · LEVEL −2', alt: 'Flooded alley under a concrete overpass with tangled cables and neon signs', id: '98727b618aba76fc8e8518f2cf65d946' },
+      { title: 'Titan Mk.IV', cat: 'TECH', h: 320, meta: 'CYBER-ARM · CLASS A', alt: 'Chrome cybernetic arm with cyan light seams above a holographic pedestal', id: '7c3eeb33b5ee094448d356ca99619ac9' },
+      { title: 'Oracle Optic', cat: 'TECH', h: 300, meta: 'OCULAR · CLASS B', alt: 'Cybernetic eye with glowing magenta rings and trailing cables', id: '25a5890a57af19f991703bf426d89952' },
+      { title: 'Synapse Core', cat: 'TECH', h: 300, meta: 'NEURAL CHIP · CLASS S', alt: 'Translucent neural chip with violet circuit traces', id: 'c87ab4ec868ba1b24ff6780852c169e4' },
+      { title: 'Ghost//Wire', cat: 'PEOPLE', h: 400, meta: 'NETRUNNER · DATA HARBOUR', alt: 'Netrunner with a cyan visor, neck cables and floating holo screens', id: '5d1b8491ffec97a284b45f99c24243af', pos: '50% 25%' },
+      { title: 'Ronin-9', cat: 'PEOPLE', h: 420, meta: 'STREET SAMURAI · ALLEY 13', alt: 'Street samurai in a torn leather jacket holding a glowing cyan katana in the rain', id: '836b127ffc746b55e8e586ffe4d7a7b5', pos: '50% 20%' },
+      { title: 'Lone Runner', cat: 'PEOPLE', h: 440, meta: 'SECTOR 04 · 03:17', alt: 'Hooded figure with a case standing in an empty neon canyon of towers', id: 'ce9c31b8b1c8b220db884f46c0d6eb05', pos: '50% 70%' }
+    ].map(function (g) { return Object.assign(g, { scene: U(g.id, g.pos), full: F(g.id) }); });
+    var scale = m ? 0.62 : 1;
+    var all = IMG.map(function (g, i) {
+      var isCur = i === lb;
+      return Object.assign({}, g, {
+        num: '0' + (i + 1), titleUp: g.title.toUpperCase(), catC: CAT[g.cat], h: Math.round(g.h * scale),
+        hoverCls: hover === i ? 'is-hover' : '',
+        curStr: isCur ? 'true' : 'false', thBorder: isCur ? '#00F0FF' : 'rgba(0,240,255,0.2)', thOp: isCur ? 1 : 0.5, thGlow: isCur ? '0 0 8px #00F0FF' : 'none',
+        dotW: isCur ? 18 : 4, dotC: isCur ? '#00F0FF' : 'rgba(0,240,255,0.3)',
+        open: function () { self.setState({ lb: i }); }
+      });
+    });
+    var shown = all.filter(function (g) { return filter === 'ALL' || g.cat === filter; });
+    var tabs = ['ALL', 'STREETS', 'TECH', 'PEOPLE'].map(function (k) {
+      var sel = k === filter;
+      var c = k === 'ALL' ? 9 : IMG.filter(function (g) { return g.cat === k; }).length;
+      return { label: k, count: '0' + c, selStr: sel ? 'true' : 'false', bg: sel ? 'rgba(0,240,255,0.12)' : 'transparent', border: sel ? '#00F0FF' : 'rgba(0,240,255,0.2)', color: sel ? '#00F0FF' : '#8A93A8', countC: sel ? '#E8F1FF' : 'rgba(138,147,168,0.8)', glow: sel ? '0 0 8px rgba(0,240,255,0.5)' : 'none', pick: function () { self.setState({ filter: k }); } };
+    });
+    var cur = all[lb >= 0 ? lb : 0];
+    var go = function (d) { var n = ((lb >= 0 ? lb : 0) + d + 9) % 9; self.setState({ lb: n }); };
+    return {
+      desktop: !m, mobile: m, W: m ? 390 : 1440,
+      H: (this.props.lightbox ?? -1) >= 0 ? (m ? 844 : 1000) : (m ? 1300 : 1460),
+      hdrPad: m ? '32px 16px 0' : '96px 80px 0', hdrGap: m ? 12 : 16, idxFs: m ? 12 : 14, h2Fs: m ? 26 : 56, tabPad: m ? 10 : 16,
+      countLabel: '0' + shown.length + ' / 09 FRAMES',
+      gridTop: m ? 24 : 40, padX: m ? 16 : 80, cols: m ? 2 : 3, gap: m ? 10 : 24,
+      tabs: tabs, shown: shown, all: all,
+      lbOpen: lb >= 0, cur: cur, lbNum: cur.num,
+      lbPadX: m ? 12 : 32, cntFs: m ? 18 : 22, stagePad: m ? '12px' : '24px 120px', figMax: m ? 390 : 1100, capFs: m ? 16 : 22,
+      showThumbs: !m, thGap: m ? 6 : 8, thBottom: m ? 28 : 16,
+      close: function () { self.setState({ lb: -1 }); },
+      prev: function () { go(-1); }, next: function () { go(1); },
+      tStart: function (e) { var t = e.touches && e.touches[0]; if (t) self.setState({ tx: t.clientX }); },
+      tEnd: function (e) { var t = e.changedTouches && e.changedTouches[0]; if (!t) return; var dx = t.clientX - self.state.tx; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); }
+    };
+  }
+}
+</script>
+</body>
+</html>

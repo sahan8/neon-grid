@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>01 / Districts</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:50}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:49}
+.track{transition:transform 600ms cubic-bezier(.16,1,.3,1)}
+.cw{transition:transform 600ms cubic-bezier(.16,1,.3,1),filter 600ms cubic-bezier(.16,1,.3,1),opacity 300ms;cursor:pointer}
+.scene{transition:transform 600ms cubic-bezier(.16,1,.3,1)}
+.dcard:hover .scene,.dcard.is-hover .scene{transform:scale(1.05)}
+.rgb{position:absolute;inset:0;opacity:0;mix-blend-mode:screen;isolation:isolate;transition:opacity 150ms;pointer-events:none}
+.rgb::after{content:"";position:absolute;inset:0;mix-blend-mode:multiply}
+.rgb-c::after{background:#00F0FF}.rgb-m::after{background:#FF2A6D}
+.dcard:hover .rgb,.dcard.is-hover .rgb,.dcard:active .rgb{opacity:.85}
+.dcard:hover .rgb-c,.dcard.is-hover .rgb-c,.dcard:active .rgb-c{animation:rgbc 600ms steps(4) infinite}
+.dcard:hover .rgb-m,.dcard.is-hover .rgb-m,.dcard:active .rgb-m{animation:rgbm 600ms steps(4) infinite}
+@keyframes rgbc{0%{transform:translate(-6px,0) scale(1.05);clip-path:inset(0 0 0 0)}25%{transform:translate(-10px,2px) scale(1.05);clip-path:inset(12% 0 52% 0)}50%{transform:translate(-4px,-1px) scale(1.05);clip-path:inset(46% 0 18% 0)}75%{transform:translate(-8px,0) scale(1.05);clip-path:inset(0 0 0 0)}100%{transform:translate(-6px,0) scale(1.05)}}
+@keyframes rgbm{0%{transform:translate(6px,0) scale(1.05);clip-path:inset(0 0 0 0)}25%{transform:translate(9px,-2px) scale(1.05);clip-path:inset(30% 0 40% 0)}50%{transform:translate(5px,1px) scale(1.05);clip-path:inset(0 0 60% 0)}75%{transform:translate(8px,0) scale(1.05);clip-path:inset(58% 0 6% 0)}100%{transform:translate(6px,0) scale(1.05)}}
+.slice{position:absolute;left:0;right:0;height:10%;top:40%;opacity:0;background:inherit;pointer-events:none}
+.dcard:hover .slice,.dcard.is-hover .slice{opacity:1;animation:slice 600ms steps(4) infinite}
+@keyframes slice{0%{top:20%;transform:translateX(-14px)}25%{top:62%;transform:translateX(10px)}50%{top:38%;transform:translateX(-6px)}75%{top:74%;transform:translateX(16px)}100%{top:20%;transform:translateX(-14px)}}
+.dcard:hover .hv-tag,.dcard.is-hover .hv-tag{opacity:1}
+.enter{transition:color 150ms,gap 300ms cubic-bezier(.16,1,.3,1),background 150ms}
+.enter:hover,.dcard.is-hover .enter{color:#E8F1FF !important;gap:16px !important;background:rgba(0,240,255,.08)}
+.enter:focus-visible,.navb:focus-visible,.seg:focus-visible,.dot:focus-visible,.cw:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.navb{cursor:pointer;transition:all 150ms cubic-bezier(.16,1,.3,1)}
+.navb:hover:not(:disabled){border-color:#00F0FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.navb:disabled{opacity:.4;cursor:not-allowed}
+.seg,.dot{cursor:pointer}
+.snap{scroll-snap-type:y mandatory;scrollbar-width:none}
+.snap::-webkit-scrollbar{display:none}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:ng-pulse 1200ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes ng-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.8);opacity:0}}
+@media (prefers-reduced-motion:reduce){.track,.cw,.scene{transition:opacity 300ms}.rgb-c,.rgb-m,.slice,.pulse::after{animation:none !important}.dcard:hover .rgb-c,.dcard.is-hover .rgb-c{transform:translate(-4px,0)}.dcard:hover .rgb-m,.dcard.is-hover .rgb-m{transform:translate(4px,0)}.dcard:hover .scene,.dcard.is-hover .scene{transform:none}.snap{scroll-behavior:auto}}
+</style>
+</helmet>
+<section id="districts" aria-label="Districts" onWheel="{{onWheel}}" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 60%, rgba(123,44,255,0.14), rgba(5,6,10,0) 60%), linear-gradient(to top, rgba(255,42,109,0.08), rgba(5,6,10,0) 40%)"></div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- HEADER -->
+<header style="position: relative; z-index: 2; padding: {{hdrPad}}; display: flex; flex-direction: {{hdrDir}}; justify-content: space-between; align-items: {{hdrAlign}}; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: {{hdrGap}}px; flex: 1; min-width: 0">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">01 / DISTRICTS</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; white-space: nowrap">04 ZONES</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{h2Fs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">Choose your turf</h2>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}"><p style="margin: 0; max-width: 520px; font-size: 18px; color: #8A93A8">Four districts, four sets of rules. Pick where you jack in — the city remembers.</p></sc-if>
+</div>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; align-items: flex-end">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">ACTIVE ZONE</span>
+<span aria-live="polite" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 48px; line-height: 1"><span style="color: #00F0FF; text-shadow: 0 0 8px rgba(0,240,255,0.6)">{{activeNum}}</span><span style="color: #8A93A8; font-size: 24px"> / 04</span></span>
+</div>
+<div style="display: flex; gap: 8px">
+<button type="button" class="navb" aria-label="Previous district" onClick="{{prev}}" disabled="{{prevDisabled}}" style="width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.35); color: #00F0FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="navb" aria-label="Next district" onClick="{{next}}" disabled="{{nextDisabled}}" style="width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.35); color: #00F0FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+</sc-if>
+</header>
+
+<!-- DESKTOP TRACK -->
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; z-index: 2; left: 0; right: 0; top: 300px; height: 620px; display: flex; align-items: center">
+<div class="track" role="list" style="display: flex; align-items: center; gap: 48px; padding-left: 96px; transform: translateX({{trackX}}px)">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+<div role="listitem" class="cw" aria-label="{{c.name}}, district {{c.num}} of 4" aria-current="{{c.current}}" style="flex: none; transform: scale({{c.scale}}); transform-origin: {{c.origin}}; filter: {{c.filter}}; opacity: {{c.op}}">
+<article class="dcard {{c.hoverCls}}" style="width: {{cardW}}px; padding: 1px; background: {{c.borderC}}; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<div style="height: {{cardH}}px; background: #0B0E17; display: flex; flex-direction: column; clip-path: polygon(0 0, calc(100% - 11.5px) 0, 100% 11.5px, 100% 100%, 11.5px 100%, 0 calc(100% - 11.5px))">
+<div role="img" aria-label="{{c.alt}}" style="height: {{imgH}}px; flex: none; position: relative; overflow: hidden; background: #05060A">
+<div class="scene" style="position: absolute; inset: 0; background: {{c.scene}}"></div>
+<div class="rgb rgb-c" style="background: {{c.scene}}"></div>
+<div class="rgb rgb-m" style="background: {{c.scene}}"></div>
+<div class="slice" style="background: {{c.scene}}; background-size: 100% 1000%"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(232,241,255,0.05) 0 1px, transparent 1px 3px), linear-gradient(to top, #0B0E17 0%, rgba(11,14,23,0) 40%)"></div>
+<span aria-hidden="true" style="position: absolute; right: 16px; top: 4px; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 96px; line-height: 1; color: rgba(232,241,255,0.08)">{{c.num}}</span>
+<span style="position: absolute; left: 16px; top: 16px; height: 26px; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: {{c.accent}}; border: 1px solid {{c.accent}}; background: rgba(5,6,10,0.7)"><span aria-hidden="true" style="width: 4px; height: 4px; background: {{c.accent}}"></span>SECTOR {{c.num}}</span>
+<span class="hv-tag" aria-hidden="true" style="position: absolute; right: 16px; bottom: 16px; opacity: 0; transition: opacity 150ms; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #E8F1FF; background: rgba(255,42,109,0.8); padding: 2px 6px">SIGNAL INTERFERENCE</span>
+</div>
+<div style="flex: 1; padding: {{bodyPad}}px; display: flex; flex-direction: column; gap: {{bodyGap}}px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: {{c.accent}}">{{c.type}}</span>
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{nameFs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">{{c.name}}</h3>
+<p style="margin: 0; font-size: {{descFs}}px; line-height: 1.45; color: #8A93A8">{{c.desc}}</p>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px dashed rgba(0,240,255,0.2)">
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 56px; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">
+<span style="color: #8A93A8">DANGER</span>
+<div role="meter" aria-label="Danger level" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{c.danger}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px">
+<sc-for list="{{c.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 10px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}; clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%)"></span></sc-for>
+</div>
+<span style="text-align: right; color: {{c.dColor}}">LVL {{c.danger}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">
+<span><span style="color: #8A93A8">POP </span>{{c.pop}}</span>
+<span><span style="color: #8A93A8">CURFEW </span>{{c.curfew}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center">
+<a href="#" class="enter" style="height: 44px; padding: 0 12px 0 0; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #00F0FF; font-weight: 700; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase">Enter<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></a>
+<span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8"><span class="pulse" aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: {{c.dColor}}"></span>{{c.status}}</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- DESKTOP FOOTER: progress + hint -->
+<div style="position: absolute; z-index: 2; left: 96px; right: 96px; bottom: 40px; display: flex; align-items: center; gap: 32px">
+<div role="tablist" aria-label="Districts" style="display: flex; gap: 6px; flex: 1">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+<button type="button" class="seg" role="tab" aria-selected="{{c.currentBool}}" aria-label="{{c.name}}" onClick="{{c.pick}}" style="flex: 1; height: 44px; padding: 0; background: transparent; border: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; text-align: left">
+<span style="display: block; height: 3px; background: {{c.segColor}}; box-shadow: {{c.segGlow}}"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{c.segText}}">{{c.num}} · {{c.short}}</span>
+</button>
+</sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #8A93A8; white-space: nowrap">SCROLL ↓ TO TRAVERSE →</span>
+</div>
+</sc-if>
+
+<!-- MOBILE CAROUSEL -->
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; z-index: 2; left: 0; right: 0; top: 176px; height: 600px">
+<div class="snap" role="list" aria-label="Districts" onScroll="{{onSnapScroll}}" style="position: absolute; left: 16px; right: 44px; top: 0; bottom: 0; overflow-y: auto; padding: 20px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+<div role="listitem" class="cw" aria-current="{{c.current}}" style="flex: none; scroll-snap-align: center; scroll-snap-stop: always; transform: scale({{c.scale}}); filter: {{c.filter}}; opacity: {{c.op}}">
+<article class="dcard {{c.hoverCls}}" style="width: 100%; box-sizing: border-box; padding: 1px; background: {{c.borderC}}; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<div style="height: {{cardH}}px; background: #0B0E17; display: flex; flex-direction: column; clip-path: polygon(0 0, calc(100% - 11.5px) 0, 100% 11.5px, 100% 100%, 11.5px 100%, 0 calc(100% - 11.5px))">
+<div role="img" aria-label="{{c.alt}}" style="height: {{imgH}}px; flex: none; position: relative; overflow: hidden; background: #05060A">
+<div class="scene" style="position: absolute; inset: 0; background: {{c.scene}}"></div>
+<div class="rgb rgb-c" style="background: {{c.scene}}"></div>
+<div class="rgb rgb-m" style="background: {{c.scene}}"></div>
+<div class="slice" style="background: {{c.scene}}; background-size: 100% 1000%"></div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(232,241,255,0.05) 0 1px, transparent 1px 3px), linear-gradient(to top, #0B0E17 0%, rgba(11,14,23,0) 40%)"></div>
+<span aria-hidden="true" style="position: absolute; right: 12px; top: 4px; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 64px; line-height: 1; color: rgba(232,241,255,0.08)">{{c.num}}</span>
+<span style="position: absolute; left: 12px; top: 12px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: {{c.accent}}; border: 1px solid {{c.accent}}; background: rgba(5,6,10,0.7)">SECTOR {{c.num}}</span>
+<span class="hv-tag" aria-hidden="true" style="position: absolute; right: 12px; bottom: 12px; opacity: 0; transition: opacity 150ms; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: #E8F1FF; background: rgba(255,42,109,0.8); padding: 2px 6px">SIGNAL INTERFERENCE</span>
+</div>
+<div style="flex: 1; padding: {{bodyPad}}px; display: flex; flex-direction: column; gap: {{bodyGap}}px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: {{c.accent}}">{{c.type}}</span>
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{nameFs}}px; line-height: 1.1; letter-spacing: 0.06em; text-transform: uppercase">{{c.name}}</h3>
+<p style="margin: 0; font-size: {{descFs}}px; line-height: 1.45; color: #8A93A8">{{c.desc}}</p>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px dashed rgba(0,240,255,0.2)">
+<div style="display: grid; grid-template-columns: 56px minmax(0, 1fr) 48px; gap: 8px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em">
+<span style="color: #8A93A8">DANGER</span>
+<div role="meter" aria-label="Danger level" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{c.danger}}" style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{c.blocks}}" as="b" hint-placeholder-count="10"><span style="height: 9px; background: {{b.bg}}; border: 1px solid {{b.bd}}; box-shadow: {{b.glow}}"></span></sc-for>
+</div>
+<span style="text-align: right; color: {{c.dColor}}">LVL {{c.danger}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em"><span><span style="color: #8A93A8">POP </span>{{c.pop}}</span><span><span style="color: #8A93A8">CURFEW </span>{{c.curfew}}</span></div>
+<a href="#" class="enter" style="height: 44px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #00F0FF; font-weight: 700; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase">Enter<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</div>
+</article>
+</div>
+</sc-for>
+</div>
+<div aria-hidden="true" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 44px; display: flex; flex-direction: column; align-items: center">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+<span style="width: 44px; height: 32px; display: flex; align-items: center; justify-content: center">
+<span style="display: block; width: 4px; height: {{c.dotH}}px; background: {{c.segColor}}; box-shadow: {{c.segGlow}}; transition: height 300ms cubic-bezier(.16,1,.3,1)"></span>
+</span>
+</sc-for>
+</div>
+</div>
+<div style="position: absolute; z-index: 2; left: 16px; right: 16px; bottom: 24px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">
+<span aria-live="polite"><span style="color: #00F0FF">{{activeNum}}</span> / 04 · {{activeShort}}</span>
+<span>SWIPE ↕</span>
+</div>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"active":{"editor":"int","default":0,"min":0,"max":3},"hover":{"editor":"int","default":-1,"min":-1,"max":3},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { active: null, acc: 0, lock: 0 }; }
+  renderVals() {
+    var self = this;
+    var m = !!(this.props.mobile ?? false);
+    var active = this.state.active !== null ? this.state.active : Math.max(0, Math.min(3, this.props.active ?? 0));
+    var hover = this.props.hover ?? -1;
+    var cardW = 480, gap = 48;
+    var setA = function (i) { self.setState({ active: Math.max(0, Math.min(3, i)) }); };
+    var CY = '#00F0FF', YL = '#F5E642', MG = '#FF2A6D';
+    var data = [
+      { name: 'Neon Bazaar', short: 'BAZAAR', type: 'MARKET · NIGHT TRADE', accent: YL, danger: 4, pop: '6.8M', curfew: 'NONE', status: 'OPEN 24/7',
+        desc: 'Lantern-lit night markets, street food stalls and black-market chrome sold by the gram.',
+        alt: 'Night market street strung with yellow and magenta lanterns over crowded stalls',
+        scene: 'radial-gradient(circle at 16% 26%, rgba(245,230,66,0.95) 0 5px, rgba(245,230,66,0) 26px), radial-gradient(circle at 32% 18%, rgba(255,42,109,0.95) 0 5px, rgba(255,42,109,0) 24px), radial-gradient(circle at 50% 28%, rgba(245,230,66,0.9) 0 6px, rgba(245,230,66,0) 28px), radial-gradient(circle at 68% 18%, rgba(255,42,109,0.95) 0 5px, rgba(255,42,109,0) 24px), radial-gradient(circle at 86% 26%, rgba(0,240,255,0.85) 0 5px, rgba(0,240,255,0) 22px), repeating-linear-gradient(90deg, #FF2A6D 0 16px, #3A0D24 16px 32px) 0 56% / 100% 9% no-repeat, linear-gradient(#24101C, #24101C) 4% 100% / 20% 42% no-repeat, linear-gradient(#1A0C14, #1A0C14) 32% 100% / 22% 36% no-repeat, linear-gradient(#24101C, #24101C) 62% 100% / 22% 44% no-repeat, linear-gradient(#1A0C14, #1A0C14) 96% 100% / 22% 38% no-repeat, radial-gradient(ellipse at 50% 100%, rgba(245,230,66,0.35), rgba(245,230,66,0) 60%), linear-gradient(to bottom, #12061A, #3D1030 62%, #1A0A10)' },
+      { name: 'Chrome Heights', short: 'HEIGHTS', type: 'CORPORATE · ARCOLOGY', accent: CY, danger: 2, pop: '1.1M', curfew: '23:00', status: 'SECURED',
+        desc: 'Mirror-glass arcologies where the megacorps live above the smog line. Access by invitation.',
+        alt: 'Glass corporate towers rising into a cyan-lit sky with a beacon on the tallest spire',
+        scene: 'radial-gradient(circle at 50% 6%, rgba(0,240,255,0.95) 0 3px, rgba(0,240,255,0) 34px), repeating-linear-gradient(to bottom, rgba(0,240,255,0.14) 0 2px, rgba(0,240,255,0) 2px 9px), linear-gradient(#7FF8FF, #7FF8FF) 50% 0 / 0.6% 14% no-repeat, linear-gradient(90deg, #0C1A2A, #2A5672 50%, #0C1A2A) 50% 100% / 16% 86% no-repeat, linear-gradient(90deg, #0A1422, #1D3A52 50%, #0A1422) 24% 100% / 14% 66% no-repeat, linear-gradient(90deg, #0A1422, #1D3A52 50%, #0A1422) 76% 100% / 14% 72% no-repeat, linear-gradient(90deg, #08101C, #14283C 50%, #08101C) 4% 100% / 12% 48% no-repeat, linear-gradient(90deg, #08101C, #14283C 50%, #08101C) 97% 100% / 12% 54% no-repeat, radial-gradient(ellipse at 50% 30%, rgba(0,240,255,0.25), rgba(0,240,255,0) 60%), linear-gradient(to bottom, #04101C, #0A2A3A 70%, #05060A)' },
+      { name: 'The Undercity', short: 'UNDERCITY', type: 'SLUMS · BELOW LEVEL 0', accent: MG, danger: 9, pop: '14.3M', curfew: 'UNENFORCED', status: 'HOSTILE',
+        desc: 'Stacked shanties under the city’s foundations. No sun, no law — just pipes, steam and gangs.',
+        alt: 'Dark stacked shacks beneath rusted pipes, lit by a toxic green glow',
+        scene: 'radial-gradient(circle at 12% 72%, #F5E642 0 2px, rgba(0,0,0,0) 3px), radial-gradient(circle at 46% 58%, #FF2A6D 0 2px, rgba(0,0,0,0) 3px), radial-gradient(circle at 54% 80%, #F5E642 0 2px, rgba(0,0,0,0) 3px), radial-gradient(circle at 80% 74%, #2BFF88 0 2px, rgba(0,0,0,0) 3px), radial-gradient(circle at 90% 64%, #FF2A6D 0 2px, rgba(0,0,0,0) 3px), linear-gradient(#2A2F3E, #2A2F3E) 0 20% / 100% 4% no-repeat, linear-gradient(#1C2130, #1C2130) 0 32% / 100% 2% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 22% 0 / 2.5% 100% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 72% 0 / 1.5% 60% no-repeat, linear-gradient(#141821, #141821) 0 100% / 32% 46% no-repeat, linear-gradient(#10131B, #10131B) 42% 100% / 28% 58% no-repeat, linear-gradient(#161A24, #161A24) 100% 100% / 34% 42% no-repeat, radial-gradient(ellipse at 50% 100%, rgba(43,255,136,0.4), rgba(43,255,136,0) 62%), linear-gradient(to bottom, #070A0C, #0D1A14 60%, #05060A)' },
+      { name: 'Data Harbour', short: 'HARBOUR', type: 'PORT · FREIGHT + DATA', accent: CY, danger: 6, pop: '3.4M', curfew: '02:00', status: 'PATROLLED',
+        desc: 'Container cranes, smuggler skiffs and the undersea cables that carry the city’s data.',
+        alt: 'Harbour at night with neon shipping containers, a crane and rippling cyan water',
+        scene: 'radial-gradient(circle at 70% 18%, #FF3B3B 0 3px, rgba(255,59,59,0) 14px), repeating-linear-gradient(to bottom, rgba(0,240,255,0.3) 0 1px, rgba(0,240,255,0) 1px 6px) 0 100% / 100% 28% no-repeat, linear-gradient(to bottom, rgba(0,240,255,0.28), rgba(0,240,255,0)) 0 100% / 100% 28% no-repeat, linear-gradient(#0D1018, #0D1018) 0 72% / 100% 4% no-repeat, linear-gradient(#FF2A6D, #A0153F) 8% 68% / 14% 9% no-repeat, linear-gradient(#00F0FF, #00808A) 24% 68% / 14% 9% no-repeat, linear-gradient(#F5E642, #9A8F1D) 16% 58% / 14% 9% no-repeat, linear-gradient(#7B2CFF, #4A1A9A) 40% 68% / 14% 9% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 70% 70% / 1.6% 52% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 84% 20% / 38% 1.6% no-repeat, linear-gradient(#8A93A8, #8A93A8) 90% 28% / 0.4% 22% no-repeat, linear-gradient(#FF2A6D, #FF2A6D) 91% 50% / 6% 5% no-repeat, linear-gradient(to bottom, #050A14, #10203A 62%, #05060A)' }
+    ];
+    var ART = [
+      ['url(/_blob/6fbdad1e066b1da64c216533141b5e5d) 50% 60% / cover no-repeat', 'Rain-soaked night market: noodle stalls, steam, neon signs and glowing umbrellas'],
+      ['url(/_blob/12ce196c35a0c37ae214c29834eed671) 50% 40% / cover no-repeat', 'Glass corporate towers joined by neon skybridges under crossing searchlights'],
+      ['url(/_blob/98727b618aba76fc8e8518f2cf65d946) 50% 55% / cover no-repeat', 'Flooded alley under an overpass, tangled cables, signs for a noodle bar and a cybernetics clinic'],
+      ['url(/_blob/b30faa349a40b5909793dee40ebd9b4e) 50% 45% / cover no-repeat', 'Container port at night: neon cranes, cargo drones and a ship in the rain']
+    ];
+    data.forEach(function (d, i) { d.scene = ART[i][0]; d.alt = ART[i][1]; });
+    var cards = data.map(function (d, i) {
+      var isA = i === active;
+      var dv = d.danger * 10;
+      var dColor = dv >= 90 ? MG : (dv >= 70 ? YL : CY);
+      var blocks = [];
+      for (var j = 0; j < 10; j++) { var on = j < d.danger; blocks.push({ bg: on ? dColor : 'rgba(0,0,0,0)', bd: on ? dColor : 'rgba(0,240,255,0.2)', glow: on ? '0 0 6px ' + dColor : 'none' }); }
+      return Object.assign({}, d, {
+        num: '0' + (i + 1), one: [],
+        current: isA ? 'true' : 'false', currentBool: isA ? 'true' : 'false',
+        scale: isA ? (m ? 1 : 1.06) : (m ? 0.94 : 0.92),
+        origin: 'center center',
+        filter: isA ? 'drop-shadow(0 0 12px rgba(0,240,255,0.65)) drop-shadow(0 0 32px rgba(0,240,255,0.3))' : 'saturate(0.45) brightness(0.7)',
+        op: isA ? 1 : 0.6,
+        borderC: isA ? CY : 'rgba(0,240,255,0.14)',
+        hoverCls: hover === i ? 'is-hover' : '',
+        dColor: dColor, blocks: blocks,
+        segColor: isA ? CY : 'rgba(0,240,255,0.2)', segGlow: isA ? '0 0 8px #00F0FF' : 'none',
+        segText: isA ? '#E8F1FF' : '#8A93A8', dotH: isA ? 24 : 6,
+        pick: function () { setA(i); }
+      });
+    });
+    return {
+      desktop: !m, mobile: m,
+      W: m ? 390 : 1440, H: m ? 844 : 1000,
+      hdrPad: m ? '24px 16px 0' : '96px 96px 0', hdrDir: m ? 'column' : 'row', hdrAlign: m ? 'stretch' : 'flex-end', hdrGap: m ? 10 : 16,
+      idxFs: m ? 12 : 14, h2Fs: m ? 28 : 56,
+      cardW: cardW, cardH: m ? 560 : 600, imgH: m ? 240 : 300,
+      bodyPad: m ? 18 : 24, bodyGap: m ? 8 : 10, nameFs: m ? 22 : 28, descFs: m ? 14 : 16,
+      trackX: -active * (cardW + gap),
+      activeNum: '0' + (active + 1), activeShort: data[active].short,
+      prevDisabled: active === 0, nextDisabled: active === 3,
+      prev: function () { setA(active - 1); }, next: function () { setA(active + 1); },
+      cards: cards,
+      onWheel: function (e) {
+        if (m) return;
+        var now = Date.now();
+        if (now < self.state.lock) return;
+        var acc = self.state.acc + e.deltaY;
+        if (Math.abs(acc) > 80) {
+          var dir = acc > 0 ? 1 : -1;
+          self.setState({ active: Math.max(0, Math.min(3, active + dir)), acc: 0, lock: now + 600 });
+        } else { self.setState({ acc: acc }); }
+      },
+      onSnapScroll: function (e) {
+        var i = Math.round(e.currentTarget.scrollTop / (560 + 16));
+        if (i !== active) setA(i);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

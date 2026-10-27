@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NEON//GRID — Typography</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+a{color:#00F0FF}a:hover{color:#E8F1FF}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:5}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:4}
+.ng-glitch{display:inline-block}
+.ng-glitch:hover{animation:ng-glitch 200ms steps(4) 1}
+@keyframes ng-glitch{0%{text-shadow:-2px 0 #00F0FF,2px 0 #FF2A6D;transform:translate(0,0)}25%{text-shadow:3px 0 #00F0FF,-3px 0 #FF2A6D;transform:translate(-2px,1px)}50%{text-shadow:-3px 0 #00F0FF,2px 0 #FF2A6D;transform:translate(2px,-1px)}75%{text-shadow:2px 0 #00F0FF,-2px 0 #FF2A6D;transform:translate(-1px,0)}100%{text-shadow:none;transform:none}}
+@media (prefers-reduced-motion:reduce){.ng-glitch:hover{animation:none;opacity:.85;transition:opacity 300ms}}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2050px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px; box-sizing: border-box; display: flex; flex-direction: column; gap: 64px">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<header style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">02 / TYPOGRAPHY</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">3 FAMILIES · 6 STEPS · FLUID</span>
+</div>
+<h2 class="ng-glitch" style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1">Type specimen</h2>
+<p style="margin: 0; max-width: 760px; color: #8A93A8; font-size: 18px">Three voices: Orbitron shouts (H1/H2 only), Rajdhani speaks, JetBrains Mono reports. Fallbacks: Unbounded for display, Inter for UI.</p>
+</header>
+
+<!-- FAMILIES -->
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 16px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #00F0FF">FONT/DISPLAY</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 120px; line-height: 1; color: #E8F1FF; text-shadow: 0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)">Aa</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.08em">ORBITRON</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.08em; color: #8A93A8; line-height: 1.8">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 // ++</span>
+<span style="font-size: 15px; color: #8A93A8">Uppercase · tracking 0.08em · 700/900 · H1 and H2 only. Fallback: Unbounded.</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 16px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #FF2A6D">FONT/UI</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 120px; line-height: 1; color: #E8F1FF">Aa</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: 0.04em">RAJDHANI</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 500; font-size: 17px; color: #8A93A8; line-height: 1.6">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789</span>
+<span style="font-size: 15px; color: #8A93A8">Body 500 · UI labels 600 · H3 700 · 16px base / 1.6. Fallback: Inter.</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 16px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #F5E642">FONT/MONO</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 112px; line-height: 1; color: #E8F1FF">Aa</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 22px">JETBRAINS MONO</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #8A93A8; line-height: 1.7">0123456789 {}[]&lt;&gt;/=+% ÷ ±  0xFF2A6D</span>
+<span style="font-size: 15px; color: #8A93A8">Labels, HUD readouts, code, stats. Tabular numerals by default.</span>
+</div>
+</div>
+
+<!-- SCALE -->
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 0 0 12px; border-bottom: 1px solid rgba(0,240,255,0.25); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">
+<span>TOKEN</span><span>SAMPLE (AT 1440)</span><span>SPEC</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 32px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/h1</span>
+<span class="ng-glitch" style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 96px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase">Jack in</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">Orbitron 900 · UPPER<br>clamp(2.5rem, 7vw, 6rem)<br>40 → 96px · lh 1.0 · ls 0.08em</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 32px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/h2</span>
+<span class="ng-glitch" style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 56px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">The districts</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">Orbitron 700 · UPPER<br>clamp(2rem, 4.5vw, 3.5rem)<br>32 → 56px · lh 1.1 · ls 0.08em</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/h3</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.3; letter-spacing: 0.02em">Neural augment, Mk. IV</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">Rajdhani 700 · sentence case<br>1.5rem / 24px · lh 1.3</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/body</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 500; font-size: 16px; line-height: 1.6; max-width: 620px">Rain hits the neon and the street turns into a circuit board. Every district runs on its own clock, its own currency, its own rules.</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">Rajdhani 500<br>1rem / 16px · lh 1.6 · max 68ch</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/small</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 500; font-size: 14px; line-height: 1.5; color: #8A93A8">Last synced 4 minutes ago from relay node 07.</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">Rajdhani 500<br>0.875rem / 14px · lh 1.5</span>
+</div>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 340px; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(0,240,255,0.12); align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">type/micro</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #E8F1FF">SECTOR 07 · LVL 3 · SIGNAL 98%</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8; line-height: 1.8">JetBrains Mono 500 · UPPER<br>0.75rem / 12px · ls 0.14em</span>
+</div>
+</div>
+
+<!-- COMPOSITION -->
+<div style="display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 48px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #00F0FF">03 / AUGMENTS</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1">Upgrade the hardware you were born with</span>
+<span style="font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 24px">Optical overlay, street-legal</span>
+<span style="font-size: 16px; color: #8A93A8; max-width: 560px">Pairing order: micro-label above, display heading, H3 deck, then body. Never stack two display headings without body copy between them.</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<span style="font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">HUD READOUT</span>
+<div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 8px"><span style="color: #8A93A8">LATENCY</span><span style="color: #00F0FF">012 ms</span></div>
+<div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 8px"><span style="color: #8A93A8">CREDITS</span><span>¥ 48,200</span></div>
+<div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(0,240,255,0.2); padding-bottom: 8px"><span style="color: #8A93A8">HEAT</span><span style="color: #F5E642">ELEVATED</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #8A93A8">LINK</span><span style="color: #2BFF88">STABLE</span></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2050}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

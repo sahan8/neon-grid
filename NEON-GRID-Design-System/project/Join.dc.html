@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jack In — join terminal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.tun-img{animation:tunz 14s ease-in-out infinite alternate;transform-origin:50% 50%}
+@keyframes tunz{from{transform:scale(1)}to{transform:scale(1.18)}}
+.ring{position:absolute;left:50%;top:50%;width:60vmax;height:60vmax;margin:-30vmax 0 0 -30vmax;border:2px solid #00F0FF;opacity:0;animation:tunnel 7s linear infinite}
+.ring.m{border-color:#FF2A6D}.ring.v{border-color:#7B2CFF}
+@keyframes tunnel{0%{transform:scale(.04) rotate(0deg);opacity:0}15%{opacity:.7}85%{opacity:.25}100%{transform:scale(2.4) rotate(45deg);opacity:0}}
+.streams{animation:streams 2.4s linear infinite}
+@keyframes streams{from{background-position:0 0}to{background-position:0 200px}}
+.caret{display:inline-block;width:9px;height:18px;background:#00F0FF;vertical-align:middle;box-shadow:0 0 6px #00F0FF;animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.term-in{background:transparent;border:0;outline:none;color:#E8F1FF;font:inherit;flex:1;min-width:0;height:100%;caret-color:#00F0FF}
+.term-in::placeholder{color:#8A93A8}
+.term-in:disabled{color:#8A93A8}
+select.term-in{appearance:none;-webkit-appearance:none;cursor:pointer}
+select.term-in option{background:#121726;color:#E8F1FF}
+.fld{transition:border-color 150ms,box-shadow 150ms}
+.fld:focus-within{border-color:#00F0FF !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5) !important}
+.shake{animation:shake 400ms steps(4) 1}
+@keyframes shake{0%{transform:translate(0,0)}20%{transform:translate(-8px,0);filter:drop-shadow(-3px 0 #00F0FF) drop-shadow(3px 0 #FF2A6D)}40%{transform:translate(7px,1px)}60%{transform:translate(-5px,-1px);filter:drop-shadow(3px 0 #00F0FF) drop-shadow(-3px 0 #FF2A6D)}80%{transform:translate(3px,0)}100%{transform:none;filter:none}}
+.errtxt{animation:errg 1200ms steps(1) infinite}
+@keyframes errg{0%,92%{text-shadow:none;transform:none}93%{text-shadow:-2px 0 #00F0FF,2px 0 #FF2A6D;transform:translateX(2px)}96%{text-shadow:2px 0 #00F0FF,-2px 0 #FF2A6D;transform:translateX(-2px)}}
+.bw{display:inline-flex;transition:filter 150ms cubic-bezier(.16,1,.3,1)}
+.bw:hover{filter:drop-shadow(0 0 8px #FF2A6D) drop-shadow(0 0 16px rgba(255,42,109,.5))}
+.bw:focus-within{outline:2px solid #00F0FF;outline-offset:3px;filter:drop-shadow(0 0 8px rgba(0,240,255,.6))}
+.b-pri{cursor:pointer;transition:background 150ms cubic-bezier(.16,1,.3,1),transform 150ms}
+.b-pri:hover:not(:disabled){background:#FF4D85 !important}
+.b-pri:active:not(:disabled){background:#D91E5B !important;transform:translateY(1px)}
+.b-pri:focus{outline:none}
+.b-pri:disabled{cursor:progress}
+.ck{cursor:pointer}
+.ck:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.load-seg{animation:lseg 1200ms steps(1) infinite}
+@keyframes lseg{0%{background:#00F0FF;box-shadow:0 0 6px #00F0FF}50%,100%{background:rgba(0,240,255,.12);box-shadow:none}}
+.px{position:absolute;top:-20px;width:8px;height:8px;animation-name:fall;animation-timing-function:steps(18);animation-iteration-count:infinite}
+@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(var(--fallH)) rotate(180deg);opacity:0}}
+.ok-in{animation:okin 600ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes okin{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tun-img,.ring,.streams,.caret,.errtxt,.load-seg,.px,.shake,.ok-in{animation:none}.ring{opacity:.2}.px{display:none}.caret{opacity:.8}}
+</style>
+</helmet>
+<section id="join" aria-label="Join" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<!-- TUNNEL BACKGROUND -->
+<div aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; perspective: 600px">
+<img class="tun-img" src="/_blob/17f1d164409b3c47bd3811c1471d4644" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.9">
+<div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(123,44,255,0.22), rgba(5,6,10,0) 40%)"></div>
+<sc-for list="{{rings}}" as="r" hint-placeholder-count="9"><span class="ring {{r.cls}}" style="animation-delay: {{r.delay}}; border-radius: {{r.radius}}"></span></sc-for>
+<div class="streams" style="position: absolute; inset: 0; opacity: 0.35; background-image: repeating-linear-gradient(to bottom, rgba(0,240,255,0.5) 0 2px, rgba(0,0,0,0) 2px 40px), repeating-linear-gradient(to bottom, rgba(255,42,109,0.45) 0 2px, rgba(0,0,0,0) 2px 70px); background-size: 3px 200px, 3px 200px; background-position: 0 0, 60px 30px; -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 15%, #000 60%); mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 15%, #000 60%)"></div>
+<div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(5,6,10,0.2) 0%, rgba(5,6,10,0.85) 75%)"></div>
+<span style="position: absolute; right: 16px; bottom: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(232,241,255,0.45)">[THREE.JS DATA TUNNEL]</span>
+</div>
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<div style="position: relative; z-index: 2; height: 100%; box-sizing: border-box; padding: {{pad}}; display: flex; flex-direction: {{dir}}; align-items: {{alignItems}}; justify-content: center; gap: {{colGap}}px; max-width: {{maxW}}px; margin: 0 auto">
+
+<!-- COPY -->
+<div style="flex: {{copyFlex}}; display: flex; flex-direction: column; gap: {{copyGap}}px; max-width: {{copyMax}}px; text-align: {{copyAlign}}; align-items: {{copyItems}}">
+<div style="display: flex; align-items: center; gap: 16px; width: 100%">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">06 / JACK IN</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{h2Fs}}px; line-height: 1.05; letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.4)">Join the grid</h2>
+<p style="margin: 0; font-size: {{leadFs}}px; line-height: 1.5; color: #8A93A8">Claim your handle before someone else does. Early runners get first access to every district drop.</p>
+<sc-if value="{{showPerks}}" hint-placeholder-val="{{ true }}">
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.06em">
+<li style="display: flex; gap: 12px"><span style="color: #2BFF88">[+]</span>Early access to new districts</li>
+<li style="display: flex; gap: 12px"><span style="color: #2BFF88">[+]</span>Exclusive augment drops</li>
+<li style="display: flex; gap: 12px"><span style="color: #2BFF88">[+]</span>Crew comms + faction events</li>
+</ul>
+</sc-if>
+</div>
+
+<!-- TERMINAL -->
+<div class="{{shakeCls}}" style="flex: none; width: {{termW}}; max-width: 100%; position: relative">
+<div style="background: rgba(11,14,23,0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid {{termBorder}}; box-shadow: {{termGlow}}; position: relative">
+<span aria-hidden="true" style="position: absolute; top: -1px; left: -1px; width: 16px; height: 16px; border-top: 2px solid {{termAcc}}; border-left: 2px solid {{termAcc}}"></span>
+<span aria-hidden="true" style="position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px; border-bottom: 2px solid {{termAcc}}; border-right: 2px solid {{termAcc}}"></span>
+<div style="height: 36px; padding: 0 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,240,255,0.15); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8A93A8">
+<span aria-hidden="true" style="display: inline-flex; gap: 6px"><span style="width: 8px; height: 8px; background: #FF2A6D"></span><span style="width: 8px; height: 8px; background: #F5E642"></span><span style="width: 8px; height: 8px; background: #00F0FF"></span></span>
+<span>jack_in.sh — tty07</span>
+<span style="color: {{statusC}}">● {{statusTxt}}</span>
+</div>
+
+<sc-if value="{{notSuccess}}" hint-placeholder-val="{{ true }}">
+<form novalidate="" aria-describedby="join-log" onSubmit="{{submit}}" style="padding: {{formPad}}px; display: flex; flex-direction: column; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: {{termFs}}px">
+<div id="join-log" role="log" aria-live="polite" style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.6">
+<sc-for list="{{log}}" as="l" hint-placeholder-count="2"><span style="color: {{l.c}}" class="{{l.cls}}">{{l.t}}</span></sc-for>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="j-handle" style="font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">HANDLE</label>
+<div class="fld" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 10px; background: #121726; border: 1px solid {{hBorder}}; border-radius: 2px; box-shadow: {{hGlow}}">
+<span aria-hidden="true" style="color: {{hPrompt}}">&gt;</span>
+<input id="j-handle" class="term-in" type="text" autocomplete="username" spellcheck="false" placeholder="netrunner_07" value="{{handle}}" onChange="{{setHandle}}" onFocus="{{focusH}}" disabled="{{busy}}" aria-invalid="{{hInvalid}}" aria-describedby="j-handle-err">
+<sc-if value="{{showFakeCaret}}" hint-placeholder-val="{{ false }}"><span class="caret" aria-hidden="true"></span></sc-if>
+<sc-if value="{{hOk}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size: 11px; color: #2BFF88">AVAILABLE</span></sc-if>
+</div>
+<span id="j-handle-err" class="errtxt" style="font-size: 11px; letter-spacing: 0.06em; color: #FF3B3B; min-height: 16px">{{hErr}}</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="j-email" style="font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">EMAIL</label>
+<div class="fld" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 10px; background: #121726; border: 1px solid {{eBorder}}; border-radius: 2px; box-shadow: {{eGlow}}">
+<span aria-hidden="true" style="color: {{ePrompt}}">&gt;</span>
+<input id="j-email" class="term-in" type="email" autocomplete="email" spellcheck="false" placeholder="you@grid.net" value="{{email}}" onChange="{{setEmail}}" disabled="{{busy}}" aria-invalid="{{eInvalid}}" aria-describedby="j-email-err">
+</div>
+<span id="j-email-err" class="errtxt" style="font-size: 11px; letter-spacing: 0.06em; color: #FF3B3B; min-height: 16px">{{eErr}}</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="j-faction" style="font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">FACTION</label>
+<div class="fld" style="height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 10px; background: #121726; border: 1px solid {{fBorder}}; border-radius: 2px">
+<span aria-hidden="true" style="color: {{fPrompt}}">&gt;</span>
+<select id="j-faction" class="term-in" value="{{faction}}" onChange="{{setFaction}}" disabled="{{busy}}" aria-invalid="{{fInvalid}}" aria-describedby="j-faction-err">
+<option value="">Select faction…</option><option value="netrunner">Netrunner</option><option value="corpo">Corpo</option><option value="nomad">Nomad</option><option value="street">Street</option>
+</select>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<span id="j-faction-err" class="errtxt" style="font-size: 11px; letter-spacing: 0.06em; color: #FF3B3B; min-height: 16px">{{fErr}}</span>
+</div>
+
+<button type="button" class="ck" role="checkbox" aria-checked="{{updStr}}" onClick="{{toggleUpd}}" disabled="{{busy}}" style="min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0; background: transparent; border: 0; color: #E8F1FF; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-align: left">
+<span aria-hidden="true" style="color: #00F0FF">[{{updMark}}]</span>Send me transmissions — drops, events, lore
+</button>
+
+<span class="bw" style="width: 100%"><button type="submit" class="b-pri" disabled="{{busy}}" style="width: 100%; height: 56px; border: 0; background: {{btnBg}}; color: #05060A; display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">{{btnLabel}}</button></span>
+<sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
+<div role="progressbar" aria-label="Establishing link" style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 3px">
+<sc-for list="{{segs}}" as="s" hint-placeholder-count="16"><span class="load-seg" style="height: 6px; animation-delay: {{s.d}}"></span></sc-for>
+</div>
+</sc-if>
+<span style="font-size: 10px; letter-spacing: 0.12em; color: #8A93A8">By connecting you accept the [TERMS] and [PRIVACY POLICY].</span>
+</form>
+</sc-if>
+
+<sc-if value="{{success}}" hint-placeholder-val="{{ false }}">
+<div class="ok-in" role="status" style="position: relative; padding: {{okPad}}px {{formPad}}px; min-height: {{okMinH}}px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; overflow: hidden">
+<sc-for list="{{confetti}}" as="p" hint-placeholder-count="40"><span class="px" aria-hidden="true" style="left: {{p.x}}%; background: {{p.c}}; box-shadow: 0 0 6px {{p.c}}; width: {{p.s}}px; height: {{p.s}}px; animation-duration: {{p.dur}}; animation-delay: {{p.delay}}; --fallH: {{fallH}}px"></span></sc-for>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #2BFF88">LINK ESTABLISHED · 200 OK</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: {{okFs}}px; line-height: 1.15; letter-spacing: 0.06em; text-transform: uppercase; text-shadow: 0 0 8px #FF2A6D, 0 0 24px rgba(255,42,109,0.5)">Welcome to the grid, <span style="color: #00F0FF; text-shadow: 0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)">{{handleUp}}</span></span>
+<span style="font-size: 16px; color: #8A93A8; max-width: 400px">Your link is live. An access key is on its way to {{emailShown}}.</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">FACTION · <span style="color: #F5E642">{{factionUp}}</span> · RUNNER #{{runnerNo}}</span>
+<span class="bw"><a href="#" class="b-pri" onClick="{{reset}}" style="height: 52px; padding: 0 28px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; background: #FF2A6D; color: #05060A; font-weight: 700; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Enter the grid →</a></span>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"device":{"editor":"enum","options":["mobile","tablet","desktop","wide"],"default":"desktop"},"phase":{"editor":"enum","options":["empty","typing","error","loading","success"],"default":"empty"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var ph = props.phase ?? 'empty';
+    var preset = { empty: ['', '', '', true], typing: ['v1per', '', '', true], error: ['v1', 'v1per@grid', '', true], loading: ['v1per', 'v1per@grid.net', 'netrunner', true], success: ['v1per', 'v1per@grid.net', 'netrunner', true] }[ph] || ['', '', '', true];
+    this.state = { phase: ph, handle: preset[0], email: preset[1], faction: preset[2], upd: preset[3], shakeKey: ph === 'error' ? 1 : 0, typing: ph === 'typing' };
+    this.t = null;
+  }
+  componentWillUnmount() { if (this.t) clearTimeout(this.t); }
+  renderVals() {
+    var self = this;
+    var dev = this.props.device ?? 'desktop';
+    var m = dev === 'mobile', tb = dev === 'tablet', wd = dev === 'wide';
+    var s = this.state;
+    var ph = s.phase;
+    var errs = { h: '', e: '', f: '' };
+    if (ph === 'error') {
+      if (s.handle.length < 3) errs.h = '✕ ERR_411 // HANDLE TOO SHORT — MIN 3 CHARS';
+      if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(s.email)) errs.e = '✕ ERR_422 // INVALID EMAIL — expected user@domain.net';
+      if (!s.faction) errs.f = '✕ ERR_400 // CHOOSE A FACTION TO ROUTE YOUR LINK';
+    }
+    var busy = ph === 'loading';
+    var cy = '#00F0FF', rd = '#FF3B3B';
+    var fstate = function (err, focused) {
+      if (err) return { b: rd, g: '0 0 8px rgba(255,59,59,0.5)', p: rd };
+      if (focused) return { b: cy, g: '0 0 8px #00F0FF, 0 0 24px rgba(0,240,255,0.5)', p: cy };
+      return { b: 'rgba(0,240,255,0.25)', g: 'none', p: cy };
+    };
+    var fh = fstate(errs.h, s.typing), fe = fstate(errs.e, false), ff = fstate(errs.f, false);
+    var log;
+    if (ph === 'error') log = [{ t: '> NEON//GRID ACCESS TERMINAL v2.0', c: '#8A93A8' }, { t: '> CONNECT FAILED · ' + [errs.h, errs.e, errs.f].filter(Boolean).length + ' FIELD(S) REJECTED', c: rd, cls: 'errtxt' }];
+    else if (busy) log = [{ t: '> HANDSHAKE ............ OK', c: '#2BFF88' }, { t: '> ROUTING VIA NODE 07 .. OK', c: '#2BFF88' }, { t: '> ESTABLISHING LINK...', c: cy }];
+    else if (s.typing) log = [{ t: '> NEON//GRID ACCESS TERMINAL v2.0', c: '#8A93A8' }, { t: '> CHECKING HANDLE "' + (s.handle || '_') + '"...', c: cy }];
+    else log = [{ t: '> NEON//GRID ACCESS TERMINAL v2.0', c: '#8A93A8' }, { t: '> ENTER CREDENTIALS TO JACK IN', c: '#E8F1FF' }];
+    log = log.map(function (l) { return { t: l.t, c: l.c, cls: l.cls || '' }; });
+    var rings = []; for (var i = 0; i < 9; i++) rings.push({ cls: i % 3 === 1 ? 'm' : (i % 3 === 2 ? 'v' : ''), delay: (-i * 7 / 9).toFixed(2) + 's', radius: i % 2 ? '50%' : '0' });
+    var segs = []; for (var j = 0; j < 16; j++) segs.push({ d: (j * 75) + 'ms' });
+    var cols = ['#00F0FF', '#FF2A6D', '#F5E642', '#2BFF88', '#7B2CFF', '#E8F1FF'];
+    var seed = 3; var rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var confetti = []; for (var k = 0; k < 40; k++) confetti.push({ x: Math.round(rnd() * 100), c: cols[k % 6], s: rnd() > 0.6 ? 10 : 6, dur: (1.6 + rnd() * 1.8).toFixed(2) + 's', delay: (-rnd() * 3).toFixed(2) + 's' });
+    var facNames = { netrunner: 'NETRUNNER', corpo: 'CORPO', nomad: 'NOMAD', street: 'STREET' };
+    var validate = function () {
+      var bad = s.handle.length < 3 || !/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(s.email) || !s.faction;
+      if (bad) { self.setState({ phase: 'empty', typing: false }); setTimeout(function () { self.setState({ phase: 'error', shakeKey: self.state.shakeKey + 1 }); }, 10); return; }
+      self.setState({ phase: 'loading', typing: false });
+      self.t = setTimeout(function () { self.setState({ phase: 'success' }); }, 2400);
+    };
+    var termW = m ? '100%' : (tb ? '640px' : (wd ? '680px' : '600px'));
+    return {
+      W: m ? 390 : (tb ? 834 : (wd ? 1920 : 1440)), H: m ? 1120 : (tb ? 1194 : (wd ? 1080 : 1000)),
+      pad: m ? '40px 16px' : (tb ? '64px 40px' : (wd ? '96px 160px' : '80px')),
+      dir: (m || tb) ? 'column' : 'row', alignItems: m ? 'stretch' : 'center', colGap: m ? 28 : (tb ? 40 : (wd ? 120 : 80)),
+      maxW: wd ? 1600 : 4000,
+      copyFlex: (m || tb) ? 'none' : '1', copyGap: m ? 12 : 18, copyMax: (m || tb) ? 9999 : (wd ? 620 : 520),
+      copyAlign: tb ? 'center' : 'left', copyItems: tb ? 'center' : 'flex-start',
+      idxFs: m ? 12 : 14, h2Fs: m ? 34 : (tb ? 48 : (wd ? 80 : 64)), leadFs: m ? 16 : (wd ? 22 : 19), showPerks: !m,
+      termW: termW,
+      formPad: m ? 16 : 24, termFs: m ? 14 : 15,
+      termBorder: ph === 'error' ? 'rgba(255,59,59,0.7)' : (ph === 'success' ? '#2BFF88' : 'rgba(0,240,255,0.3)'),
+      termAcc: ph === 'error' ? rd : (ph === 'success' ? '#2BFF88' : cy),
+      termGlow: ph === 'error' ? '0 0 24px rgba(255,59,59,0.25)' : (ph === 'success' ? '0 0 32px rgba(43,255,136,0.25)' : '0 0 24px rgba(0,240,255,0.15)'),
+      shakeCls: ph === 'error' ? (s.shakeKey % 2 ? 'shake' : 'shake') : '',
+      statusC: ph === 'error' ? rd : (busy ? '#F5E642' : (ph === 'success' ? '#2BFF88' : '#8A93A8')),
+      statusTxt: ph === 'error' ? 'REJECTED' : (busy ? 'CONNECTING' : (ph === 'success' ? 'ONLINE' : 'IDLE')),
+      notSuccess: ph !== 'success', success: ph === 'success', loading: busy, busy: busy,
+      log: log,
+      handle: s.handle, email: s.email, faction: s.faction,
+      hBorder: fh.b, hGlow: fh.g, hPrompt: fh.p, eBorder: fe.b, eGlow: fe.g, ePrompt: fe.p, fBorder: ff.b, fPrompt: ff.p,
+      hErr: errs.h, eErr: errs.e, fErr: errs.f,
+      hInvalid: errs.h ? 'true' : 'false', eInvalid: errs.e ? 'true' : 'false', fInvalid: errs.f ? 'true' : 'false',
+      hOk: s.typing && s.handle.length >= 3, showFakeCaret: s.typing && (this.props.phase ?? '') === 'typing' && s.handle === 'v1per',
+      updStr: s.upd ? 'true' : 'false', updMark: s.upd ? 'x' : ' ',
+      btnBg: busy ? '#8A93A8' : '#FF2A6D', btnLabel: busy ? 'Establishing link...' : 'Connect',
+      segs: segs, rings: rings, confetti: confetti, fallH: m ? 520 : 560,
+      okPad: m ? 40 : 56, okMinH: m ? 520 : 560, okFs: m ? 26 : 36,
+      handleUp: (s.handle || 'RUNNER').toUpperCase(), emailShown: s.email || 'your inbox', factionUp: facNames[s.faction] || 'UNALIGNED', runnerNo: '04,217',
+      setHandle: function (e) { self.setState({ handle: e.target.value, typing: true, phase: self.state.phase === 'error' ? 'empty' : self.state.phase }); },
+      setEmail: function (e) { self.setState({ email: e.target.value, typing: false }); },
+      setFaction: function (e) { self.setState({ faction: e.target.value }); },
+      focusH: function () { self.setState({ typing: true }); },
+      toggleUpd: function () { self.setState({ upd: !self.state.upd }); },
+      submit: function (e) { if (e && e.preventDefault) e.preventDefault(); validate(); },
+      reset: function (e) { if (e && e.preventDefault) e.preventDefault(); self.setState({ phase: 'empty', handle: '', email: '', faction: '', typing: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

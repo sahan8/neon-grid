@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NEON//GRID — Foundations</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+a{color:#00F0FF}a:hover{color:#E8F1FF}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:5}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:4}
+.ng-glitch{display:inline-block;cursor:default}
+.ng-glitch:hover{animation:ng-glitch 200ms steps(4) 1}
+.ng-glitch-loop{display:inline-block;animation:ng-glitch 200ms steps(4) infinite;animation-delay:1.6s}
+@keyframes ng-glitch{0%{text-shadow:-2px 0 #00F0FF,2px 0 #FF2A6D;transform:translate(0,0)}25%{text-shadow:3px 0 #00F0FF,-3px 0 #FF2A6D;transform:translate(-2px,1px)}50%{text-shadow:-3px 0 #00F0FF,2px 0 #FF2A6D;transform:translate(2px,-1px)}75%{text-shadow:2px 0 #00F0FF,-2px 0 #FF2A6D;transform:translate(-1px,0)}100%{text-shadow:none;transform:none}}
+.ng-move{animation-name:ng-move;animation-timing-function:cubic-bezier(0.16,1,0.3,1);animation-iteration-count:infinite;animation-direction:alternate}
+.ng-move-steps{animation-name:ng-move;animation-timing-function:steps(4);animation-iteration-count:infinite;animation-direction:alternate;animation-duration:1200ms}
+@keyframes ng-move{0%,15%{transform:translateX(0)}85%,100%{transform:translateX(calc(var(--track) - 16px))}}
+@media (prefers-reduced-motion:reduce){.ng-glitch:hover,.ng-glitch-loop{animation:none}.ng-move,.ng-move-steps{animation:ng-fade 1200ms ease infinite alternate}@keyframes ng-fade{from{opacity:.3}to{opacity:1}}}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2700px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px; box-sizing: border-box; display: flex; flex-direction: column; gap: 96px">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- SPACING -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">03 / FOUNDATIONS</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">SPACE · GRID · SHAPE · FX · MOTION</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1">Spacing scale</h2>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 16px; align-items: end; background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px">
+<sc-for list="{{space}}" as="s" hint-placeholder-count="10">
+<div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<div style="width: {{s.px}}; height: {{s.px}}; max-width: 100%; background: rgba(0,240,255,0.18); border: 1px solid #00F0FF"></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">space/{{s.n}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">{{s.px}} · {{s.use}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- GRID -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Layout grid</h2>
+<div style="display: grid; grid-template-columns: 6fr 3.4fr 2fr; gap: 24px; align-items: end">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; border: 1px solid rgba(0,240,255,0.25); padding: 0 32px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{c12}}" as="c" hint-placeholder-count="12"><div style="background: rgba(255,42,109,0.14); border-left: 1px solid rgba(255,42,109,0.5); border-right: 1px solid rgba(255,42,109,0.5)"></div></sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">DESKTOP ≥1280 · 12 COL</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">1440 frame · 80px margins · 24px gutter · max content 1280</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; border: 1px solid rgba(0,240,255,0.25); padding: 0 20px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{c8}}" as="c" hint-placeholder-count="8"><div style="background: rgba(255,42,109,0.14); border-left: 1px solid rgba(255,42,109,0.5); border-right: 1px solid rgba(255,42,109,0.5)"></div></sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">TABLET 768–1279 · 8 COL</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">40px margins · 24px gutter</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; border: 1px solid rgba(0,240,255,0.25); padding: 0 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{c4}}" as="c" hint-placeholder-count="4"><div style="background: rgba(255,42,109,0.14); border-left: 1px solid rgba(255,42,109,0.5); border-right: 1px solid rgba(255,42,109,0.5)"></div></sc-for>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">MOBILE &lt;768 · 4 COL</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">16px margins · 16px gutter</span>
+</div>
+</div>
+</section>
+
+<!-- SHAPE -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Shape language</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 180px; background: #00F0FF; padding: 1px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">
+<div style="height: 100%; background: #0B0E17; clip-path: polygon(0 0, calc(100% - 11.5px) 0, 100% 11.5px, 100% 100%, 11.5px 100%, 0 calc(100% - 11.5px))"></div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">shape/clip-12</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)) — border = 1px padding on a coloured parent.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 180px; position: relative; background: #0B0E17; border: 1px solid rgba(0,240,255,0.12)">
+<span style="position: absolute; top: -1px; left: -1px; width: 16px; height: 16px; border-top: 2px solid #00F0FF; border-left: 2px solid #00F0FF"></span>
+<span style="position: absolute; top: -1px; right: -1px; width: 16px; height: 16px; border-top: 2px solid #00F0FF; border-right: 2px solid #00F0FF"></span>
+<span style="position: absolute; bottom: -1px; left: -1px; width: 16px; height: 16px; border-bottom: 2px solid #00F0FF; border-left: 2px solid #00F0FF"></span>
+<span style="position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px; border-bottom: 2px solid #00F0FF; border-right: 2px solid #00F0FF"></span>
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">TARGET LOCK</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">shape/brackets</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">16px arms, 2px neon, sit on the 1px border. Use for focus targets, media frames, featured cards.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 0 24px; background: #0B0E17; border: 1px solid rgba(0,240,255,0.12)">
+<div style="height: 44px; border: 1px solid rgba(0,240,255,0.4); display: flex; align-items: center; padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">radius/0 · panels, buttons</div>
+<div style="height: 44px; border: 1px solid rgba(0,240,255,0.4); border-radius: 2px; display: flex; align-items: center; padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">radius/2 · inputs only</div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">radius/0 · radius/2</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">No pills, no rounded cards. Circles only for status dots, avatars and the loader ring.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: 0 24px; background: #0B0E17; border: 1px solid rgba(0,240,255,0.12)">
+<div style="height: 1px; background: rgba(0,240,255,0.12)"></div>
+<div style="height: 1px; background: rgba(0,240,255,0.4)"></div>
+<div style="height: 1px; background: #00F0FF; box-shadow: 0 0 8px #00F0FF"></div>
+<div style="height: 0; border-top: 1px dashed rgba(0,240,255,0.3)"></div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">border/1</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">Always 1px. Subtle 12% → hover 40% → active 100% + glow. Dashed for data rows.</span>
+</div>
+</div>
+</section>
+
+<!-- EFFECTS -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Effects</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; position: relative; overflow: hidden; background: #05060A">
+<div style="position: absolute; width: 160px; height: 160px; left: -20px; top: 10px; border-radius: 50%; background: #7B2CFF"></div>
+<div style="position: absolute; width: 140px; height: 140px; right: -10px; bottom: -20px; border-radius: 50%; background: #FF2A6D"></div>
+<div style="position: absolute; inset: 36px 28px; background: rgba(11,14,23,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(0,240,255,0.15); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">GLASS PANEL</span>
+<span style="font-size: 15px">Readable over any 3D scene.</span>
+</div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">fx/glass</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">bg rgba(11,14,23,.6) · backdrop-filter blur(16px) · 1px border rgba(0,240,255,.15)</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; position: relative; background: #121726; display: flex; align-items: center; justify-content: center">
+<div style="position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(232,241,255,0.12) 0 2px, transparent 2px 4px)"></div>
+<span style="position: relative; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: 0.08em">CRT</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">fx/scanlines</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">repeating-linear-gradient(to bottom, rgba(232,241,255,.04) 0 2px, transparent 2px 4px). Shown here at 3× strength; page uses 4%.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+<span class="ng-glitch-loop" style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 36px; letter-spacing: 0.08em">GLITCH</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">loops here · hover-only in product</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">fx/glitch</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">H1/H2 :hover · 200ms steps(4) · text-shadow ±3px cyan / magenta + 2px jitter. Reduced motion: none.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="height: 220px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr))">
+<div style="background: #121726; display: flex; align-items: flex-end; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">CLEAN</div>
+<div style="position: relative; background: #121726; display: flex; align-items: flex-end; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">
+<img src="/_blob/4471ec4b76afa1f4abfdc8c2ea75b053" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.25">
+<span style="position: relative">GRAIN ×8</span>
+</div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">fx/noise</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; line-height: 1.6">feTurbulence tile, fixed full-page layer, opacity .03, pointer-events none. Shown boosted for visibility.</span>
+</div>
+</div>
+</section>
+
+<!-- MOTION -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Motion tokens</h2>
+<div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 32px; display: flex; flex-direction: column; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">DURATIONS · CYBER-OUT</span>
+<sc-for list="{{dur}}" as="d" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; align-items: center">
+<div style="display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">motion/{{d.n}} · {{d.ms}}</span>
+<span style="font-size: 14px; color: #8A93A8">{{d.use}}</span>
+</div>
+<div style="position: relative; height: 16px; border-bottom: 1px dashed rgba(0,240,255,0.25); --track: 520px; width: 520px">
+<div class="ng-move" style="width: 16px; height: 16px; background: #00F0FF; box-shadow: 0 0 8px #00F0FF; animation-duration: {{d.ms}}"></div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<svg viewBox="-8 -8 176 176" width="100%" height="150" aria-hidden="true"><path d="M0 160 L160 160 M0 160 L0 0" stroke="rgba(0,240,255,0.25)" fill="none"/><path d="M0 160 C25.6 0 48 0 160 0" stroke="#00F0FF" stroke-width="2" fill="none"/></svg>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">ease/cyber-out</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">cubic-bezier(0.16, 1, 0.3, 1) — all entrances, hovers</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<svg viewBox="-8 -8 176 176" width="100%" height="150" aria-hidden="true"><path d="M0 160 L160 160 M0 160 L0 0" stroke="rgba(0,240,255,0.25)" fill="none"/><path d="M0 160 L40 160 L40 120 L80 120 L80 80 L120 80 L120 40 L160 40 L160 0" stroke="#FF2A6D" stroke-width="2" fill="none"/></svg>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF2A6D">ease/glitch</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">steps(4) — glitch, caret, HUD counters</span>
+</div>
+<div style="grid-column: span 2; background: #121726; border: 1px solid rgba(245,230,66,0.4); padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F5E642; white-space: nowrap">REDUCED MOTION</span>
+<span style="font-size: 15px; color: #E8F1FF">Every animation has a fade-only alternative: @media (prefers-reduced-motion: reduce) → opacity transition, motion/base, no transform, no glitch, no tilt, no parallax.</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var n = function (k) { var a = []; for (var i = 0; i < k; i++) a.push({ i: i }); return a; };
+    return {
+      space: [
+        { n: 1, px: '4px', use: 'icon gap' }, { n: 2, px: '8px', use: 'chip pad' }, { n: 3, px: '12px', use: 'label gap' },
+        { n: 4, px: '16px', use: 'input pad' }, { n: 6, px: '24px', use: 'gutter' }, { n: 8, px: '32px', use: 'card pad' },
+        { n: 12, px: '48px', use: 'block' }, { n: 16, px: '64px', use: 'group' }, { n: 24, px: '96px', use: 'section' }, { n: 32, px: '128px', use: 'hero' }
+      ],
+      c12: n(12), c8: n(8), c4: n(4),
+      dur: [
+        { n: 'fast', ms: '150ms', use: 'Hover colour, press, toggles' },
+        { n: 'base', ms: '300ms', use: 'Menus, tooltips, fades' },
+        { n: 'slow', ms: '600ms', use: 'Modals, cards entering' },
+        { n: 'cinematic', ms: '1200ms', use: 'Hero reveal, 3D camera moves' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

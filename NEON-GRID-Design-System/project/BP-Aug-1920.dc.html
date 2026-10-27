@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Augments — 1920 wide</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#05060A}</style>
+</helmet>
+<div style="width: 1920px; height: 1200px; overflow: hidden; background: #05060A">
+<dc-import name="Augments" bp="{{bp}}" hotspot="{{h}}" hint-size="1920px,1200px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() { return { bp: 'wide', h: 0 }; }
+}
+</script>
+</body>
+</html>

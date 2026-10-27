@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lore — mobile full timeline at 62%</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#05060A}</style>
+</helmet>
+<div style="width: 390px; height: 2800px; overflow: hidden; background: #05060A">
+<dc-import name="Lore" mobile="{{m}}" tall="{{t}}" progress="{{p}}" hint-size="390px,2800px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"progress":{"editor":"range","default":62,"min":0,"max":100,"step":1,"unit":"%"},"$preview":{"width":390,"height":2800}}'>
+class Component extends DCLogic {
+  renderVals() { return { m: true, t: true, p: this.props.progress ?? 62 }; }
+}
+</script>
+</body>
+</html>

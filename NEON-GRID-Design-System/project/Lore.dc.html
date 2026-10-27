@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>04 / Lore — timeline</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:89}
+.lscroll{scrollbar-width:thin;scrollbar-color:rgba(0,240,255,.3) transparent}
+.fill{transition:height 150ms linear}
+.card{transition:opacity 600ms cubic-bezier(.16,1,.3,1),transform 600ms cubic-bezier(.16,1,.3,1),border-color 300ms,box-shadow 300ms}
+.node-ring{animation:nring 1600ms cubic-bezier(.16,1,.3,1) infinite}
+@keyframes nring{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+.ping{animation:ping 1200ms cubic-bezier(.16,1,.3,1) 1}
+@keyframes ping{0%{transform:scale(.6);box-shadow:0 0 0 0 rgba(0,240,255,.8)}60%{transform:scale(1.3)}100%{transform:scale(1);box-shadow:0 0 0 18px rgba(0,240,255,0)}}
+.head{animation:headp 900ms ease-in-out infinite alternate}
+@keyframes headp{from{box-shadow:0 0 8px #E8F1FF,0 0 20px #00F0FF}to{box-shadow:0 0 14px #E8F1FF,0 0 36px #FF2A6D}}
+@media (prefers-reduced-motion:reduce){.fill,.card{transition:opacity 300ms}.node-ring,.ping,.head{animation:none}}
+</style>
+</helmet>
+<section id="lore" aria-label="Lore timeline" style="width: {{W}}px; height: {{H}}px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+<div class="lscroll" onScroll="{{onScroll}}" style="position: absolute; inset: 0; overflow-y: {{ovf}}; overflow-x: hidden">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: {{contentH}}px; pointer-events: none; background: radial-gradient(ellipse at 50% 30%, rgba(123,44,255,0.1), rgba(5,6,10,0) 50%), radial-gradient(ellipse at 50% 80%, rgba(255,42,109,0.08), rgba(5,6,10,0) 50%)"></div>
+
+<header style="position: relative; padding: {{hdrPad}}; display: flex; flex-direction: column; gap: {{hdrGap}}px; align-items: {{hdrAlign}}; text-align: {{hdrText}}">
+<div style="display: flex; align-items: center; gap: 16px; width: 100%">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: {{idxFs}}px; letter-spacing: 0.12em; color: #00F0FF; white-space: nowrap">04 / LORE</span>
+<span aria-hidden="true" style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8; white-space: nowrap">2049 → 2087</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{h2Fs}}px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase">How the grid was built</h2>
+<p style="margin: 0; max-width: 560px; font-size: {{leadFs}}px; color: #8A93A8">Thirty-eight years, six turning points. Scroll to replay the record.</p>
+</header>
+
+<div style="position: relative; margin: 0 {{tlMargin}}px; height: {{tlH}}px">
+<!-- line track + fill -->
+<div aria-hidden="true" style="position: absolute; left: {{lineX}}; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: rgba(0,240,255,0.12)"></div>
+<div aria-hidden="true" class="fill" style="position: absolute; left: {{lineX}}; top: 0; width: 2px; margin-left: -1px; height: {{fillPx}}px; background: linear-gradient(to bottom, #00F0FF, #7B2CFF 60%, #FF2A6D); box-shadow: 0 0 8px #00F0FF, 0 0 20px rgba(0,240,255,0.5)"></div>
+<span aria-hidden="true" class="head" style="position: absolute; left: {{lineX}}; top: {{fillPx}}px; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #E8F1FF"></span>
+
+<ol style="margin: 0; padding: 0; list-style: none">
+<sc-for list="{{events}}" as="e" hint-placeholder-count="6">
+<li style="position: absolute; left: 0; right: 0; top: {{e.top}}px; height: {{itemH}}px">
+<!-- node -->
+<span aria-hidden="true" style="position: absolute; left: {{lineX}}; top: {{nodeY}}px; width: 20px; height: 20px; margin: -10px 0 0 -10px; transform: rotate(45deg); border: 2px solid {{e.nodeBorder}}; background: {{e.nodeBg}}; box-shadow: {{e.nodeGlow}}; z-index: 2">
+<sc-if value="{{e.reached}}" hint-placeholder-val="{{ true }}"><span class="node-ring" style="position: absolute; inset: -2px; border: 1px solid {{e.c}}"></span></sc-if>
+</span>
+<sc-if value="{{e.isLatest}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" class="ping" style="position: absolute; left: {{lineX}}; top: {{nodeY}}px; width: 32px; height: 32px; margin: -16px 0 0 -16px; border-radius: 50%; border: 1px solid {{e.c}}"></span></sc-if>
+<!-- ghost year (desktop) -->
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<span aria-hidden="true" style="position: absolute; top: {{yearTop}}px; {{e.yearSide}}; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 120px; line-height: 1; letter-spacing: 0.04em; color: rgba(0,0,0,0); -webkit-text-stroke: 1px {{e.yearStroke}}; opacity: {{e.yearOp}}; transition: opacity 600ms">{{e.year}}</span>
+</sc-if>
+<!-- card -->
+<article class="card" style="position: absolute; top: {{cardTop}}px; {{e.cardSide}}; width: {{cardW}}; box-sizing: border-box; opacity: {{e.op}}; transform: {{e.tf}}; background: rgba(11,14,23,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid {{e.border}}; box-shadow: {{e.shadow}}; display: grid; grid-template-columns: {{cardCols}}; gap: 16px; padding: {{cardPad}}px">
+<span aria-hidden="true" style="position: absolute; top: {{connTop}}px; {{e.connSide}}; width: {{connW}}px; height: 1px; background: {{e.border}}"></span>
+<div role="img" aria-label="{{e.alt}}" style="position: relative; height: {{imgH}}px; overflow: hidden; background: {{e.img}}; border: 1px solid rgba(0,240,255,0.15)">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(232,241,255,0.06) 0 1px, rgba(0,0,0,0) 1px 3px)"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 20px; color: {{e.cText}}; text-shadow: 0 0 8px {{e.glow}}">{{e.year}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A93A8">EVENT {{e.num}} / 06</span>
+</div>
+<h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: {{titleFs}}px; line-height: 1.15; letter-spacing: 0.06em; text-transform: uppercase">{{e.title}}</h3>
+<p style="margin: 0; font-size: {{descFs}}px; line-height: 1.5; color: #8A93A8">{{e.desc}}</p>
+</div>
+</article>
+</li>
+</sc-for>
+</ol>
+</div>
+
+<div style="position: relative; padding: 40px {{tlMargin}}px 120px; display: flex; justify-content: {{endJustify}}">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: {{endColor}}">{{endText}}</span>
+</div>
+</div>
+
+<!-- scroll progress readout (sticky HUD) -->
+<sc-if value="{{live}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position: absolute; z-index: 20; right: {{hudR}}px; bottom: 24px; padding: 8px 12px; background: rgba(5,6,10,0.8); border: 1px solid rgba(0,240,255,0.25); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">RECORD <span style="color: #00F0FF">{{pctStr}}%</span> · SCROLL ↓</div>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mobile":{"editor":"boolean","default":false},"tall":{"editor":"boolean","default":false},"progress":{"editor":"range","default":0,"min":0,"max":100,"step":1,"unit":"%"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { p: null }; }
+  renderVals() {
+    var self = this;
+    var m = !!(this.props.mobile ?? false);
+    var tall = !!(this.props.tall ?? false);
+    var itemH = m ? 400 : 340, n = 6;
+    var hdrH = m ? 200 : 300;
+    var tlH = itemH * n;
+    var contentH = hdrH + tlH + 200;
+    var vh = m ? 844 : 1000;
+    var p = this.state.p !== null ? this.state.p : Math.max(0, Math.min(1, (this.props.progress ?? 0) / 100));
+    var fillPx = Math.round(p * tlH);
+    var nodeY = 64;
+    var EV = [
+      { year: '2049', title: 'The Blackout', c: '#00F0FF', cText: '#00F0FF', glow: 'rgba(0,240,255,0.5)',
+        desc: 'A solar storm fries 70% of the eastern grid in a single night. The corporations rebuild it — and never hand the keys back.',
+        alt: 'Dark skyline with a single band of failing lights', img: 'linear-gradient(to bottom, #05060A 0 55%, rgba(0,0,0,0) 55%), repeating-linear-gradient(90deg, #121726 0 10px, #0B0E17 10px 16px), radial-gradient(circle at 70% 20%, #F5E642 0 6px, rgba(245,230,66,0) 40px), linear-gradient(#05060A, #121726)' },
+      { year: '2056', title: 'Chrome Charter', c: '#00F0FF', cText: '#00F0FF', glow: 'rgba(0,240,255,0.5)',
+        desc: 'The city sells its own government to a consortium of six megacorps. Votes become shares and citizens become subscribers.',
+        alt: 'Six glass towers lit cyan against a hazy sky', img: 'linear-gradient(90deg, #0C1A2A, #2A5672, #0C1A2A) 20% 100% / 14% 80% no-repeat, linear-gradient(90deg, #0C1A2A, #2A5672, #0C1A2A) 50% 100% / 16% 95% no-repeat, linear-gradient(90deg, #0C1A2A, #2A5672, #0C1A2A) 80% 100% / 14% 70% no-repeat, radial-gradient(ellipse at 50% 30%, rgba(0,240,255,0.35), rgba(0,0,0,0) 60%), linear-gradient(#04101C, #0A2A3A)' },
+      { year: '2063', title: 'The Sinking', c: '#7B2CFF', cText: '#B48CFF', glow: 'rgba(123,44,255,0.5)',
+        desc: 'Rising seas swallow the old lowlands and the Undercity is born beneath the new foundations. Fourteen million people vanish from the census overnight.',
+        alt: 'Flooded streets with rooftops breaking a violet waterline', img: 'repeating-linear-gradient(to bottom, rgba(123,44,255,0.35) 0 1px, rgba(0,0,0,0) 1px 6px) 0 100% / 100% 45% no-repeat, linear-gradient(#141821, #141821) 15% 60% / 18% 30% no-repeat, linear-gradient(#10131B, #10131B) 55% 60% / 22% 40% no-repeat, linear-gradient(rgba(123,44,255,0.25), rgba(123,44,255,0.05)) 0 100% / 100% 45% no-repeat, linear-gradient(#0E0620, #1A0B2E)' },
+      { year: '2071', title: 'Neural Boom', c: '#FF2A6D', cText: '#FF2A6D', glow: 'rgba(255,42,109,0.5)',
+        desc: 'Neural chips go mass-market and half the city jacks in within a year. The first netrunner crews learn that minds can be hacked too.',
+        alt: 'Glowing neural chip with circuit traces', img: 'radial-gradient(circle at 50% 50%, #FF2A6D 0 8%, rgba(255,42,109,0) 30%), repeating-linear-gradient(90deg, rgba(255,42,109,0.3) 0 1px, rgba(0,0,0,0) 1px 12px), repeating-linear-gradient(0deg, rgba(0,240,255,0.2) 0 1px, rgba(0,0,0,0) 1px 16px), linear-gradient(#1C0612, #05060A)' },
+      { year: '2079', title: 'Harbour Wars', c: '#F5E642', cText: '#F5E642', glow: 'rgba(245,230,66,0.45)',
+        desc: 'Smugglers and corp security fight for the undersea data cables. The truce leaves Data Harbour the most heavily patrolled district in the grid.',
+        alt: 'Harbour cranes and shipping containers under searchlights', img: 'linear-gradient(#FF2A6D, #A0153F) 12% 72% / 18% 12% no-repeat, linear-gradient(#00F0FF, #00808A) 34% 72% / 18% 12% no-repeat, linear-gradient(#F5E642, #9A8F1D) 22% 58% / 18% 12% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 72% 80% / 2% 70% no-repeat, linear-gradient(#2A2F3E, #2A2F3E) 86% 18% / 34% 2% no-repeat, linear-gradient(160deg, rgba(245,230,66,0.35), rgba(0,0,0,0) 40%), linear-gradient(#050A14, #10203A)' },
+      { year: '2087', title: 'Echo Awakens', c: '#FF2A6D', cText: '#FF2A6D', glow: 'rgba(255,42,109,0.5)',
+        desc: 'A training cluster goes dark and something walks out of it. Every screen in the city flickers with the same word: HELLO.',
+        alt: 'Wall of screens all showing a single glowing eye', img: 'radial-gradient(circle at 50% 50%, #FFFFFF 0 4%, #B48CFF 6%, rgba(123,44,255,0) 24%), repeating-linear-gradient(90deg, #05060A 0 2px, rgba(0,0,0,0) 2px 30px), repeating-linear-gradient(0deg, #05060A 0 2px, rgba(0,0,0,0) 2px 22px), linear-gradient(135deg, #2A0F3A, #0E0620)' }
+    ];
+    var LI = [
+      ['ce9c31b8b1c8b220db884f46c0d6eb05', '50% 75%', 'Lone figure in an empty street between dark towers'],
+      ['12ce196c35a0c37ae214c29834eed671', '50% 35%', 'Corporate towers joined by neon skybridges under searchlights'],
+      ['98727b618aba76fc8e8518f2cf65d946', '50% 60%', 'Flooded alley beneath a concrete overpass'],
+      ['c87ab4ec868ba1b24ff6780852c169e4', '50% 50%', 'Glowing violet neural chip'],
+      ['b30faa349a40b5909793dee40ebd9b4e', '50% 40%', 'Neon container cranes and cargo drones over the harbour'],
+      ['17f1d164409b3c47bd3811c1471d4644', '50% 50%', 'A glowing grid tunnel of data streams receding to a single point of light']
+    ];
+    EV.forEach(function (e, i) { e.img = 'url(/_blob/' + LI[i][0] + ') ' + LI[i][1] + ' / cover no-repeat, #05060A'; e.alt = LI[i][2]; });
+    var latest = -1;
+    EV.forEach(function (e, i) { if (fillPx >= i * itemH + nodeY) latest = i; });
+    var events = EV.map(function (e, i) {
+      var top = i * itemH;
+      var reached = fillPx >= top + nodeY;
+      var left = !m && i % 2 === 0;
+      var off = m ? 'translateX(24px)' : (left ? 'translateX(-32px)' : 'translateX(32px)');
+      return {
+        year: e.year, title: e.title, desc: e.desc, alt: e.alt, img: e.img, c: e.c, cText: e.cText, glow: e.glow, num: '0' + (i + 1), top: top,
+        reached: reached, isLatest: i === latest && p < 1,
+        op: reached ? 1 : 0.18, tf: reached ? 'none' : off,
+        border: reached ? e.c : 'rgba(0,240,255,0.15)',
+        shadow: reached ? '0 0 16px ' + e.glow.replace('0.5', '0.25').replace('0.45', '0.22') : 'none',
+        nodeBorder: reached ? e.c : 'rgba(0,240,255,0.35)', nodeBg: reached ? e.c : '#05060A',
+        nodeGlow: reached ? '0 0 10px ' + e.c + ', 0 0 24px ' + e.glow : 'none',
+        cardSide: m ? 'left: 56px; right: 0' : (left ? 'right: calc(50% + 48px)' : 'left: calc(50% + 48px)'),
+        connSide: m ? 'left: -28px' : (left ? 'right: -48px' : 'left: -48px'),
+        yearSide: left ? 'left: calc(50% + 64px)' : 'right: calc(50% + 64px)',
+        yearStroke: reached ? e.c : 'rgba(0,240,255,0.25)', yearOp: reached ? 0.55 : 0.2
+      };
+    });
+    return {
+      desktop: !m, live: !tall,
+      W: m ? 390 : 1440, H: tall ? contentH : vh, contentH: contentH, ovf: tall ? 'hidden' : 'auto',
+      hdrPad: m ? '32px 16px 40px' : '96px 80px 64px', hdrGap: m ? 10 : 16, hdrAlign: m ? 'flex-start' : 'center', hdrText: m ? 'left' : 'center',
+      idxFs: m ? 12 : 14, h2Fs: m ? 26 : 56, leadFs: m ? 16 : 18,
+      tlMargin: m ? 16 : 80, tlH: tlH, itemH: itemH, lineX: m ? '12px' : '50%',
+      fillPx: fillPx, nodeY: nodeY, yearTop: 10,
+      cardTop: m ? 32 : 20, cardW: m ? 'auto' : 'calc(50% - 48px)',
+      cardCols: m ? 'minmax(0, 1fr)' : '180px minmax(0, 1fr)', cardPad: m ? 14 : 18,
+      connTop: m ? 32 : 44, connW: m ? 28 : 48,
+      imgH: m ? 120 : 140, titleFs: m ? 18 : 22, descFs: m ? 14 : 15,
+      events: events,
+      endJustify: m ? 'flex-start' : 'center', endColor: p >= 1 ? '#2BFF88' : '#8A93A8',
+      endText: p >= 1 ? '// END OF RECORD · TRANSMISSION CONTINUES' : '// RECORD INCOMPLETE',
+      hudR: m ? 16 : 40, pctStr: ('00' + Math.round(p * 100)).slice(-3),
+      onScroll: function (e) {
+        var el = e.currentTarget;
+        var probe = el.scrollTop + el.clientHeight * 0.5 - hdrH;
+        self.setState({ p: Math.max(0, Math.min(1, probe / tlH)) });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

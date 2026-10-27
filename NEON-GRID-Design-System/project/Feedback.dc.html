@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NEON//GRID — Overlays, Loaders, Chrome</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+a{color:#8A93A8;text-decoration:none}a:hover{color:#00F0FF}
+a:focus-visible,button:focus-visible{outline:2px solid #00F0FF;outline-offset:3px;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:5}
+.ng-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(232,241,255,.04) 0 2px,transparent 2px 4px);z-index:4}
+.tip-wrap{position:relative;display:inline-flex}
+.tip-wrap .tip{opacity:0;transform:translate(-50%,4px);pointer-events:none;transition:opacity 150ms cubic-bezier(.16,1,.3,1),transform 150ms cubic-bezier(.16,1,.3,1)}
+.tip-wrap:hover .tip,.tip-wrap:focus-within .tip{opacity:1;transform:translate(-50%,0)}
+.spin{animation:ng-spin 1200ms linear infinite}
+@keyframes ng-spin{to{transform:rotate(360deg)}}
+.seg-spin{animation:ng-spin 1200ms steps(8) infinite}
+.ng-in{animation:ng-in 600ms cubic-bezier(.16,1,.3,1)}
+@keyframes ng-in{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
+.ng-fadein{animation:ng-fade 300ms ease}
+@keyframes ng-fade{from{opacity:0}to{opacity:1}}
+.b-pri{cursor:pointer;transition:background 150ms}
+.b-pri:hover{background:#FF4D85 !important}
+.b-sec{cursor:pointer;transition:all 150ms}
+.b-sec:hover{background:rgba(0,240,255,.1) !important;box-shadow:0 0 8px #00F0FF,0 0 24px rgba(0,240,255,.5)}
+.flink:hover{color:#00F0FF !important}
+@media (prefers-reduced-motion:reduce){.spin,.seg-spin{animation:ng-pulse-o 1200ms ease infinite alternate}@keyframes ng-pulse-o{from{opacity:.4}to{opacity:1}}.ng-in{animation:ng-fade 300ms ease}.tip-wrap .tip{transform:translate(-50%,0)}}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2900px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 96px">
+<div class="ng-scan"></div>
+<div class="ng-noise"></div>
+
+<!-- OVERLAYS -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">06 / OVERLAYS + CHROME</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">MODAL · TOAST · TOOLTIP · LOADERS · FOOTER</span>
+</div>
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1">Modal + toasts</h2>
+<div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px">
+<!-- modal scene -->
+<div style="position: relative; height: 520px; overflow: hidden; border: 1px solid rgba(0,240,255,0.15); background: linear-gradient(to top, rgba(255,42,109,0.25), #05060A 70%)">
+<div style="position: absolute; inset: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">[PAGE CONTENT BEHIND]</span>
+<button type="button" class="b-sec" onClick="{{openModal}}" style="align-self: flex-start; height: 48px; padding: 0 24px; background: transparent; border: 1px solid #00F0FF; color: #00F0FF; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase">Open modal</button>
+</div>
+<sc-if value="{{modalOpen}}" hint-placeholder-val="{{ true }}">
+<div class="ng-fadein" style="position: absolute; inset: 0; background: rgba(5,6,10,0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 2">
+<div class="ng-in" role="dialog" aria-modal="true" aria-labelledby="ng-dlg-t" style="width: 480px; position: relative; background: #121726; border: 1px solid rgba(0,240,255,0.3); box-shadow: 0 0 24px rgba(0,240,255,0.2), 0 24px 64px rgba(0,0,0,0.6)">
+<span style="position: absolute; top: -1px; left: -1px; width: 16px; height: 16px; border-top: 2px solid #00F0FF; border-left: 2px solid #00F0FF"></span>
+<span style="position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px; border-bottom: 2px solid #00F0FF; border-right: 2px solid #00F0FF"></span>
+<div style="height: 48px; padding: 0 4px 0 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,240,255,0.15)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #FF2A6D">// CONFIRM UPLINK</span>
+<button type="button" aria-label="Close dialog" onClick="{{closeModal}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; color: #8A93A8; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+<div style="padding: 24px 20px; display: flex; flex-direction: column; gap: 12px">
+<span id="ng-dlg-t" style="font-weight: 700; font-size: 24px; line-height: 1.2">Jack into Sector 07?</span>
+<span style="font-size: 16px; color: #8A93A8">[Explain the consequence in one or two sentences. Say what happens and whether it can be undone.]</span>
+</div>
+<div style="padding: 0 20px 20px; display: flex; justify-content: flex-end; gap: 12px">
+<button type="button" onClick="{{closeModal}}" style="height: 48px; padding: 0 20px; background: transparent; border: 0; color: #00F0FF; font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer">Cancel</button>
+<button type="button" class="b-pri" onClick="{{closeModal}}" style="height: 48px; padding: 0 24px; border: 0; background: #FF2A6D; color: #05060A; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Jack in</button>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+<!-- toasts -->
+<div style="display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A93A8">TOAST · 360W · BOTTOM-RIGHT · AUTO 5S</span>
+<sc-for list="{{toasts}}" as="t" hint-placeholder-count="4">
+<div role="status" style="width: 100%; max-width: 420px; display: flex; gap: 12px; padding: 14px 4px 14px 16px; background: rgba(18,23,38,0.92); border: 1px solid {{t.border}}; box-shadow: 0 0 16px {{t.glow}}; position: relative; overflow: hidden">
+<span style="position: absolute; left: 0; bottom: 0; height: 2px; width: {{t.left}}; background: {{t.color}}"></span>
+<span style="width: 8px; height: 8px; margin-top: 8px; background: {{t.color}}; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: {{t.color}}">{{t.kind}}</span>
+<span style="font-size: 16px">{{t.msg}}</span>
+</div>
+<button type="button" aria-label="Dismiss" style="width: 44px; height: 44px; flex: none; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; color: #8A93A8; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+</sc-for>
+<span style="font-size: 15px; color: #8A93A8">Bottom line drains to show time left; pauses on hover/focus. Errors don't auto-dismiss. Announce via role="status" (role="alert" for errors).</span>
+</div>
+</div>
+</section>
+
+<!-- TOOLTIP + SECTION HEADER -->
+<section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Tooltip</h2>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); height: 260px; display: flex; align-items: flex-end; justify-content: space-around; padding-bottom: 48px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="position: relative; display: inline-flex; flex-direction: column; align-items: center">
+<span role="tooltip" style="margin-bottom: 10px; padding: 6px 10px; background: #121726; border: 1px solid #00F0FF; box-shadow: 0 0 8px rgba(0,240,255,0.5); font-family: 'JetBrains Mono', monospace; font-size: 12px; white-space: nowrap">Encrypted channel · 256-bit</span>
+<span style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #00F0FF; color: #00F0FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="9"></rect><path d="M8 11V7a4 4 0 018 0v4"></path></svg></span>
+</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8">STATIC</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span class="tip-wrap">
+<button type="button" aria-describedby="ng-tip" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.5"></path></svg></button>
+<span id="ng-tip" role="tooltip" class="tip" style="position: absolute; bottom: calc(100% + 10px); left: 50%; padding: 6px 10px; background: #121726; border: 1px solid #00F0FF; box-shadow: 0 0 8px rgba(0,240,255,0.5); font-family: 'JetBrains Mono', monospace; font-size: 12px; white-space: nowrap">Hover or tab to me</span>
+</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #F5E642">LIVE</span>
+</div>
+</div>
+<span style="font-size: 15px; color: #8A93A8">Shows on hover and keyboard focus after 300ms, motion/fast in. Max 240px, one line preferred. Never put essential info or links inside.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Section header</h2>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 40px; display: flex; flex-direction: column; gap: 48px; min-height: 260px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">01 / DISTRICTS</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">06 ZONES</span>
+</div>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; line-height: 1.1">CHOOSE YOUR TURF</span>
+</div>
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #FF2A6D">02 / AUGMENTS</span>
+<span style="flex: 1; height: 1px; background: rgba(255,42,109,0.4)"></span>
+<span style="width: 8px; height: 8px; background: #FF2A6D; transform: rotate(45deg)"></span>
+</div>
+</div>
+<span style="font-size: 15px; color: #8A93A8">Index is two digits, slash, label in mono 14. Divider fades from the accent; optional right-aligned count. Index label is an aria-hidden prefix; the H2 carries the meaning.</span>
+</div>
+</section>
+
+<!-- LOADERS / CURSOR / SCROLL -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Loaders + pointer chrome</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 24px; display: flex; flex-direction: column; gap: 16px; align-items: center">
+<div role="status" aria-label="Loading" style="width: 96px; height: 96px; position: relative; margin-top: 16px">
+<div class="spin" style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(0,240,255,0.15); border-top-color: #00F0FF; border-right-color: #00F0FF; filter: drop-shadow(0 0 6px #00F0FF)"></div>
+<div class="seg-spin" style="position: absolute; inset: 14px; border-radius: 50%; border: 2px dashed rgba(255,42,109,0.7)"></div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">loader/ring</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; text-align: center">Indeterminate · 1200ms linear · inner ring steps(8)</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); padding: 24px; display: flex; flex-direction: column; gap: 16px; align-items: center">
+<div role="progressbar" aria-label="Loading scene" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 96px; height: 96px; margin-top: 16px; border-radius: 50%; background: conic-gradient(#00F0FF 0 72%, rgba(0,240,255,0.12) 72% 100%); display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px rgba(0,240,255,0.6))">
+<div style="width: 84px; height: 84px; border-radius: 50%; background: #0B0E17; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">72%</div>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">loader/progress-ring</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; text-align: center">Determinate · 3D asset preload · number always shown</span>
+</div>
+<div onMouseMove="{{moveCursor}}" onMouseLeave="{{leaveCursor}}" style="position: relative; overflow: hidden; background: #0B0E17; border: 1px dashed rgba(0,240,255,0.3); padding: 24px; display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: flex-end; cursor: none; min-height: 236px; box-sizing: border-box">
+<span aria-hidden="true" style="position: absolute; left: {{cx}}; top: {{cy}}; width: 32px; height: 32px; margin: -16px 0 0 -16px; border: 1px solid #00F0FF; border-radius: 50%; box-shadow: 0 0 8px rgba(0,240,255,0.6); transition: left 150ms cubic-bezier(.16,1,.3,1), top 150ms cubic-bezier(.16,1,.3,1); pointer-events: none"></span>
+<span aria-hidden="true" style="position: absolute; left: {{dx}}; top: {{dy}}; width: 4px; height: 4px; margin: -2px 0 0 -2px; background: #FF2A6D; pointer-events: none"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">cursor/follower</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #F5E642; text-align: center">LIVE · move the pointer here</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; text-align: center">32px ring lags 150ms; dot is exact. Pointer: fine only. Off on touch and reduced motion.</span>
+</div>
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.12); display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 3px; background: rgba(0,240,255,0.12)"><div style="height: 100%; width: {{scrollPct}}; background: linear-gradient(90deg, #7B2CFF, #FF2A6D, #00F0FF); box-shadow: 0 0 8px rgba(0,240,255,0.6)"></div></div>
+<div onScroll="{{onScroll}}" tabindex="0" aria-label="Scroll demo" style="height: 150px; overflow-y: auto; padding: 16px 24px; font-size: 15px; color: #8A93A8">
+<p style="margin: 0 0 12px">LIVE · scroll this box. The bar above tracks reading progress, pinned to the very top of the viewport in product.</p>
+<p style="margin: 0 0 12px">[Long-form lore content]</p>
+<p style="margin: 0 0 12px">[Long-form lore content]</p>
+<p style="margin: 0 0 12px">[Long-form lore content]</p>
+<p style="margin: 0 0 12px">[Long-form lore content]</p>
+<p style="margin: 0">End of transmission.</p>
+</div>
+<div style="padding: 12px 24px 20px; display: flex; flex-direction: column; gap: 4px; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00F0FF">scroll/progress · {{scrollPct}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A93A8; text-align: center">3px · synthwave fill · aria-hidden</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<section style="display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.08em; text-transform: uppercase">Footer</h2>
+</section>
+<footer style="margin: 0 -80px; position: relative; overflow: hidden; border-top: 1px solid rgba(0,240,255,0.15); background: #05060A; padding: 64px 80px 32px; display: flex; flex-direction: column; gap: 48px">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: linear-gradient(to top, rgba(255,42,109,0.18), rgba(255,42,109,0)); pointer-events: none"></div>
+<div style="position: relative; display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)) minmax(0, 2fr); gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 24px; letter-spacing: 0.08em">NEON<span style="color: #FF2A6D">//</span>GRID</span>
+<span style="font-size: 16px; color: #8A93A8; max-width: 300px">[One-line brand statement]</span>
+</div>
+<nav aria-label="Explore" style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF; margin-bottom: 8px">EXPLORE</span>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Districts</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Augments</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Crew</a>
+</nav>
+<nav aria-label="Lore" style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF; margin-bottom: 8px">ARCHIVE</span>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Lore</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Timeline</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Press kit</a>
+</nav>
+<nav aria-label="Legal" style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF; margin-bottom: 8px">LEGAL</span>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Privacy</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Terms</a>
+<a href="#" class="flink" style="min-height: 32px; display: flex; align-items: center; color: #8A93A8">Accessibility</a>
+</nav>
+<form style="display: flex; flex-direction: column; gap: 8px">
+<label for="ng-news" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #00F0FF">SUBSCRIBE TO TRANSMISSIONS</label>
+<div style="display: flex; gap: 8px">
+<div style="flex: 1; height: 48px; padding: 0 12px; display: flex; align-items: center; gap: 8px; background: #121726; border: 1px solid rgba(0,240,255,0.25); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 14px"><span style="color: #00F0FF">&gt;</span><input id="ng-news" type="email" placeholder="you@grid.net" style="flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: #E8F1FF; font: inherit; caret-color: #00F0FF"></div>
+<button type="button" class="b-pri" style="height: 48px; padding: 0 20px; border: 0; background: #FF2A6D; color: #05060A; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))">Send</button>
+</div>
+</form>
+</div>
+<div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(0,240,255,0.12); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8A93A8">
+<span>© [YEAR] [STUDIO NAME] · ALL SIGNALS RESERVED</span>
+<span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #2BFF88"></span>ALL SYSTEMS NOMINAL</span>
+<a href="#" style="min-height: 44px; display: inline-flex; align-items: center; color: #00F0FF">BACK TO TOP ↑</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { modalOpen: true, x: null, y: null, pct: 0 }; }
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var has = s.x !== null;
+    return {
+      modalOpen: !!s.modalOpen,
+      openModal: function () { self.setState({ modalOpen: true }); },
+      closeModal: function () { self.setState({ modalOpen: false }); },
+      toasts: [
+        { kind: 'TRANSMISSION', msg: 'Uplink established with Node 07.', color: '#00F0FF', border: 'rgba(0,240,255,0.4)', glow: 'rgba(0,240,255,0.15)', left: '70%' },
+        { kind: 'SUCCESS', msg: 'Augment installed. Reboot in 3s.', color: '#2BFF88', border: 'rgba(43,255,136,0.4)', glow: 'rgba(43,255,136,0.12)', left: '45%' },
+        { kind: 'WARNING', msg: 'Heat level rising in Sector 13.', color: '#F5E642', border: 'rgba(245,230,66,0.4)', glow: 'rgba(245,230,66,0.12)', left: '25%' },
+        { kind: 'ERROR', msg: 'Payment rejected. Check your credchip.', color: '#FF3B3B', border: 'rgba(255,59,59,0.5)', glow: 'rgba(255,59,59,0.15)', left: '100%' }
+      ],
+      cx: has ? s.x + 'px' : '50%', cy: has ? s.y + 'px' : '38%',
+      dx: has ? s.x + 'px' : '50%', dy: has ? s.y + 'px' : '38%',
+      moveCursor: function (e) {
+        var r = e.currentTarget.getBoundingClientRect();
+        self.setState({ x: Math.round(e.clientX - r.left), y: Math.round(e.clientY - r.top) });
+      },
+      leaveCursor: function () { self.setState({ x: null, y: null }); },
+      scrollPct: Math.round(s.pct) + '%',
+      onScroll: function (e) {
+        var el = e.currentTarget;
+        var max = el.scrollHeight - el.clientHeight;
+        self.setState({ pct: max > 0 ? (el.scrollTop / max) * 100 : 0 });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

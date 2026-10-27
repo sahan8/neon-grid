@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Motion and 3D specification</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05060A}
+.ng-noise{position:absolute;inset:0;pointer-events:none;background-image:url(/_blob/4471ec4b76afa1f4abfdc8c2ea75b053);background-size:240px;opacity:.03;z-index:90}
+</style>
+</helmet>
+<div style="width: 1440px; height: 5800px; position: relative; overflow: hidden; background: #05060A; color: #E8F1FF; font-family: 'Rajdhani', 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; padding: 96px 80px; box-sizing: border-box; display: flex; flex-direction: column; gap: 80px">
+<div class="ng-noise"></div>
+
+<!-- TITLE -->
+<header style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 24px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; color: #00F0FF">SPEC / MOTION + 3D</span>
+<span style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,240,255,0.6), rgba(0,240,255,0.12) 40%, rgba(0,240,255,0))"></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">v1.0 · THREE.JS / R3F · GSAP SCROLLTRIGGER · LENIS</span>
+</div>
+<h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 72px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1">Motion &amp; 3D spec</h1>
+<p style="margin: 0; max-width: 860px; font-size: 19px; color: #8A93A8">Every effect on the site, with its ID, trigger, duration, easing token and reduced-motion fallback. IDs (S-, SC-, MT-, MI-, SD-, PF-) match the teal notes beside each screen on the canvas.</p>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: rgba(0,240,255,0.15); border: 1px solid rgba(0,240,255,0.15); margin-top: 8px">
+<sc-for list="{{tokens}}" as="t" hint-placeholder-count="6">
+<div style="background: #0B0E17; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: {{t.c}}">{{t.k}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">{{t.v}}</span></div>
+</sc-for>
+</div>
+</header>
+
+<!-- 3D SCENES -->
+<section style="display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">A /</span><h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 36px; letter-spacing: 0.08em; text-transform: uppercase">3D scenes</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">THREE.JS + REACT THREE FIBER · DREI · POSTPROCESSING</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{scenes}}" as="s" hint-placeholder-count="3">
+<article style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.15); display: flex; flex-direction: column">
+<div style="padding: 20px 24px; border-bottom: 1px solid rgba(0,240,255,0.12); display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: {{s.c}}">{{s.id}} · {{s.where}}</span>
+<span style="font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase">{{s.name}}</span>
+</div>
+<div style="padding: 16px 24px 24px; display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{s.groups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8A93A8">{{g.k}}</span>
+<sc-for list="{{g.items}}" as="i" hint-placeholder-count="3"><span style="font-size: 15px; line-height: 1.45; display: flex; gap: 8px"><span style="color: {{s.c}}; flex: none">›</span><span>{{i}}</span></span></sc-for>
+</div>
+</sc-for>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<!-- TABLE SECTIONS -->
+<sc-for list="{{tables}}" as="tb" hint-placeholder-count="5">
+<section style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">{{tb.letter}} /</span><h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 36px; letter-spacing: 0.08em; text-transform: uppercase">{{tb.title}}</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A93A8">{{tb.sub}}</span></div>
+<div role="table" aria-label="{{tb.title}}" style="border: 1px solid rgba(0,240,255,0.15)">
+<div role="row" style="display: grid; grid-template-columns: 80px 200px 220px 120px 150px minmax(0, 1fr) 250px; background: #121726; border-bottom: 1px solid rgba(0,240,255,0.25); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">
+<span role="columnheader" style="padding: 12px 14px">ID</span><span role="columnheader" style="padding: 12px 14px">EFFECT</span><span role="columnheader" style="padding: 12px 14px">TRIGGER</span><span role="columnheader" style="padding: 12px 14px">DURATION</span><span role="columnheader" style="padding: 12px 14px">EASING</span><span role="columnheader" style="padding: 12px 14px">BEHAVIOUR</span><span role="columnheader" style="padding: 12px 14px">REDUCED MOTION</span>
+</div>
+<sc-for list="{{tb.rows}}" as="r" hint-placeholder-count="5">
+<div role="row" style="display: grid; grid-template-columns: 80px 200px 220px 120px 150px minmax(0, 1fr) 250px; border-bottom: 1px solid rgba(0,240,255,0.1); background: #0B0E17; font-size: 15px; line-height: 1.45">
+<span role="cell" style="padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{tb.c}}">{{r.id}}</span>
+<span role="cell" style="padding: 14px; font-weight: 700">{{r.fx}}</span>
+<span role="cell" style="padding: 14px; color: #8A93A8">{{r.trig}}</span>
+<span role="cell" style="padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px">{{r.dur}}</span>
+<span role="cell" style="padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F5E642">{{r.ease}}</span>
+<span role="cell" style="padding: 14px">{{r.how}}</span>
+<span role="cell" style="padding: 14px; color: #2BFF88">{{r.rm}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-for>
+
+<!-- PERFORMANCE -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #00F0FF">G /</span><h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 36px; letter-spacing: 0.08em; text-transform: uppercase">Performance budget</h2></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+<sc-for list="{{perf}}" as="p" hint-placeholder-count="8">
+<div style="background: #0B0E17; border: 1px solid rgba(0,240,255,0.15); padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A93A8">{{p.id}} · {{p.k}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 26px; color: #00F0FF">{{p.v}}</span>
+<span style="font-size: 15px; line-height: 1.4; color: #8A93A8">{{p.d}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- REDUCED MOTION SUMMARY -->
+<section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px">
+<div style="background: #121726; border: 1px solid rgba(43,255,136,0.4); padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #2BFF88">H / PREFERS-REDUCED-MOTION: REDUCE</span>
+<sc-for list="{{rmRules}}" as="r" hint-placeholder-count="6"><span style="display: flex; gap: 10px; font-size: 16px"><span style="color: #2BFF88">✓</span>{{r}}</span></sc-for>
+</div>
+<div style="background: #121726; border: 1px solid rgba(255,42,109,0.4); padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #FF2A6D">I / GLOBAL RULES</span>
+<sc-for list="{{globals}}" as="r" hint-placeholder-count="6"><span style="display: flex; gap: 10px; font-size: 16px"><span style="color: #FF2A6D">!</span>{{r}}</span></sc-for>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var R = function (id, fx, trig, dur, ease, how, rm) { return { id: id, fx: fx, trig: trig, dur: dur, ease: ease, how: how, rm: rm }; };
+    return {
+      tokens: [
+        { k: 'motion/fast', v: '150ms', c: '#00F0FF' }, { k: 'motion/base', v: '300ms', c: '#00F0FF' }, { k: 'motion/slow', v: '600ms', c: '#00F0FF' },
+        { k: 'motion/cinematic', v: '1200ms', c: '#00F0FF' }, { k: 'ease/cyber-out', v: 'cubic-bezier(.16,1,.3,1)', c: '#F5E642' }, { k: 'ease/glitch', v: 'steps(4)', c: '#F5E642' }
+      ],
+      scenes: [
+        { id: 'S-01', where: 'HERO', name: 'Night megacity', c: '#00F0FF', groups: [
+          { k: 'GEOMETRY', items: ['Low-poly skyscrapers as InstancedMesh (desktop 1,200 · mobile 480, −60%)', 'Main street spline the camera flies along (1.5 viewports)', '3–4 holographic billboard planes, VideoTexture / animated sprite sheet, additive blend'] },
+          { k: 'FX + PARTICLES', items: ['Flying-car light trails: 24 Line2 ribbons along curves, emissive cyan/magenta', 'Rain: 6k GPU points, instanced streaks, wind skew 12°', 'FogExp2 #2A0F3A (violet), density 0.018'] },
+          { k: 'MATERIALS', items: ['Window atlas emissive texture (KTX2), random per-instance offset', 'Ground: MeshReflectorMaterial, blur [300,100], mixStrength 1.4, roughness 0.8 (off on mobile)'] },
+          { k: 'POST', items: ['Bloom strength 1.2, threshold 0.6, radius 0.7 (mobile 0.8, half-res)', 'ChromaticAberration offset 0.0008 (off on mobile)', 'Film grain 0.03 · Vignette darkness 0.6'] }
+        ] },
+        { id: 'S-02', where: 'AUGMENTS', name: 'Product viewer', c: '#FF2A6D', groups: [
+          { k: 'MODEL', items: ['Single GLB per augment, Draco-compressed, ≤ 2 MB, KTX2 textures', 'Swap with 300ms dissolve shader (motion/base, cyber-out)', 'Finish swatch swaps emissive + trim material colour'] },
+          { k: 'PEDESTAL', items: ['Ring mesh + additive cone beam, rotates 6°/s', 'Pulsing emissive 0.6 → 1.0 over 2400ms sine'] },
+          { k: 'CONTROLS', items: ['OrbitControls: azimuth unlimited, polar 80°–100° (slight tilt), no pan', 'enableDamping, dampingFactor 0.08 · autoRotate 6°/s after 4s idle', 'Desktop wheel zoom 0.8–1.4× · mobile pinch disabled'] },
+          { k: 'HOTSPOTS', items: ['drei <Html> anchored to 3D points, occlude, hidden when facing away (dot < −0.2)', 'Desktop: floating callout · mobile: opens bottom sheet'] }
+        ] },
+        { id: 'S-03', where: 'JOIN', name: 'Data tunnel', c: '#7B2CFF', groups: [
+          { k: 'GEOMETRY', items: ['24 glowing grid rings (alternating square/circle) recycled along −Z', 'Data streams: 400 instanced line segments on the tunnel wall'] },
+          { k: 'MOTION', items: ['Rings travel toward camera at 4 units/s, rotate 45° per pass', 'On CONNECT success: speed ×6 for motion/cinematic, then ease back'] },
+          { k: 'MATERIALS + POST', items: ['MeshBasicMaterial emissive cyan / magenta / violet, additive', 'Bloom 1.0 · fog to #05060A at far end'] },
+          { k: 'FALLBACK', items: ['No WebGL / low power: CSS rings shown on the Join boards, or a 6s looping MP4'] }
+        ] }
+      ],
+      tables: [
+        { letter: 'B', title: 'Scroll behaviour', sub: 'GSAP SCROLLTRIGGER + LENIS', c: '#00F0FF', rows: [
+          R('SC-01', 'Smooth scroll', 'Page load', 'lerp 0.1', 'linear', 'Lenis drives all scrolling; ScrollTrigger reads Lenis via scrollerProxy.', 'Native scroll, Lenis off'),
+          R('SC-02', 'Hero fly-through', 'Hero top → +150vh (scrub 1)', 'scroll-linked', 'linear (scrub)', 'Camera z 0 → −600 down the main street; H1 group opacity 1→0 and scale 1→0.9 over first 40%; scroll cue fades in first 5%.', 'Static hero image, text stays, no camera move'),
+          R('SC-03', 'Districts pin', 'Section top hits top; pin 4 × 100vh', 'scroll-linked + snap motion/slow', 'cyber-out (snap)', 'Track translates x by card width + gap; snap 1/3; active card scales 1.06 with glow/cyan. Pin releases after card 04.', 'No pin; cards in a vertical list'),
+          R('SC-04', 'Lore line draw', 'Timeline top 80% → bottom 50% (scrub)', 'scroll-linked', 'linear (scrub)', 'Line scaleY 0→1 with gradient cyan → violet → magenta; each node fires at "top 50%": pulse ring + card slides in 32px.', 'Line fully drawn, cards visible, no pulse'),
+          R('SC-05', 'Section header split-text', 'Header top 80%', '30ms / char, motion/base total', 'ease/glitch', 'SplitText chars; each char cycles 3 random glyphs then resolves; divider line scaleX 0→1 in motion/slow cyber-out.', 'Header fades in, motion/base'),
+          R('SC-06', 'Scroll progress bar', 'Whole page (scrub)', 'scroll-linked', 'linear', '3px bar pinned to viewport top, scaleX 0→1, gradient cyan → magenta, glow 8px.', 'Kept (it isn’t motion), no glow pulse'),
+          R('SC-07', 'Nav glass', 'scrollY > 24px', 'motion/base', 'cyber-out', 'Bar 88 → 64px, transparent → glass (blur 16, border cyan 15%).', 'Instant switch, no height animation')
+        ] },
+        { letter: 'C', title: 'Mouse / touch', sub: 'POINTER EVENTS · DEVICEORIENTATION', c: '#FF2A6D', rows: [
+          R('MT-01', 'Custom cursor', 'pointer: fine only', 'ring lerp 0.15 / frame', 'cyber-out (scale)', '8px dot exact + 32px cyan ring that lags. Over interactive: ring scales 2.2 in motion/fast and shows label VIEW / DRAG / ENTER (mono 10px).', 'System cursor; hidden entirely on touch'),
+          R('MT-02', 'Hero camera parallax', 'pointermove over hero', 'continuous', 'lerp 0.05 / frame', 'Camera yaw/pitch max 3° toward pointer; returns to 0 on leave.', 'Off'),
+          R('MT-03', 'Card tilt + shine', 'pointermove over card', 'motion/fast follow · motion/slow release', 'cyber-out', 'rotateX/Y max 10°, scale 1.03; holographic gradient + radial highlight follow pointer; portrait swaps to glitched alt.', 'No tilt; border glow + alt portrait only'),
+          R('MT-04', 'Magnetic buttons', 'Pointer within 80px of CTA', 'motion/base release', 'cyber-out', 'Button translates up to 6px toward pointer; label moves 3px (parallax inside).', 'Off'),
+          R('MT-05', 'Gyro parallax (mobile)', 'Tap “Enable motion” → permission granted', 'continuous', 'lerp 0.05', 'DeviceOrientation beta/gamma clamped ±15° → camera max 1.5°. Never requested on load.', 'Never requested')
+        ] },
+        { letter: 'D', title: 'Micro-interactions', sub: 'CSS + GSAP', c: '#F5E642', rows: [
+          R('MI-01', 'Button glitch flash', 'Hover / focus-visible', '200ms', 'ease/glitch', 'RGB split ±3px cyan/magenta text-shadow + 2px jitter, once per hover.', 'Colour change only'),
+          R('MI-02', 'Scanline sweep', 'Click / tap', 'motion/base', 'cyber-out', 'A 2px bright line sweeps top → bottom across the button; primary also flashes darker magenta.', 'Darker press colour only'),
+          R('MI-03', 'Text scramble', 'Link hover / focus', '400ms (30ms ticks)', 'ease/glitch', 'Letters cycle through A–Z 0–9 #%& and resolve left → right; width locked to avoid reflow.', 'Underline only'),
+          R('MI-04', 'Form error shake', 'Submit with invalid fields', '400ms', 'ease/glitch', 'Terminal shakes ±8px with RGB drop-shadow; error text glitches every 1200ms; aria-live announces.', 'Red border + message, no shake'),
+          R('MI-05', 'Terminal caret + typing sounds', 'Field focus / keypress', 'caret 1s', 'steps(1)', 'Block caret blinks; optional key click (only if sound ON).', 'Caret steady'),
+          R('MI-06', 'Pulse dots', 'Live status, hotspots, timeline nodes', 'motion/cinematic loop', 'cyber-out', 'Ring scales 1 → 2.8 and fades.', 'Static dot')
+        ] },
+        { letter: 'E', title: 'Sound', sub: 'OFF BY DEFAULT · TOGGLE IN NAV + BOOT LOADER', c: '#7B2CFF', rows: [
+          R('SD-01', 'Ambient city drone', 'Sound toggle ON', 'fade in motion/cinematic', 'linear', 'Seamless loop (≤ 400 KB Opus), volume 30%, ducks to 10% when tab hidden; preference saved per device.', 'Unaffected — sound is opt-in'),
+          R('SD-02', 'UI blips', 'Hover / click on interactive', '40ms hover · 80ms click', '—', 'Short synthetic ticks at 30% volume; throttled to 1 per 60ms.', 'Unaffected — sound is opt-in'),
+          R('SD-03', 'Nav sound toggle', 'Click', 'motion/fast', 'cyber-out', 'Icon button (44×44) in the nav bar with aria-pressed; mirrors the boot-loader toggle. Add it beside the clock in the nav boards.', '—')
+        ] }
+      ],
+      perf: [
+        { id: 'PF-01', k: 'FIRST LOAD (MOBILE)', v: '< 3 MB', d: 'HTML, CSS, fonts and the poster image only. 3D lazy-loads after first paint.' },
+        { id: 'PF-02', k: 'GLB MODEL', v: '≤ 2 MB', d: 'Draco geometry + KTX2 (Basis) textures, loaded on viewport enter.' },
+        { id: 'PF-03', k: 'FRAME RATE', v: '60 / 30+', d: '60fps desktop, 30fps+ on mid-range phones. Drop quality tier when FPS < target for 2s.' },
+        { id: 'PF-04', k: 'PIXEL RATIO', v: 'DPR ≤ 1.5', d: 'Adaptive DPR on mobile (cap 1.5), 2 on desktop; PerformanceMonitor lowers it under load.' },
+        { id: 'PF-05', k: 'OFF-SCREEN', v: 'PAUSED', d: 'frameloop="demand" when the canvas is out of view or document.hidden is true.' },
+        { id: 'PF-06', k: 'HERO INSTANCES', v: '−60% MOBILE', d: 'Fewer buildings, no reflections, no chromatic aberration, half-res bloom.' },
+        { id: 'PF-07', k: 'NO WEBGL / LOW POWER', v: 'POSTER / MP4', d: 'Pre-rendered still or 6–8s loop of the same scene replaces the canvas.' },
+        { id: 'PF-08', k: 'FONTS', v: '3 FAMILIES', d: 'Subset, woff2, font-display swap; Orbitron preloaded for the hero H1.' }
+      ],
+      rmRules: ['No camera flights, no scroll-jacking, no pinning', 'No glitch flicker, no shake, no RGB split animation', 'Hero shows a static poster image', 'All reveals become opacity fades in motion/base', 'Parallax, tilt, magnetic pull and gyro are off', 'Status pulses and carets become steady'],
+      globals: ['Nothing flashes more than 3 times per second', 'Every hover effect has a focus-visible equivalent', 'Every hover-only detail is also reachable by tap', 'Custom cursor never replaces focus rings', 'Sound is always opt-in and never autoplays', 'Motion never blocks input: CTAs stay fixed and clickable']
+    };
+  }
+}
+</script>
+</body>
+</html>
