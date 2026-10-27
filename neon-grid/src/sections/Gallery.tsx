@@ -79,7 +79,7 @@ export function Gallery() {
                     style={{ objectPosition: g.pos ?? '50% 50%' }}
                   />
                   <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-base group-hover:opacity-100" style={{ background: 'repeating-linear-gradient(to bottom, rgba(232,241,255,.06) 0 2px, transparent 2px 4px)' }} />
-                  <span className="absolute left-3 top-3 font-mono text-[10px] tracking-[0.14em]" style={{ color: catColor[g.cat] }}>
+                  <span className="absolute left-2.5 top-2.5 inline-flex h-[22px] items-center border bg-void/70 px-2 font-mono text-[10px] tracking-[0.14em]" style={{ color: catColor[g.cat], borderColor: catColor[g.cat] }}>
                     {g.cat}
                   </span>
                   <span className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-void to-transparent p-3 transition-transform duration-base ease-cyber group-hover:translate-y-0 group-focus-visible:translate-y-0">
