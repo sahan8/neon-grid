@@ -37,6 +37,10 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           exit={{ clipPath: 'inset(0 0 100% 0)' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
+          <div className="container-grid hud-label flex justify-between pt-4">
+            <span>MENU // {String(navLinks.length).padStart(2, '0')} NODES</span>
+            <span className="text-cyan">SECTOR 07</span>
+          </div>
           <nav aria-label="Mobile" className="container-grid flex flex-1 flex-col justify-center">
             <ul className="flex flex-col gap-2">
               {navLinks.map((l, i) => (
