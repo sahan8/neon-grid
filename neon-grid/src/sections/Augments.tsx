@@ -23,7 +23,7 @@ export function Augments() {
   };
 
   return (
-    <section id="augments" aria-labelledby="augments-title" className="relative bg-void py-20 md:py-28">
+    <section id="augments" aria-labelledby="augments-title" className="relative overflow-x-clip bg-void py-20 md:py-28">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(ellipse at 30% 50%, ${color}14, transparent 60%)` }} />
       <div className="container-grid relative">
         <SectionHeader id="augments-title" index="02" label="AUGMENTS" meta="RIPPERDOC CATALOGUE" title="Upgrade the hardware" />
@@ -41,7 +41,7 @@ export function Augments() {
               <span className="hud-label">[3D] · {a.file}</span>
               <span className="hud-label">{a.tris}</span>
             </div>
-            <span className="hud-label pointer-events-none absolute bottom-4 left-4">DRAG TO ROTATE · TAP NODES</span>
+            <span className="hud-label pointer-events-none absolute bottom-4 left-4 bg-void/70 px-2 py-1">DRAG TO ROTATE · TAP NODES</span>
 
             {/* Hotspot callout (also reachable via the node list for keyboard/no-WebGL users) */}
             <AnimatePresence>
@@ -168,6 +168,7 @@ export function Augments() {
                 <span className="block truncate text-sm font-semibold md:text-base">{it.name}</span>
                 <span className="hidden font-mono text-xs text-cyan md:block">{it.price}</span>
               </span>
+              {i === idx && <span className="ml-auto hidden font-mono text-[10px] tracking-[0.14em] text-cyan lg:block">VIEWING</span>}
             </button>
           ))}
         </div>
