@@ -1,4 +1,4 @@
-import { Suspense, lazy, type ComponentType, type ReactNode, useEffect } from 'react';
+import { Suspense, lazy, type ComponentType, type ReactNode, useEffect, useState } from 'react';
 import { useInView } from '../hooks/useInView';
 import { useWebGLSupport } from '../hooks/useWebGLSupport';
 import { markReady } from '../lib/boot';
@@ -30,6 +30,7 @@ export function SceneShell<P extends object>({
   const webgl = useWebGLSupport();
   const { ref, inView, everSeen } = useInView<HTMLDivElement>('300px');
   const Scene = useLazy(load);
+  const [live, setLive] = useState(false);
 
   // With no live 3D, the static image is the "ready" state for the loader.
   useEffect(() => {
@@ -40,10 +41,11 @@ export function SceneShell<P extends object>({
 
   return (
     <div ref={ref} className={className || 'relative'}>
-      {/* The fallback stays underneath so there is never a blank frame while the chunk loads. */}
-      <div className="absolute inset-0">{fallback}</div>
+      {/* The fallback covers the load, then fades once the scene commits (canvases are transparent, so it would show through). */}
+      <div className={`absolute inset-0 transition-opacity duration-slow ${mount && live ? 'opacity-0' : ''}`}>{fallback}</div>
       {mount && (
         <Suspense fallback={null}>
+          <OnMount run={() => setLive(true)} />
           <div className="absolute inset-0">
             <Scene {...props} active={inView && !paused} />
           </div>
@@ -51,6 +53,12 @@ export function SceneShell<P extends object>({
       )}
     </div>
   );
+}
+
+// Commits together with the lazy scene inside the same Suspense boundary.
+function OnMount({ run }: { run: () => void }) {
+  useEffect(run, [run]);
+  return null;
 }
 
 // Memoise React.lazy per loader so re-renders don't re-create the component.
