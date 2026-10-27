@@ -70,6 +70,7 @@ export function Join() {
   } = useForm<FormValues>({ resolver: zodResolver(schema), mode: 'onTouched', defaultValues: { updates: true } });
 
   const handle = watch('handle');
+  const handleOk = !errors.handle && schema.shape.handle.safeParse(handle).success;
   const errCount = Object.keys(errors).length;
   const status = phase === 'loading' ? 'CONNECTING' : phase === 'success' ? 'ONLINE' : errCount && submitCount ? 'REJECTED' : 'IDLE';
   const statusColor = status === 'REJECTED' ? '#FF3B3B' : status === 'ONLINE' ? '#2BFF88' : status === 'CONNECTING' ? '#F5E642' : '#8A93A8';
@@ -162,7 +163,7 @@ export function Join() {
                     </div>
                   ))}
                 </div>
-                <Input label="HANDLE" placeholder="v1per" autoComplete="nickname" error={errors.handle?.message} {...register('handle')} />
+                <Input label="HANDLE" placeholder="v1per" autoComplete="nickname" error={errors.handle?.message} hint={handleOk && <span className="font-mono text-[11px] tracking-[0.14em] text-success">● AVAILABLE</span>} {...register('handle')} />
                 <Input label="EMAIL" type="email" placeholder="you@grid.net" autoComplete="email" inputMode="email" error={errors.email?.message} {...register('email')} />
                 <Select label="FACTION" placeholder="Select faction…" options={FACTIONS} error={errors.faction?.message} {...register('faction')} />
                 <Checkbox label="Send me transmissions — drops, events, lore" {...register('updates')} />
