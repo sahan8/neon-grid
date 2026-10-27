@@ -34,7 +34,7 @@ export function Augments() {
             <SceneShell
               load={loadViewer}
               className="absolute inset-0"
-              props={{ item: a.id, color, parts: a.parts, hotspot, onHotspot: (i: number) => setHotspot(i === hotspot ? -1 : i) }}
+              props={{ img: a.img, color, parts: a.parts, hotspot, onHotspot: (i: number) => setHotspot(i === hotspot ? -1 : i) }}
               fallback={<img src={a.img} alt={a.alt} loading="lazy" className="h-full w-full object-contain p-6" style={{ filter: finish === 1 ? 'hue-rotate(140deg) saturate(1.15)' : finish === 2 ? 'saturate(0.12) brightness(1.15) contrast(1.1)' : 'none' }} />}
             />
             <div className="pointer-events-none absolute left-4 top-4 flex flex-col gap-1">
