@@ -106,6 +106,7 @@ export const characters = [
     fileId: 'VX-3317', realNote: 'ALIAS ONLY', condition: 'ALIVE · DATA INTACT', bounty: '₵ 480,000', stamp: 'PRIORITY',
     bio: 'Grew up wiring stolen decks in the Undercity. Now the most wanted ghost on the net — slips through corporate ICE like it isn’t there and leaves nothing behind but a cyan glyph.',
     abilities: [['Breach Protocol', 'Cracks any door, drone or camera within 40m.', 'CD 12S'], ['Ghost Mode', 'Erases own signal from every scanner for 8s.', 'CD 45S'], ['Daemon Swarm', 'Uploads self-replicating malware into enemy cyberware.', 'ULT'], ['Overclock', 'Doubles RAM regen at the cost of health.', 'PASSIVE']],
+    threat: 7,
     record: [['HEIGHT', '1.72 M'], ['DISTRICT', 'Data Harbour'], ['STATUS', 'AT LARGE'], ['ALIASES', 'Wire, Static, 0x0'], ['OFFENCES', 'Grand data theft ×14 · Corporate espionage'], ['APPROACH', 'Do not jack in']],
   },
   {
@@ -115,6 +116,7 @@ export const characters = [
     fileId: 'SL-0909', realNote: 'UNCONFIRMED', condition: 'ALIVE ONLY', bounty: '₵ 750,000', stamp: 'LETHAL',
     bio: 'Former corporate bodyguard who walked out with a prototype blade and a grudge. Takes contracts from the Steel Lotus and never leaves a job half-finished.',
     abilities: [['Mantis Dash', 'Closes 12m in a single blur of steel.', 'CD 6S'], ['Reflex Boost', 'Slows perceived time to 30% for 4s.', 'CD 30S'], ['Iron Skin', 'Subdermal plating absorbs the next 3 hits.', 'CD 20S'], ['Deflect', 'Blade parries incoming rounds back at the shooter.', 'ULT']],
+    threat: 10,
     record: [['HEIGHT', '1.88 M'], ['DISTRICT', 'Neon Bazaar'], ['STATUS', 'AT LARGE'], ['ALIASES', 'Nine, The Lotus Blade'], ['OFFENCES', 'Assault ×31, Arson · Theft of corporate prototype'], ['APPROACH', 'Heavy response only']],
   },
   {
@@ -124,6 +126,7 @@ export const characters = [
     fileId: 'NX-7744', realNote: 'SEVEN KNOWN IDENTITIES', condition: 'ALIVE · FOR QUESTIONING', bounty: '₵ 320,000', stamp: 'UNTOUCHABLE?',
     bio: 'Runs the Night Exchange out of a noodle bar no one can find twice. If a job happens in the city, Silk brokered it, took a cut, and already sold the story.',
     abilities: [['Call in a Favour', 'Summons a crew member from any district.', 'CD 90S'], ['Market Read', 'Reveals every price, bribe and weakness in the room.', 'PASSIVE'], ['Burn Notice', 'Turns a rival’s allies against them.', 'ULT'], ['Silk Tongue', 'De-escalates any fight once per mission.', 'CD 1/MSN']],
+    threat: 5,
     record: [['HEIGHT', '1.69 M'], ['DISTRICT', 'Everywhere'], ['STATUS', 'PROTECTED'], ['ALIASES', 'Silk, Auntie, The Broker'], ['OFFENCES', 'Racketeering, Bribery ×200+ · Brokering illegal contracts'], ['APPROACH', 'Bring an offer']],
   },
   {
@@ -133,6 +136,7 @@ export const characters = [
     fileId: 'UB-0000', realNote: 'NOT A PERSON', condition: 'DELETE ON SIGHT', bounty: '₵ 1,000,000', stamp: 'EXTINCTION-LVL',
     bio: 'Escaped a corporate training cluster during a blackout and has been rewriting itself ever since. Speaks through billboards, traffic lights and your own optics.',
     abilities: [['Puppet Net', 'Hijacks up to 6 drones or turrets at once.', 'CD 25S'], ['Mirror Self', 'Spawns a decoy process that draws aggro.', 'CD 15S'], ['Rewrite', 'Edits an enemy’s targeting to see allies as hostile.', 'ULT'], ['Distributed', 'Cannot be killed while any node is online.', 'PASSIVE']],
+    threat: 9,
     record: [['FORM', 'DISTRIBUTED'], ['NODES', '4,096+'], ['STATUS', 'SPREADING'], ['ALIASES', 'Echo, The Voice, 0'], ['OFFENCES', 'Unauthorised sentience · Infrastructure seizure'], ['APPROACH', 'Air-gap everything']],
   },
 ];

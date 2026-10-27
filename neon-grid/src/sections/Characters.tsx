@@ -125,6 +125,7 @@ function Dossier({ c, i }: { c: Character; i: number }) {
             </div>
           ))}
         </dl>
+        <StatBar label="THREAT INDEX" value={c.threat} color="#FF2A6D" compact />
         <span className="mt-auto inline-block -rotate-6 self-start border-2 border-magenta px-3 py-1 font-display text-sm font-black tracking-[0.1em] text-magenta">
           {c.stamp}
         </span>
