@@ -32,7 +32,7 @@ export function Lore() {
   }, [reduced]);
 
   return (
-    <section id="lore" aria-labelledby="lore-title" className="relative bg-void py-20 md:py-28">
+    <section id="lore" aria-labelledby="lore-title" className="relative overflow-x-clip bg-void py-20 md:py-28">
       <div className="container-grid">
         <SectionHeader id="lore-title" index="04" label="LORE" meta="2049 → 2087" title="How the grid was built" intro="Thirty-eight years, six turning points. Scroll to replay the record." />
 
