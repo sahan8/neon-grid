@@ -5,6 +5,7 @@ import { images } from '../data/content';
 import { Button, ArrowIcon } from '../components/ui';
 import { SoundToggle } from '../components/layout/Nav';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useSound } from '../lib/sound';
 
 const LOG: { at: number; t: string; c: string }[] = [
   { at: -1, t: 'NEON//GRID OS v1.0 · tty07 · build 2087.10.27', c: '#8A93A8' },
@@ -27,6 +28,8 @@ export function Loader({ onEnter }: { onEnter: () => void }) {
   const reduced = useReducedMotion();
   const [anim, setAnim] = useState(reduced ? 100 : 0);
   const [open, setOpen] = useState(true);
+  const [entering, setEntering] = useState(false);
+  const [sound] = useSound();
   const enterRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -49,9 +52,13 @@ export function Loader({ onEnter }: { onEnter: () => void }) {
     document.body.style.overflow = open ? 'hidden' : '';
   }, [open]);
 
+  // Hold the "ENTERING SECTOR 07" flash briefly before handing over to the hero.
   const enter = () => {
-    setOpen(false);
-    onEnter();
+    setEntering(true);
+    window.setTimeout(() => {
+      setOpen(false);
+      onEnter();
+    }, reduced ? 0 : 700);
   };
 
   const lines = LOG.filter((l) => shown >= l.at).map((l) => (l.at === 50 ? { ...l, t: `${l.t} ${done ? '100% [OK]' : shown + '%'}` } : l));
@@ -76,7 +83,15 @@ export function Loader({ onEnter }: { onEnter: () => void }) {
               <span className="pulse-dot h-2 w-2 rounded-full" style={{ background: done ? '#2BFF88' : '#F5E642', color: done ? '#2BFF88' : '#F5E642' }} />
               NEON//GRID OS v1.0
             </span>
-            <span>BOOT SEQ 0x07</span>
+            <span className="md:hidden">TTY07</span>
+            <span className="hidden md:inline">BOOT SEQ 0x07 · TTY07 · AUDIO {sound ? 'ON' : 'OFF'}</span>
+          </div>
+          <div className="hud-label absolute bottom-8 left-10 right-10 hidden justify-between md:flex">
+            <span>SECTOR 07 // NIGHT CITY</span>
+            <span>
+              SIGNAL {60 + Math.round(shown * 0.38)}% · LATENCY {String(Math.max(12, 140 - shown)).padStart(3, '0')}MS
+            </span>
+            <span>© 2087 NEON//GRID</span>
           </div>
 
           <div className="relative flex w-full max-w-[760px] flex-col items-center gap-6 md:gap-8">
@@ -152,6 +167,20 @@ export function Loader({ onEnter }: { onEnter: () => void }) {
               )}
             </div>
           </div>
+
+          {entering && (
+            <motion.div
+              className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-void/95 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="font-mono text-xs tracking-[0.24em] text-success">LINK ESTABLISHED</span>
+              <span className="font-display text-[22px] font-black tracking-[0.08em] text-ink md:text-5xl" style={{ textShadow: '0 0 8px #FF2A6D, 0 0 24px rgba(255,42,109,.5)' }}>
+                ENTERING SECTOR 07
+              </span>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
