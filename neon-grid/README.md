@@ -21,9 +21,9 @@ npm run dev        # http://localhost:5173
 
 ## Deploy to Vercel
 
-1. Push this folder to a GitHub repo.
-2. In Vercel: **Add New → Project**, import the repo. Vercel detects Vite automatically
-   (build command `npm run build`, output `dist`).
+1. Push the repo to GitHub (the site lives in this `neon-grid/` folder).
+2. In Vercel: **Add New → Project**, import the repo and set **Root Directory** to `neon-grid`.
+   Vercel detects Vite automatically (build command `npm run build`, output `dist`).
 3. `vercel.json` already handles SPA routing (so `/anything` shows the 404 page) and
    long-term caching for hashed assets.
 4. After the first deploy, replace `https://neon-grid.vercel.app` with your real URL in
