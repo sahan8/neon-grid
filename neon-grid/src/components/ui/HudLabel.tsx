@@ -27,7 +27,7 @@ export function Chip({ children, color = '#00F0FF', className = '' }: { children
   return (
     <span
       className={`inline-flex h-6 items-center px-2 font-mono text-[11px] uppercase tracking-[0.14em] ${className}`}
-      style={{ color, border: `1px solid ${color}55`, background: `${color}14` }}
+      style={{ color, border: `1px solid ${color}55`, background: `linear-gradient(${color}14, ${color}14), rgba(5,6,10,.7)` }}
     >
       {children}
     </span>
