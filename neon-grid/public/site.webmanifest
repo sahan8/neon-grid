@@ -1,0 +1,8 @@
+{
+  "name": "NEON//GRID",
+  "short_name": "NEON//GRID",
+  "icons": [{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }],
+  "theme_color": "#05060A",
+  "background_color": "#05060A",
+  "display": "standalone"
+}

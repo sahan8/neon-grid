@@ -1,0 +1,51 @@
+/* NEON//GRID design tokens — source of truth: NEON-GRID-Design-System (Main, Typography, Foundations artboards). */
+:root {
+  /* Colour */
+  --bg-void: #05060a;
+  --bg-surface: #0b0e17;
+  --bg-elevated: #121726;
+  --line-subtle: rgba(0, 240, 255, 0.12);
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff2a6d;
+  --neon-yellow: #f5e642;
+  --neon-violet: #7b2cff;
+  --text-primary: #e8f1ff;
+  --text-muted: #8a93a8;
+  --state-success: #2bff88;
+  --state-error: #ff3b3b;
+
+  /* Gradients */
+  --grad-synthwave: linear-gradient(135deg, #7b2cff, #ff2a6d 50%, #00f0ff);
+  --grad-horizon: linear-gradient(to top, rgba(255, 42, 109, 0.35), transparent);
+
+  /* Glow */
+  --glow-cyan: 0 0 8px #00f0ff, 0 0 24px rgba(0, 240, 255, 0.5);
+  --glow-magenta: 0 0 8px #ff2a6d, 0 0 24px rgba(255, 42, 109, 0.5);
+
+  /* Type */
+  --font-display: 'Orbitron', 'Unbounded', system-ui, sans-serif;
+  --font-body: 'Rajdhani', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Shape */
+  --cut: 12px;
+  --clip-cut: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+
+  /* Motion */
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+  --dur-cinematic: 1200ms;
+  --ease-cyber: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --gutter: 16px;
+  --nav-h: 64px;
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: 40px; --nav-h: 72px; }
+}
+@media (min-width: 1200px) {
+  :root { --gutter: 80px; --nav-h: 80px; }
+}
