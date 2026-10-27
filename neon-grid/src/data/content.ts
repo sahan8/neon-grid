@@ -27,7 +27,7 @@ export type Stat = [label: string, value: number];
 export const districts = [
   {
     num: '01', name: 'Neon Bazaar', short: 'BAZAAR', type: 'MARKET · NIGHT TRADE', pop: '6.8M', curfew: 'NONE', status: 'OPEN 24/7',
-    danger: 3, accent: '#F5E642', img: bazaar, pos: '50% 60%',
+    danger: 4, accent: '#F5E642', img: bazaar, pos: '50% 60%',
     desc: 'Lantern-lit night markets, street food stalls and black-market chrome sold by the gram.',
     alt: 'Rain-soaked night market: noodle stalls, steam, neon signs and glowing umbrellas',
   },
@@ -39,13 +39,13 @@ export const districts = [
   },
   {
     num: '03', name: 'The Undercity', short: 'UNDERCITY', type: 'SLUMS · BELOW LEVEL 0', pop: '14.3M', curfew: 'UNENFORCED', status: 'HOSTILE',
-    danger: 5, accent: '#FF2A6D', img: undercity, pos: '50% 55%',
+    danger: 9, accent: '#FF2A6D', img: undercity, pos: '50% 55%',
     desc: 'Stacked shanties under the city’s foundations. No sun, no law — just pipes, steam and gangs.',
     alt: 'Flooded alley under an overpass, tangled cables, signs for a noodle bar and a cybernetics clinic',
   },
   {
     num: '04', name: 'Data Harbour', short: 'HARBOUR', type: 'PORT · FREIGHT + DATA', pop: '3.4M', curfew: '02:00', status: 'PATROLLED',
-    danger: 4, accent: '#00F0FF', img: harbour, pos: '50% 45%',
+    danger: 6, accent: '#00F0FF', img: harbour, pos: '50% 45%',
     desc: 'Container cranes, smuggler skiffs and the undersea cables that carry the city’s data.',
     alt: 'Container port at night: neon cranes, cargo drones and a ship in the rain',
   },

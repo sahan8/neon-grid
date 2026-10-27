@@ -7,6 +7,8 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 
 type District = (typeof districts)[number];
 
+const dangerColor = (lvl: number) => (lvl >= 9 ? '#FF2A6D' : lvl >= 7 ? '#F5E642' : '#00F0FF');
+
 function DistrictCard({ d, active, onFocus }: { d: District; active: boolean; onFocus?: () => void }) {
   return (
     <article
@@ -32,6 +34,9 @@ function DistrictCard({ d, active, onFocus }: { d: District; active: boolean; on
         <img aria-hidden="true" src={d.img} alt="" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 mix-blend-screen transition-opacity duration-fast group-hover:opacity-40" style={{ objectPosition: d.pos, transform: 'translateX(6px)', filter: 'hue-rotate(-60deg) saturate(3)' }} />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-surface via-transparent" />
         <span className="absolute left-4 top-4 font-mono text-xs tracking-[0.14em] text-ink">SECTOR {d.num}</span>
+        <span aria-hidden="true" className="absolute bottom-4 right-4 bg-magenta/80 px-1.5 py-0.5 font-mono text-[10px] tracking-[0.14em] text-ink opacity-0 transition-opacity duration-fast group-hover:opacity-100">
+          SIGNAL INTERFERENCE
+        </span>
         <span className="absolute right-4 top-4 font-display text-4xl font-black text-transparent [-webkit-text-stroke:1px_rgba(232,241,255,.5)]">{d.num}</span>
       </div>
       <div className="flex flex-1 flex-col gap-3 p-5 md:p-6">
@@ -43,7 +48,7 @@ function DistrictCard({ d, active, onFocus }: { d: District; active: boolean; on
         </h3>
         <p className="text-ink-muted">{d.desc}</p>
         <div className="mt-auto flex flex-col gap-3 border-t border-line pt-4">
-          <StatBar label="DANGER" value={d.danger} max={5} color={d.danger >= 4 ? '#FF2A6D' : '#00F0FF'} compact />
+          <StatBar label="DANGER" value={d.danger} color={dangerColor(d.danger)} valueLabel={`LVL ${d.danger}`} compact />
           <dl className="grid grid-cols-3 gap-2 font-mono text-[11px] tracking-[0.12em]">
             <div>
               <dt className="text-ink-muted">POP</dt>

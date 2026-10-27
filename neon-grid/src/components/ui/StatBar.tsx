@@ -5,12 +5,14 @@ export function StatBar({
   max = 10,
   color = '#00F0FF',
   compact = false,
+  valueLabel,
 }: {
   label: string;
   value: number;
   max?: number;
   color?: string;
   compact?: boolean;
+  valueLabel?: string;
 }) {
   return (
     <div className="flex items-center gap-3">
@@ -40,7 +42,7 @@ export function StatBar({
           );
         })}
       </div>
-      <span className="w-8 text-right font-mono text-xs text-ink">{String(value).padStart(2, '0')}</span>
+      <span className="min-w-8 whitespace-nowrap text-right font-mono text-xs" style={{ color: valueLabel ? color : undefined }}>{valueLabel ?? String(value).padStart(2, '0')}</span>
     </div>
   );
 }
